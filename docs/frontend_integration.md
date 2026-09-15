@@ -1,6 +1,6 @@
 # Frontend Integration Guide
 
-This guide shows how to integrate StellarSwipe contracts from a JavaScript/TypeScript frontend using `@stellar/stellar-sdk`.
+This guide shows how to integrate CallStake contracts from a JavaScript/TypeScript frontend using `@stellar/stellar-sdk`.
 
 ## Prerequisites
 

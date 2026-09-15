@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document provides detailed, step-by-step procedures for executing state migrations in the StellarSwipe protocol. Follow these procedures carefully to ensure safe and successful contract upgrades.
+This document provides detailed, step-by-step procedures for executing state migrations in the CallStake protocol. Follow these procedures carefully to ensure safe and successful contract upgrades.
 
 ## Table of Contents
 

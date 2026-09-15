@@ -1,6 +1,6 @@
 # Fee Optimization Methodology
 
-Stellar Swipe uses a dynamic fee model that combines:
+Call Stake uses a dynamic fee model that combines:
 
 - A base fee configured by protocol governance.
 - User-specific volume rebates for silver and gold trading tiers.

@@ -41,7 +41,7 @@ Defined in `contracts/shared/src/errors.rs` as `RecoveryStrategy`.
    depend on stable numeric values. The `check_error_codes.py` CI step will
    fail if a renumbering is detected.
 4. **Add a baseline entry.** After adding the new variant, run
-   `python3 stellar-swipe/scripts/check_error_codes.py`; it will auto-update
+   `python3 call-stake/scripts/check_error_codes.py`; it will auto-update
    the relevant `error-baselines/<crate>.json` file. Commit the updated
    baseline alongside the new code.
 5. **Document the recovery strategy** in the contract's public API doc comment
@@ -49,7 +49,7 @@ Defined in `contracts/shared/src/errors.rs` as `RecoveryStrategy`.
 
 ## Per-contract error inventory
 
-The baseline JSON files in `stellar-swipe/error-baselines/` are the canonical
+The baseline JSON files in `call-stake/error-baselines/` are the canonical
 source of truth. The table below is a human-readable summary; the JSON files
 are authoritative for CI.
 

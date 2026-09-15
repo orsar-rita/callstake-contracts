@@ -1,6 +1,6 @@
 # Error Handling and Recovery Patterns
 
-This document describes the standardized error handling strategy used across Stellar Swipe contracts.
+This document describes the standardized error handling strategy used across Call Stake contracts.
 
 ## Error categories
 

@@ -1,6 +1,6 @@
 # Protocol 23 Parallelization Optimization
 
-This document audits the StellarSwipe contract storage design for Stellar Protocol 23 parallel transaction execution.
+This document audits the CallStake contract storage design for Stellar Protocol 23 parallel transaction execution.
 
 ## Goals
 

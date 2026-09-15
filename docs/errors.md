@@ -1,6 +1,6 @@
 # Contract Error Codes
 
-Frontend-facing mapping for contract error codes. Codes are derived from the Rust `#[contracterror]` enums in `stellar-swipe/contracts/*/src`.
+Frontend-facing mapping for contract error codes. Codes are derived from the Rust `#[contracterror]` enums in `call-stake/contracts/*/src`.
 
 Note: `auto_trade`, `bridge`, and `trade_executor` contain unresolved branch-marker text on the current base. Where duplicate numeric mappings appear in source, the table preserves the source mapping so frontend handling remains explicit until the contract source is repaired.
 

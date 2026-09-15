@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document outlines the compliance requirements, regulations, and best practices for signal provider onboarding and verification in the StellarSwipe protocol.
+This document outlines the compliance requirements, regulations, and best practices for signal provider onboarding and verification in the CallStake protocol.
 
 ## Regulatory Framework
 
@@ -470,15 +470,15 @@ Risk Score = (Identity Risk × 0.30) +
 ## Contact Information
 
 **Compliance Officer**:
-- Email: compliance@stellarswipe.io
+- Email: compliance@callstake.io
 - Phone: +1-XXX-XXX-XXXX
 
 **Data Protection Officer**:
-- Email: dpo@stellarswipe.io
+- Email: dpo@callstake.io
 - Phone: +1-XXX-XXX-XXXX
 
 **Regulatory Inquiries**:
-- Email: regulatory@stellarswipe.io
+- Email: regulatory@callstake.io
 
 **Emergency Hotline** (24/7):
 - Phone: +1-XXX-XXX-XXXX

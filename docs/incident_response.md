@@ -1,4 +1,4 @@
-# StellarSwipe Incident Response Runbook
+# CallStake Incident Response Runbook
 
 > **Purpose:** Pre-written response plans for the most likely production incidents.
 > Improvising during an incident leads to mistakes and delays. Follow this runbook
@@ -78,7 +78,7 @@ at stale or zero prices.
 ## Scenario 2: Contract Exploit
 
 ### Description
-An attacker exploits a vulnerability in one or more StellarSwipe contracts (e.g.,
+An attacker exploits a vulnerability in one or more CallStake contracts (e.g.,
 `user_portfolio`, `trade_executor`, `fee_collector`) to drain funds, manipulate
 positions, or bypass access controls.
 

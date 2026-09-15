@@ -1,4 +1,4 @@
-# StellarSwipe Mainnet Deployment Checklist
+# CallStake Mainnet Deployment Checklist
 
 > **STOP.** Mainnet deployment is irreversible. Every item below must be checked and
 > signed off before proceeding. A single missed step can result in permanent loss of
@@ -69,13 +69,13 @@ Any single **No-Go** vote blocks the deployment.
 
 - [ ] All unit tests pass on the exact commit being deployed:
   ```bash
-  cd stellar-swipe && cargo test --workspace 2>&1 | tail -20
+  cd call-stake && cargo test --workspace 2>&1 | tail -20
   ```
 - [ ] WASM artifacts built from the tagged release commit (not a dirty working tree):
   ```bash
   git status  # must show "nothing to commit, working tree clean"
   git tag     # confirm release tag is on HEAD
-  cd stellar-swipe && cargo build --workspace --target wasm32-unknown-unknown --release
+  cd call-stake && cargo build --workspace --target wasm32-unknown-unknown --release
   ```
 - [ ] WASM artifacts optimized:
   ```bash

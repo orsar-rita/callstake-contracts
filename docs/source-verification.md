@@ -1,6 +1,6 @@
 # Source Verification
 
-Every deployed StellarSwipe contract WASM embeds two metadata entries that let
+Every deployed CallStake contract WASM embeds two metadata entries that let
 a third party independently verify that a specific on-chain binary matches the
 source code used to produce it:
 
@@ -11,9 +11,9 @@ source code used to produce it:
 
 ## How the hash is computed
 
-The hash is computed by `stellar-swipe/scripts/embed_source_hash.sh` before
+The hash is computed by `call-stake/scripts/embed_source_hash.sh` before
 `cargo build` runs.  It covers every `*.rs` and `*.toml` file tracked by Git
-under `stellar-swipe/`, sorted alphabetically so the result is identical on
+under `call-stake/`, sorted alphabetically so the result is identical on
 any platform.
 
 ```
@@ -44,15 +44,15 @@ The output includes a `Meta` section.  Look for `key="SourceHash"` and
 2. **Fetch the exact source snapshot.**
 
    ```bash
-   git clone https://github.com/StellarSwipe/StellarSwipe-Contract.git
-   cd StellarSwipe-Contract
+   git clone https://github.com/CallStake/CallStake-Contract.git
+   cd CallStake-Contract
    git checkout <GitCommit>
    ```
 
 3. **Recompute the source hash.**
 
    ```bash
-   cd stellar-swipe
+   cd call-stake
    source ./scripts/embed_source_hash.sh
    echo "$STELLAR_SOURCE_HASH"
    ```

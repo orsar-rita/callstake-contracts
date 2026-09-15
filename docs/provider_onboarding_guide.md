@@ -2,7 +2,7 @@
 
 ## Overview
 
-The StellarSwipe Provider Onboarding system provides a comprehensive, compliant framework for verifying and onboarding signal providers. This guide covers the complete onboarding process, KYC verification, background checks, tier assignment, and provider dashboard features.
+The CallStake Provider Onboarding system provides a comprehensive, compliant framework for verifying and onboarding signal providers. This guide covers the complete onboarding process, KYC verification, background checks, tier assignment, and provider dashboard features.
 
 ## Table of Contents
 

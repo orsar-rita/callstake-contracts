@@ -1,6 +1,6 @@
 # Real-Time Notification System
 
-Stellar Swipe supports a WebSocket-powered notification service for real-time user alerts.
+Call Stake supports a WebSocket-powered notification service for real-time user alerts.
 
 ## Features
 
