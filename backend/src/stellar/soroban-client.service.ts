@@ -121,6 +121,24 @@ export class SorobanClientService {
     return this.server.getTransaction(hash);
   }
 
+  /** Raw contract events since `startLedger`, decoded to native values — used by the event indexer. */
+  async getEvents(contractAddress: string, startLedger: number) {
+    const response = await this.server.getEvents({
+      startLedger,
+      filters: [{ type: 'contract', contractIds: [contractAddress] }],
+    });
+
+    return {
+      latestLedger: response.latestLedger,
+      events: response.events.map((event) => ({
+        ledger: event.ledger,
+        txHash: 'txHash' in event ? (event as { txHash?: string }).txHash : undefined,
+        topics: event.topic.map((t) => scValToNative(t)),
+        data: scValToNative(event.value),
+      })),
+    };
+  }
+
   private async loadAccountOrThrow(accountId: string): Promise<Account> {
     try {
       return await this.server.getAccount(accountId);
