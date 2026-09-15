@@ -1,0 +1,80 @@
+# StellarSwipe
+
+StellarSwipe is a decentralized trading-signal platform built on Stellar
+using Soroban smart contracts. Signal providers register trade calls,
+stake against their reputation, and get paid from protocol fees; users
+follow, vote on, and (increasingly) auto-execute those signals. See
+[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for the full design.
+
+## Repository layout
+
+```
+stellar-swipe/       Live Soroban contract workspace (Rust) — see below
+frontend/            Next.js + React frontend, Freighter wallet integration
+scripts/             Deployment, snapshot/replay, and e2e tooling (TypeScript/Python)
+config/              Per-network config (mainnet.json, testnet.json, rpc_endpoints.json)
+deployments/         Deployment manifests and the contract address registry
+docs/                Architecture, security, and per-feature reference docs
+tests/               End-to-end and regression suites (separate from per-crate unit tests)
+```
+
+**`stellar-swipe/` is the only live contract workspace.** Its
+`Cargo.toml` defines the workspace members, and every CI workflow under
+`.github/workflows/` builds and tests from inside it — `cd stellar-swipe
+&& cargo test --workspace --all-targets` is the baseline gate. A legacy,
+much smaller `contracts/` tree used to sit at the repo root; it predated
+this workspace, wasn't a Cargo workspace member, wasn't referenced by
+CI or by any script/doc, and has been removed.
+
+### Contracts (`stellar-swipe/contracts/`)
+
+| Crate | Role |
+|---|---|
+| `signal_registry` | Signal registration/scoring, provider reputation, leaderboards, contests |
+| `stake_vault` | Staking, rewards, slashing, emergency unstake |
+| `fee_collector` | Protocol fee collection/splitting, rebates, referral fee-share |
+| `governance` | Proposals, voting, timelocks, treasury, committees |
+| `oracle` | Price feeds — quorum, staleness/freshness, deviation guards |
+| `auto_trade` | Automated trade execution: risk limits, drawdown guards, escrow |
+| `trade_executor` | Order execution: DCA, leverage, batch settlement, SDEX routing |
+| `bridge` | Cross-chain messaging/liquidity with a validator set |
+| `user_portfolio` | User positions, watchlists, badges, exposure caps |
+| `analytics` | TVL, risk scoring, query caching |
+| `shared`, `common` | Shared primitives: pausable/reentrancy guards, access control, math |
+| `stake_vault_kani` | Kani formal-verification harness for the stake vault |
+| `integration_tests` | Cross-contract integration tests |
+
+## Getting started
+
+```bash
+rustup target add wasm32-unknown-unknown
+cd stellar-swipe
+cargo test --workspace --all-targets   # run the full contract test suite
+cargo fmt --all -- --check             # matches CI's format gate
+cargo clippy --workspace --all-targets -- -D warnings   # matches CI's lint gate
+./scripts/build.sh                     # build + optimize release WASM
+```
+
+For the frontend:
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+See [docs/deployment.md](docs/deployment.md) for deploying to testnet/mainnet,
+and [CONTRIBUTING.md](CONTRIBUTING.md) for scaffolding a new contract crate.
+
+## Documentation
+
+- [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) — system design and contract interactions
+- [docs/faq.md](docs/faq.md) — Soroban/workspace-specific FAQ
+- [docs/security/](docs/security/) — threat model, disclosure process, per-topic security analyses
+- [SECURITY.md](SECURITY.md) — vulnerability disclosure policy
+- `stellar-swipe/docs/` — implementation-level docs for individual contract patterns (cross-contract auth, event macros, governance timelocks, etc.)
+
+## Contributing
+
+This is a multi-contributor open-source project; most work lands as PRs
+against individual GitHub issues. See [CONTRIBUTING.md](CONTRIBUTING.md).
