@@ -10,6 +10,7 @@ follow, vote on, and (increasingly) auto-execute those signals. See
 
 ```
 call-stake/          Live Soroban contract workspace (Rust) — see below
+backend/             NestJS API — auth, users, and read/relay access to the contracts (see below)
 frontend/            Next.js + React frontend, Freighter wallet integration
 scripts/             Deployment, snapshot/replay, and e2e tooling (TypeScript/Python)
 config/              Per-network config (mainnet.json, testnet.json, rpc_endpoints.json)
@@ -63,12 +64,35 @@ npm install
 npm run dev
 ```
 
+For the backend:
+
+```bash
+cd backend
+cp .env.example .env        # edit JWT_SECRET at minimum
+docker compose up -d postgres redis
+npm install
+npm run migration:run
+npm run start:dev
+```
+
 See [docs/deployment.md](docs/deployment.md) for deploying to testnet/mainnet,
 and [CONTRIBUTING.md](CONTRIBUTING.md) for scaffolding a new contract crate.
+
+## Backend (`backend/`)
+
+A NestJS API providing auth (Stellar wallet challenge/response), user
+profiles, and read/relay access to the contracts above — the backend
+never signs or holds a user's private key; it builds unsigned
+transactions for the frontend to sign with Freighter. See
+[docs/BACKEND_SCOPE.md](docs/BACKEND_SCOPE.md) for what's built vs.
+deferred and why, and [docs/BACKEND_ARCHITECTURE.md](docs/BACKEND_ARCHITECTURE.md)
+for the module map and how it resolves contract addresses from this
+repo's own `deployments/` and `config/`.
 
 ## Documentation
 
 - [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) — system design and contract interactions
+- [docs/BACKEND_SCOPE.md](docs/BACKEND_SCOPE.md) / [docs/BACKEND_ARCHITECTURE.md](docs/BACKEND_ARCHITECTURE.md) — backend scope and module map
 - [docs/faq.md](docs/faq.md) — Soroban/workspace-specific FAQ
 - [docs/security/](docs/security/) — threat model, disclosure process, per-topic security analyses
 - [SECURITY.md](SECURITY.md) — vulnerability disclosure policy
