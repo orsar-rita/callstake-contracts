@@ -1,7 +1,7 @@
-# Implement Referral Fee-Share Mechanism
+# Referral Fee-Share Mechanism
 
 ## Summary
-This PR implements an on-chain referral fee-share feature in the `fee_collector` smart contract, complementing off-chain tracking mechanisms. When a user (referee) with a registered referrer completes a trade, a configured percentage of the gross trade fee is automatically routed directly to the referrer's address.
+`fee_collector` implements an on-chain referral fee-share feature, complementing off-chain tracking mechanisms. When a user (referee) with a registered referrer completes a trade, a configured percentage of the gross trade fee is automatically routed directly to the referrer's address.
 
 ## Changes
 - **Storage:** Added `Referral(Address)` mapping to store referee-to-referrer relationships and `ReferralFeeShareBps` to store the admin-configurable split percentage.
