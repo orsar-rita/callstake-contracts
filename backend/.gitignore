@@ -1,0 +1,17 @@
+# Build/deps
+node_modules/
+dist/
+
+# Test coverage — never commit generated coverage output
+coverage/
+
+# Env
+.env
+.env.local
+
+# Logs
+*.log
+npm-debug.log*
+
+# IDE / OS
+.DS_Store
