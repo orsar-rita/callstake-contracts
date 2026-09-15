@@ -55,7 +55,7 @@ ready to deploy.
 Run it directly with:
 
 ```sh
-python3 stellar-swipe/scripts/validate_deployment_manifest.py deployments/testnet.manifest.json
+python3 call-stake/scripts/validate_deployment_manifest.py deployments/testnet.manifest.json
 ```
 
 ## Contract registry (Issue #881)
