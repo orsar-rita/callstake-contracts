@@ -1,8 +1,8 @@
 {
-  "name": "stellarswipe-contract-scripts",
+  "name": "callstake-contract-scripts",
   "private": true,
   "type": "module",
-  "description": "Off-chain scripts (deploy, event parsing tests) for StellarSwipe contracts",
+  "description": "Off-chain scripts (deploy, event parsing tests) for CallStake contracts",
   "scripts": {
     "test:events": "npx tsx test_event_parsing.ts",
     "test:rewards": "npx tsx --test reward_conservation.test.ts",

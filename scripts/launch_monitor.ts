@@ -187,7 +187,7 @@ class LaunchMonitor {
    */
   async start(): Promise<void> {
     console.clear();
-    console.log('🚀 StellarSwipe Launch Monitor Started');
+    console.log('🚀 CallStake Launch Monitor Started');
     console.log(`📊 Network: ${this.config.network}`);
     console.log(`📅 Duration: ${this.config.duration} minutes`);
     console.log(`⏱️  Refresh interval: ${this.config.refreshInterval}ms\n`);
@@ -533,7 +533,7 @@ class LaunchMonitor {
 
     // Header
     console.log('╔════════════════════════════════════════════════════════════════════════════════╗');
-    console.log('║                    🚀 STELLARSWIPE LAUNCH MONITOR 🚀                            ║');
+    console.log('║                    🚀 CALLSTAKE LAUNCH MONITOR 🚀                            ║');
     console.log('╠════════════════════════════════════════════════════════════════════════════════╣');
     console.log(
       `║ Network: ${this.config.network.padEnd(20)} │ Uptime: ${minutes}m ${seconds}s ${' '.repeat(45)} ║`,

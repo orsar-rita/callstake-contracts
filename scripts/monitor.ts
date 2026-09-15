@@ -1,6 +1,6 @@
 #!/usr/bin/env tsx
 /**
- * monitor.ts — Contract event monitoring and alerting for StellarSwipe.
+ * monitor.ts — Contract event monitoring and alerting for CallStake.
  *
  * Polls Soroban contract events every 5 minutes and sends Slack alerts for:
  *   - Oracle heartbeat failures (no oracle update within threshold)
@@ -114,7 +114,7 @@ async function sendSlackAlert(message: string): Promise<void> {
   }
 
   const payload = {
-    text: `🚨 *StellarSwipe Monitor Alert* (${NETWORK})\n${message}`,
+    text: `🚨 *CallStake Monitor Alert* (${NETWORK})\n${message}`,
   };
 
   try {
@@ -394,7 +394,7 @@ async function poll(): Promise<void> {
 // ── Main loop ─────────────────────────────────────────────────────────────────
 
 async function main(): Promise<void> {
-  log(`StellarSwipe Monitor starting`);
+  log(`CallStake Monitor starting`);
   log(`  Network:        ${NETWORK}`);
   log(`  RPC URL:        ${RPC_URL}`);
   log(`  Deploy state:   ${DEPLOY_STATE}`);

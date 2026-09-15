@@ -1,6 +1,6 @@
 #!/usr/bin/env tsx
 /**
- * testnet_utils.ts — Testnet utility helpers for StellarSwipe.
+ * testnet_utils.ts — Testnet utility helpers for CallStake.
  *
  * Usage:
  *   npx tsx scripts/testnet_utils.ts fund <G...address>

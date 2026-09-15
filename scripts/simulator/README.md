@@ -1,6 +1,6 @@
 # Local Simulator
 
-This simulator provides an in-memory mock of StellarSwipe contract behavior for frontend development.
+This simulator provides an in-memory mock of CallStake contract behavior for frontend development.
 
 ## Supported contracts
 
