@@ -1,4 +1,4 @@
-//! High-volume load simulation for StellarSwipe AutoTrade contract.
+//! High-volume load simulation for CallStake AutoTrade contract.
 //!
 //! # Simulation Overview
 //! Simulates 1 000 sequential copy-trade executions across 100 providers and
@@ -243,7 +243,7 @@ fn print_metrics(
     };
 
     println!("\n╔══════════════════════════════════════════════════════╗");
-    println!("║     StellarSwipe High-Volume Load Test Results       ║");
+    println!("║     CallStake High-Volume Load Test Results       ║");
     println!("╠══════════════════════════════════════════════════════╣");
     println!(
         "║ Trades executed          : {:<6} / {:<6}             ║",

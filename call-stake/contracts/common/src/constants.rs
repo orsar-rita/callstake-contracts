@@ -1,4 +1,4 @@
-//! Shared protocol constants used across StellarSwipe contracts.
+//! Shared protocol constants used across CallStake contracts.
 
 /// One basis-point denominator: 10_000 bps = 100%.
 pub const BASIS_POINTS_DENOMINATOR: u32 = 10_000;

@@ -1,6 +1,6 @@
 //! Fuzz target: storage-key derivation (Issue #265 pattern).
 //!
-//! Exercises every user-keyed storage key variant used across the StellarSwipe
+//! Exercises every user-keyed storage key variant used across the CallStake
 //! contracts to discover inputs that:
 //!  - cause a panic / abort during key serialisation
 //!  - produce collisions between distinct (variant, address) pairs

@@ -2,7 +2,7 @@
 
 ## Overview
 
-StellarSwipe's `signal_registry` contract supports **M-of-N multisignature approval** for critical admin operations. When enabled, direct calls to gated functions return `RequiresMultisigApproval (26)` and must flow through the proposal → approval → timelock → execution pipeline.
+CallStake's `signal_registry` contract supports **M-of-N multisignature approval** for critical admin operations. When enabled, direct calls to gated functions return `RequiresMultisigApproval (26)` and must flow through the proposal → approval → timelock → execution pipeline.
 
 Guardian emergency pause remains a **single-signer fast path** and does not require multisig approval.
 

@@ -2,7 +2,7 @@
 
 ## Overview
 
-Every contract in `stellar-swipe` stores a monotonically increasing `u32`
+Every contract in `call-stake` stores a monotonically increasing `u32`
 version in instance storage (set during `initialize` via
 `shared::version::set_contract_version`). Before making a cross-contract call,
 the caller fetches the callee's version and asserts compatibility using

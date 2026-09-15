@@ -6,7 +6,7 @@ The cross-contract call allowlist restricts which contracts can invoke sensitive
 entrypoints, reducing the attack surface when privileged logic is exposed to
 other contracts on-chain.
 
-Before this feature, any contract could call any entrypoint in StellarSwipe
+Before this feature, any contract could call any entrypoint in CallStake
 contracts — including privileged flows like keeper-triggered close operations.
 The allowlist narrows this to an explicit set of approved counterpart contracts.
 

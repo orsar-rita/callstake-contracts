@@ -44,9 +44,9 @@ bench = false
 [profile.release]
 debug = 1
 
-# Detach from the parent `stellar-swipe` workspace: fuzz targets need
+# Detach from the parent `call-stake` workspace: fuzz targets need
 # libfuzzer-sys / arbitrary and a nightly sanitizer build that the deployed
 # contract workspace must never depend on (see `cargo-deny` / CI in
-# `.github/workflows/ci.yml`, which only inspects `stellar-swipe/Cargo.toml`
+# `.github/workflows/ci.yml`, which only inspects `call-stake/Cargo.toml`
 # members).
 [workspace]

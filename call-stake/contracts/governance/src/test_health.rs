@@ -39,8 +39,8 @@ fn health_initialized_running() {
     let client = GovernanceContractClient::new(&env, &id);
     client.initialize(
         &admin,
-        &String::from_str(&env, "StellarSwipe Gov"),
-        &String::from_str(&env, "SSG"),
+        &String::from_str(&env, "CallStake Gov"),
+        &String::from_str(&env, "CSG"),
         &7u32,
         &SUPPLY,
         &r,
@@ -63,8 +63,8 @@ fn health_initialized_paused() {
     let client = GovernanceContractClient::new(&env, &id);
     client.initialize(
         &admin,
-        &String::from_str(&env, "StellarSwipe Gov"),
-        &String::from_str(&env, "SSG"),
+        &String::from_str(&env, "CallStake Gov"),
+        &String::from_str(&env, "CSG"),
         &7u32,
         &SUPPLY,
         &r,
@@ -92,8 +92,8 @@ fn key_rotation_propose_and_accept() {
     let client = GovernanceContractClient::new(&env, &id);
     client.initialize(
         &admin,
-        &String::from_str(&env, "StellarSwipe Gov"),
-        &String::from_str(&env, "SSG"),
+        &String::from_str(&env, "CallStake Gov"),
+        &String::from_str(&env, "CSG"),
         &7u32,
         &SUPPLY,
         &r,
@@ -122,8 +122,8 @@ fn key_rotation_cancel() {
     let client = GovernanceContractClient::new(&env, &id);
     client.initialize(
         &admin,
-        &String::from_str(&env, "StellarSwipe Gov"),
-        &String::from_str(&env, "SSG"),
+        &String::from_str(&env, "CallStake Gov"),
+        &String::from_str(&env, "CSG"),
         &7u32,
         &SUPPLY,
         &r,
@@ -149,8 +149,8 @@ fn emergency_revoke_admin() {
     let client = GovernanceContractClient::new(&env, &id);
     client.initialize(
         &admin,
-        &String::from_str(&env, "StellarSwipe Gov"),
-        &String::from_str(&env, "SSG"),
+        &String::from_str(&env, "CallStake Gov"),
+        &String::from_str(&env, "CSG"),
         &7u32,
         &SUPPLY,
         &r,

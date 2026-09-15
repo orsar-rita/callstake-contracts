@@ -244,7 +244,7 @@ init_governance() {
   invoke_init "$logical" "$cid" \
     --admin "$ADMIN" \
     --name "CallStake Gov" \
-    --symbol "SSG" \
+    --symbol "CSG" \
     --decimals 7 \
     --total_supply "$supply" \
     --recipients.team "$rt" \

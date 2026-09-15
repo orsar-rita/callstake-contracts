@@ -1,7 +1,7 @@
 # Treasury Budget Caps
 
 This document describes how governance-approved budget caps are configured,
-enforced, and queried in the StellarSwipe governance contract.
+enforced, and queried in the CallStake governance contract.
 
 ---
 

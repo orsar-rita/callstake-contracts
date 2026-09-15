@@ -22,7 +22,7 @@
 //!
 //! Then verify all harnesses:
 //! ```sh
-//! cd stellar-swipe/contracts/stake_vault_kani
+//! cd call-stake/contracts/stake_vault_kani
 //! cargo kani
 //! ```
 //!

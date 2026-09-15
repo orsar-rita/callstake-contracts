@@ -31,8 +31,8 @@ fn init(
 ) {
     client.initialize(
         admin,
-        &String::from_str(env, "StellarSwipe Gov"),
-        &String::from_str(env, "SSG"),
+        &String::from_str(env, "CallStake Gov"),
+        &String::from_str(env, "CSG"),
         &7u32,
         &SUPPLY,
         r,
@@ -180,8 +180,8 @@ fn governance_double_init_returns_error() {
 
     let result = client.try_initialize(
         &admin,
-        &String::from_str(&env, "StellarSwipe Gov"),
-        &String::from_str(&env, "SSG"),
+        &String::from_str(&env, "CallStake Gov"),
+        &String::from_str(&env, "CSG"),
         &7u32,
         &SUPPLY,
         &r,

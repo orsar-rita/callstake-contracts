@@ -202,7 +202,7 @@ impl GovernanceContract {
     /// - `env`: Soroban environment.
     /// - `admin`: Address that will hold admin privileges (must authorize).
     /// - `name`: Token name (e.g. `"CallStake Gov"`).
-    /// - `symbol`: Token symbol (e.g. `"SSG"`).
+    /// - `symbol`: Token symbol (e.g. `"CSG"`).
     /// - `decimals`: Token decimal places.
     /// - `total_supply`: Total token supply (must be > 0).
     /// - `recipients`: Addresses for each distribution category.

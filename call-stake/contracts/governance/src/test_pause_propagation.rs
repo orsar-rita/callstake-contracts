@@ -49,8 +49,8 @@ fn client<'a>(env: &'a Env, id: &'a Address) -> GovernanceContractClient<'a> {
 fn init(c: &GovernanceContractClient<'_>, env: &Env, admin: &Address, r: &DistributionRecipients) {
     c.initialize(
         admin,
-        &String::from_str(env, "StellarSwipe Gov"),
-        &String::from_str(env, "SSG"),
+        &String::from_str(env, "CallStake Gov"),
+        &String::from_str(env, "CSG"),
         &7u32,
         &SUPPLY,
         r,

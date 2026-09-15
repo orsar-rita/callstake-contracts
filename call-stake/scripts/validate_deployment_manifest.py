@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-validate_deployment_manifest.py — validate a StellarSwipe deployment manifest
+validate_deployment_manifest.py — validate a CallStake deployment manifest
 before it is used to deploy or upgrade contracts (Issue #822).
 
 Usage:

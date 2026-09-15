@@ -11,7 +11,7 @@
 //!   recoverable error code (budget exhaustion, a bare `panic!`, a missing
 //!   contract, etc).
 //!
-//! Every StellarSwipe contract that moves tokens or calls into another
+//! Every CallStake contract that moves tokens or calls into another
 //! contract (stake vault deposits/withdrawals/slashing, fee collection and
 //! payout, and the SDEX/AMM router bridge used by the trade flow) previously
 //! used the *panicking* client methods (`transfer`, `approve`, `burn`,
@@ -30,7 +30,7 @@ use soroban_sdk::{xdr::ScErrorType, Error, InvokeError};
 /// Stable, contract-agnostic classification of a failed token or
 /// cross-contract invocation.
 ///
-/// Each StellarSwipe contract keeps its own `#[contracterror]` enum (error
+/// Each CallStake contract keeps its own `#[contracterror]` enum (error
 /// codes are public ABI and must not be renumbered), so this type is not
 /// itself a `contracterror` — it is the shared vocabulary that every
 /// contract's local error maps onto via `impl From<TokenFailure> for

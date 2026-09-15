@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Verify a StellarSwipe Soroban deployment by calling health_check() on all contracts
+# Verify a CallStake Soroban deployment by calling health_check() on all contracts
 # and validating cross-contract references. Exits 0 on full success, 1 on any failure.
 #
 # Usage: ./scripts/verify_deployment.sh

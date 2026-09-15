@@ -1,7 +1,7 @@
 # Committee Elections
 
 This document describes the requirements, quorum rules, invalid-vote handling,
-and failure modes for governance committee elections in the StellarSwipe
+and failure modes for governance committee elections in the CallStake
 governance contract.
 
 ---

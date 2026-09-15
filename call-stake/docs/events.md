@@ -1,4 +1,4 @@
-# StellarSwipe Contract Events
+# CallStake Contract Events
 
 All events use a **two-topic format**:
 

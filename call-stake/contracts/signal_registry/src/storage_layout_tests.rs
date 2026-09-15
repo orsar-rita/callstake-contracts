@@ -2,7 +2,7 @@
 //!
 //! Each test serialises a representative instance of a key `#[contracttype]`
 //! to its Soroban host XDR encoding, hex-encodes the bytes, and compares
-//! against a committed baseline in `stellar-swipe/storage-snapshots/`.
+//! against a committed baseline in `call-stake/storage-snapshots/`.
 //!
 //! A test failure here means a struct field was reordered, renamed, or its
 //! type changed in a way that alters the on-chain XDR layout — which would

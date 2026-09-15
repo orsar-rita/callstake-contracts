@@ -1,4 +1,4 @@
-# cargo-deny policy for the StellarSwipe-Contract workspace.
+# cargo-deny policy for the CallStake-Contract workspace.
 #
 # Run manually:  cargo deny check
 # CI:            runs on every PR that touches Cargo.toml / Cargo.lock

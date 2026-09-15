@@ -1,5 +1,5 @@
 {
-  "_comment": "Baseline WASM byte sizes for optimized Soroban contracts. Update via: python3 stellar-swipe/scripts/check_wasm_size.py --update",
+  "_comment": "Baseline WASM byte sizes for optimized Soroban contracts. Update via: python3 call-stake/scripts/check_wasm_size.py --update",
   "_threshold_pct": 10,
   "analytics": 65536,
   "auto_trade": 196608,

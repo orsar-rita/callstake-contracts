@@ -60,8 +60,8 @@ fn initialize(
 ) {
     client.initialize(
         admin,
-        &String::from_str(env, "StellarSwipe Gov"),
-        &String::from_str(env, "SSG"),
+        &String::from_str(env, "CallStake Gov"),
+        &String::from_str(env, "CSG"),
         &7u32,
         &SUPPLY,
         recipients,

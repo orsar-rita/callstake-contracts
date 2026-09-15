@@ -1,6 +1,6 @@
 # Cross-Contract Call Graph — Auth Annotations
 
-This document maps every cross-contract call in the StellarSwipe contracts, the
+This document maps every cross-contract call in the CallStake contracts, the
 
 For the reusable message passing and validation patterns used across contracts,
 see `cross_contract_patterns.md`.
