@@ -98,7 +98,7 @@ We are particularly interested in vulnerabilities related to:
 - **For**: Structured submissions with bounty eligibility
 
 **3. Private GitHub Security Advisory**
-- **URL**: https://github.com/AgesEmpire/CallStake-Contract/security/advisories
+- **URL**: https://github.com/TODO-OWNER/CallStake-Contract/security/advisories
 - **For**: Detailed technical reports with code references
 
 **4. Encrypted Communication**

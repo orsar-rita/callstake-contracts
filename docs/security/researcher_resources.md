@@ -103,7 +103,7 @@ rustup target add wasm32-unknown-unknown
 
 2. **Clone Repository**:
 ```bash
-git clone https://github.com/AgesEmpire/CallStake-Contract.git
+git clone https://github.com/TODO-OWNER/CallStake-Contract.git
 cd CallStake-Contract
 ```
 

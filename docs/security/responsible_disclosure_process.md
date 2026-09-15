@@ -146,7 +146,7 @@ This document provides a detailed, step-by-step guide to the responsible disclos
    - Encrypt with PGP if sensitive
 
 2. **GitHub Security Advisory**:
-   - URL: https://github.com/AgesEmpire/CallStake-Contract/security/advisories
+   - URL: https://github.com/TODO-OWNER/CallStake-Contract/security/advisories
    - Click "Report a vulnerability"
    - Fill in the form
 
