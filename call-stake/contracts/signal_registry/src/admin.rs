@@ -1,9 +1,9 @@
-use soroban_sdk::{contracttype, Address, Env, Map, String, Vec};
 use call_stake_common::emergency::{
     CircuitBreakerConfig, CircuitBreakerStats, PauseState, CAT_ALL, CAT_SIGNALS, CAT_STAKES,
     CAT_TRADING,
 };
 use call_stake_common::validate_signer_config;
+use soroban_sdk::{contracttype, Address, Env, Map, String, Vec};
 
 use crate::errors::AdminError;
 use crate::events::*;

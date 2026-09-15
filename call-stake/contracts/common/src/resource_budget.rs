@@ -87,10 +87,18 @@ pub fn emit_metric(flow: &str, dimension: &str, value: u64) {
 /// instructions when the gate trips.
 pub fn assert_within_budget(flow: &str, baseline: &ResourceUsage, actual: &ResourceUsage) {
     let dims: [(&str, u64, u64); 5] = [
-        ("cpu_instructions", baseline.cpu_instructions, actual.cpu_instructions),
+        (
+            "cpu_instructions",
+            baseline.cpu_instructions,
+            actual.cpu_instructions,
+        ),
         ("memory_bytes", baseline.memory_bytes, actual.memory_bytes),
         ("read_entries", baseline.read_entries, actual.read_entries),
-        ("write_entries", baseline.write_entries, actual.write_entries),
+        (
+            "write_entries",
+            baseline.write_entries,
+            actual.write_entries,
+        ),
         ("host_calls", baseline.host_calls, actual.host_calls),
     ];
 

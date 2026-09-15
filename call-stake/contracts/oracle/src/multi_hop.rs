@@ -1,7 +1,7 @@
 use crate::errors::OracleError;
 use crate::storage;
-use soroban_sdk::{Env, Map, Vec};
 use call_stake_common::{Asset, AssetPair};
+use soroban_sdk::{Env, Map, Vec};
 
 const PRECISION: i128 = 10_000_000;
 const MAX_HOPS: u32 = 3;

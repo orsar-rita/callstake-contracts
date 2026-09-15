@@ -1661,13 +1661,11 @@ impl StakeVaultContract {
 
         // ── Interaction ── transfer before any effect is persisted (see the
         // doc comment above for why).
-        shared::token_error::map_result(
-            token::Client::new(env, &token).try_transfer(
-                &env.current_contract_address(),
-                staker,
-                &amount,
-            ),
-        )
+        shared::token_error::map_result(token::Client::new(env, &token).try_transfer(
+            &env.current_contract_address(),
+            staker,
+            &amount,
+        ))
         .map_err(StakeVaultError::from)?;
 
         // ── Effects ── only reached after the transfer succeeded.
@@ -1855,13 +1853,11 @@ impl StakeVaultContract {
         let new_tier = stake_tier_for_amount(remaining);
 
         // ── Interaction ── transfer before any effect is persisted.
-        shared::token_error::map_result(
-            token::Client::new(env, &token).try_transfer(
-                &env.current_contract_address(),
-                staker,
-                &amount,
-            ),
-        )
+        shared::token_error::map_result(token::Client::new(env, &token).try_transfer(
+            &env.current_contract_address(),
+            staker,
+            &amount,
+        ))
         .map_err(StakeVaultError::from)?;
 
         // ── Effects ── only reached after the transfer succeeded. Reduce
@@ -2897,14 +2893,15 @@ impl StakeVaultContract {
     ) -> Result<u64, StakeVaultError> {
         depositor.require_auth();
         Self::require_not_paused(&env)?;
-        reward_vault::deposit_reward(&env, &depositor, provider, asset, amount, epoch)
-            .map_err(|e| match e {
+        reward_vault::deposit_reward(&env, &depositor, provider, asset, amount, epoch).map_err(
+            |e| match e {
                 reward_vault::RewardVaultError::UnsupportedAsset => StakeVaultError::Unauthorized,
                 reward_vault::RewardVaultError::InvalidAmount => StakeVaultError::InvalidAmount,
                 reward_vault::RewardVaultError::BatchSizeInvalid => {
                     StakeVaultError::BatchSizeInvalid
                 }
-            })
+            },
+        )
     }
 
     /// Provider: claim rewards from a batch of bucket IDs in a single call.
@@ -3024,16 +3021,14 @@ impl StakeVaultContract {
         // Storage layout compatibility guard (#1023).
         storage_version::guard_storage_upgrade(&env, next_layout_version, &required_storage_keys)
             .map_err(|e| match e {
-                storage_version::StorageVersionError::IncompatibleLayoutVersion => {
-                    StakeVaultError::IncompatibleContractVersion
-                }
-                storage_version::StorageVersionError::MissingRequiredKey => {
-                    StakeVaultError::NotInitialized
-                }
-                storage_version::StorageVersionError::NotInitialized => {
-                    StakeVaultError::NotInitialized
-                }
-            })?;
+            storage_version::StorageVersionError::IncompatibleLayoutVersion => {
+                StakeVaultError::IncompatibleContractVersion
+            }
+            storage_version::StorageVersionError::MissingRequiredKey => {
+                StakeVaultError::NotInitialized
+            }
+            storage_version::StorageVersionError::NotInitialized => StakeVaultError::NotInitialized,
+        })?;
 
         env.deployer().update_current_contract_wasm(new_wasm_hash);
         shared::version::set_contract_version(&env, new_version);

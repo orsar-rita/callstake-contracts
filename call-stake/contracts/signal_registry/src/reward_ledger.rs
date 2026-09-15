@@ -93,7 +93,11 @@ pub enum RewardLedgerError {
 ///
 /// `window_duration_ledgers` controls how many ledgers the window stays open.
 /// `total_pool` is the reward pool available for this epoch.
-pub fn open_reward_window(env: &Env, window_duration_ledgers: u32, total_pool: i128) -> RewardWindow {
+pub fn open_reward_window(
+    env: &Env,
+    window_duration_ledgers: u32,
+    total_pool: i128,
+) -> RewardWindow {
     let current_ledger = env.ledger().sequence();
     let epoch_id: u64 = env
         .storage()
@@ -131,9 +135,7 @@ pub fn open_reward_window(env: &Env, window_duration_ledgers: u32, total_pool: i
 
 /// Returns the active reward window, if any.
 pub fn get_active_window(env: &Env) -> Option<RewardWindow> {
-    env.storage()
-        .instance()
-        .get(&RewardLedgerKey::ActiveWindow)
+    env.storage().instance().get(&RewardLedgerKey::ActiveWindow)
 }
 
 /// Check whether `provider` is eligible to claim in the current window.
@@ -160,7 +162,10 @@ pub fn check_claim_eligibility(
     if env
         .storage()
         .persistent()
-        .has(&RewardLedgerKey::ClaimRecord(provider.clone(), window.epoch_id))
+        .has(&RewardLedgerKey::ClaimRecord(
+            provider.clone(),
+            window.epoch_id,
+        ))
     {
         return Err(RewardLedgerError::AlreadyClaimed);
     }
@@ -252,7 +257,9 @@ mod tests {
     fn claim_eligibility_passes_within_window() {
         let (env, id) = setup();
         env.ledger().set_sequence_number(10);
-        env.as_contract(&id, || { open_reward_window(&env, 50, 500_000); });
+        env.as_contract(&id, || {
+            open_reward_window(&env, 50, 500_000);
+        });
         let provider = Address::generate(&env);
         let result = env.as_contract(&id, || check_claim_eligibility(&env, &provider));
         assert!(result.is_ok());
@@ -262,7 +269,9 @@ mod tests {
     fn claim_eligibility_fails_after_window_closes() {
         let (env, id) = setup();
         env.ledger().set_sequence_number(10);
-        env.as_contract(&id, || { open_reward_window(&env, 5, 500_000); });
+        env.as_contract(&id, || {
+            open_reward_window(&env, 5, 500_000);
+        });
         env.ledger().set_sequence_number(16);
         let provider = Address::generate(&env);
         let result = env.as_contract(&id, || check_claim_eligibility(&env, &provider));
@@ -273,7 +282,9 @@ mod tests {
     fn double_claim_rejected() {
         let (env, id) = setup();
         env.ledger().set_sequence_number(1);
-        env.as_contract(&id, || { open_reward_window(&env, 100, 1_000_000); });
+        env.as_contract(&id, || {
+            open_reward_window(&env, 100, 1_000_000);
+        });
         let provider = Address::generate(&env);
         env.as_contract(&id, || record_claim(&env, &provider, 100).unwrap());
         let result = env.as_contract(&id, || check_claim_eligibility(&env, &provider));

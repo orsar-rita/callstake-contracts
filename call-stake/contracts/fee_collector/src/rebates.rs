@@ -1,5 +1,5 @@
-use soroban_sdk::{Address, Env, IntoVal, Symbol};
 use call_stake_common::{checked_amount::Amount, Asset};
+use soroban_sdk::{Address, Env, IntoVal, Symbol};
 
 use crate::storage::{
     get_fee_rate, get_monthly_trade_volume, get_oracle_contract, get_volume_discount_config,

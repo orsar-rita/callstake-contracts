@@ -15,9 +15,9 @@ use crate::{
     RewardConfigUpdateAction, StalenessLevel, TreasurySpendAction, TreasurySpendAuthority,
     VoteType,
 };
+use call_stake_common::Asset;
 use soroban_sdk::testutils::{Address as _, Events, Ledger};
 use soroban_sdk::{symbol_short, Address, Bytes, Env, Map, String, Symbol, Vec};
-use call_stake_common::Asset;
 
 const SUPPLY: i128 = 1_000_000_000;
 

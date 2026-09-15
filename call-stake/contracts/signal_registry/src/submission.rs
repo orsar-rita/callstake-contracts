@@ -3,8 +3,8 @@ use crate::stake::{can_submit_signal, StakeInfo, DEFAULT_MINIMUM_STAKE};
 use crate::validation::{
     check_duplicate_signal, check_price_reasonableness, validate_rationale_hash_string,
 };
-use soroban_sdk::{contracttype, Address, Env, Map, String};
 use call_stake_common::sanitize_string;
+use soroban_sdk::{contracttype, Address, Env, Map, String};
 
 #[contracttype]
 #[derive(Clone, Debug, PartialEq)]

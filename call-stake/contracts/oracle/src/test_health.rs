@@ -1,12 +1,12 @@
 #![cfg(test)]
 
 use crate::{staleness::OracleStatus, OracleContract, OracleContractClient};
+use call_stake_common::emergency::CAT_ALL;
+use call_stake_common::{Asset, AssetPair};
 use soroban_sdk::{
     testutils::{Address as _, Events, Ledger},
     Address, Env, String, TryFromVal,
 };
-use call_stake_common::emergency::CAT_ALL;
-use call_stake_common::{Asset, AssetPair};
 
 fn xlm(env: &Env) -> Asset {
     Asset {

@@ -1,6 +1,6 @@
 use crate::types::{ProviderPerformance, Signal, SignalAction, SignalStatus, TradeExecution};
-use soroban_sdk::Env;
 use call_stake_common::{structured_panic, BASIS_POINTS_DENOMINATOR_I128};
+use soroban_sdk::Env;
 
 /// ROI calculation constants
 const SUCCESS_THRESHOLD_BPS: i128 = 200; // 2% in basis points

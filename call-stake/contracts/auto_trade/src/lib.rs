@@ -75,13 +75,13 @@ use call_stake_common::{health_uninitialized, HealthStatus};
 use risk_parity::{AssetRisk, RebalanceTrade};
 
 pub use amm_bridge::TokenPairConfig;
+use call_stake_common::amm_bridge::AmmSourceConfig;
 pub use iceberg::{
     cancel_iceberg_order, create_iceberg_order, get_full_order_view, get_public_order_view,
     get_user_orders, on_sdex_fill, update_iceberg_price, AssetPair, CancellationInfo,
     FullOrderView, IcebergOrder, OrderSide, OrderStatus, PublicOrderView,
 };
 pub use smart_routing::{LiquidityVenue, RouteSegment, RoutingPlan, VenueLiquidity};
-use call_stake_common::amm_bridge::AmmSourceConfig;
 
 // ==========================
 // Types
@@ -2181,11 +2181,11 @@ mod oracle_tests {
     use super::*;
     use crate::oracle;
     use crate::risk;
+    use call_stake_common::oracle::{MockOracleClient, OraclePrice};
     use soroban_sdk::{
         testutils::{Address as _, Ledger as _},
         Env, Symbol,
     };
-    use call_stake_common::oracle::{MockOracleClient, OraclePrice};
 
     fn setup() -> (Env, Address) {
         let env = Env::default();
@@ -2346,11 +2346,11 @@ mod oracle_cb_tests {
     use super::*;
     use crate::admin;
     use crate::oracle;
+    use call_stake_common::oracle::{MockOracleClient, OraclePrice};
     use soroban_sdk::{
         testutils::{Address as _, Ledger as _},
         Env, Symbol,
     };
-    use call_stake_common::oracle::{MockOracleClient, OraclePrice};
 
     fn setup() -> (Env, Address, Address) {
         let env = Env::default();

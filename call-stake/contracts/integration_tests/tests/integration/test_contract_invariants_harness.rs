@@ -265,7 +265,11 @@ fn invariant_reward_no_double_claim() {
         record_claim(&env, &provider, 100).expect("first claim must succeed");
     });
     let second = env.as_contract(&id, || record_claim(&env, &provider, 100));
-    assert_eq!(second, Err(RewardLedgerError::AlreadyClaimed), "second claim must be rejected");
+    assert_eq!(
+        second,
+        Err(RewardLedgerError::AlreadyClaimed),
+        "second claim must be rejected"
+    );
 }
 
 /// Claim record references the correct epoch and amount.
@@ -299,7 +303,11 @@ fn invariant_reward_window_closed_rejects_claims() {
     env.ledger().set_sequence_number(12); // past close_ledger = 11
     let provider = Address::generate(&env);
     let result = env.as_contract(&id, || record_claim(&env, &provider, 100));
-    assert_eq!(result, Err(RewardLedgerError::WindowClosed), "claim after window close must be rejected");
+    assert_eq!(
+        result,
+        Err(RewardLedgerError::WindowClosed),
+        "claim after window close must be rejected"
+    );
 }
 
 /// No active window: claims are rejected with NoActiveWindow.
@@ -317,7 +325,11 @@ fn invariant_reward_no_window_rejects_claim() {
 fn regression_slash_critical_wipes_balance() {
     for balance in [1_i128, 1_000, MAX_BALANCE] {
         let slashed = slash_amount(balance, 10_000);
-        assert_eq!(slashed, balance, "critical slash must equal full balance for {}", balance);
+        assert_eq!(
+            slashed, balance,
+            "critical slash must equal full balance for {}",
+            balance
+        );
     }
 }
 
@@ -325,7 +337,9 @@ fn regression_slash_critical_wipes_balance() {
 fn regression_settlement_no_reserve_clears_only_collateral() {
     let (env, id) = make_env();
     // collateral=50, debt=100 → ratio=50% — undercollateralized
-    let result = env.as_contract(&id, || settle_debt(&env, 50, 100, 0)).unwrap();
+    let result = env
+        .as_contract(&id, || settle_debt(&env, 50, 100, 0))
+        .unwrap();
     assert_eq!(result.debt_cleared, 50);
     assert_eq!(result.reserve_consumed, 0);
     assert_eq!(result.collateral_remaining, 0);

@@ -1,7 +1,7 @@
-use soroban_sdk::{contracttype, Address, Env, Map, String, Symbol};
 use call_stake_common::emergency::{
     CircuitBreakerConfig, CircuitBreakerStats, PauseState, CAT_ALL, CAT_TRADING,
 };
+use soroban_sdk::{contracttype, Address, Env, Map, String, Symbol};
 
 use crate::errors::AutoTradeError;
 use crate::storage::{self, RateLimitInfo};

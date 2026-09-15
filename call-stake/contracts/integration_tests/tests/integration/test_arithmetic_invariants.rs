@@ -34,6 +34,7 @@
 
 extern crate std;
 
+use call_stake_common::Asset;
 use proptest::prelude::*;
 use soroban_sdk::{
     contract, contractimpl,
@@ -41,7 +42,6 @@ use soroban_sdk::{
     token::StellarAssetClient,
     Address, Env, String,
 };
-use call_stake_common::Asset;
 
 use fee_collector::{fee_amount_floor, FeeCollector, FeeCollectorClient};
 

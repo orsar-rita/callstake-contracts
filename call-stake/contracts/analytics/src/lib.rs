@@ -12,9 +12,9 @@ pub mod tvl;
 // Closes #753 — TTL-based result cache for expensive aggregate queries
 pub mod query_cache;
 
+use call_stake_common::SECONDS_PER_WEEK;
 use query_cache::QueryType;
 use soroban_sdk::{contract, contractimpl, contracttype, Address, Env, Symbol};
-use call_stake_common::SECONDS_PER_WEEK;
 
 const SCHEMA_VERSION: u32 = 1;
 

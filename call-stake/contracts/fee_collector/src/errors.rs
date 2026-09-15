@@ -175,9 +175,7 @@ impl ContractError {
             ContractError::InsufficientTokenAllowance => {
                 "fee token transfer failed: insufficient or expired allowance"
             }
-            ContractError::TokenOperationFailed => {
-                "fee token or cross-contract invocation failed"
-            }
+            ContractError::TokenOperationFailed => "fee token or cross-contract invocation failed",
         }
     }
 }

@@ -2,8 +2,8 @@
 
 use core::convert::TryFrom;
 
-use soroban_sdk::{contracttype, Address, Env, Map, String, Vec};
 use call_stake_common::Asset;
+use soroban_sdk::{contracttype, Address, Env, Map, String, Vec};
 
 use crate::distribution::update_reward_config;
 use crate::errors::GovernanceError;

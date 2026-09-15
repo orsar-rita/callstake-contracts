@@ -16,6 +16,7 @@
 
 extern crate std;
 
+use call_stake_common::Asset;
 use fee_collector::{FeeCollector, FeeCollectorClient, ReportPeriod};
 use soroban_sdk::{
     contract, contractimpl,
@@ -23,7 +24,6 @@ use soroban_sdk::{
     token::{Client as TokenClient, StellarAssetClient},
     Address, Env, String,
 };
-use call_stake_common::Asset;
 
 const SECONDS_PER_DAY: u64 = 86_400;
 

@@ -165,9 +165,12 @@ pub fn execute_sdex_swap(
         .ok_or(ContractError::InvalidAmount)?;
 
     // SEP-41: current contract authorizes router to pull `amount` of from_token.
-    shared::token_error::map_result(
-        from_client.try_approve(&this, sdex_router, &amount, &expiration),
-    )
+    shared::token_error::map_result(from_client.try_approve(
+        &this,
+        sdex_router,
+        &amount,
+        &expiration,
+    ))
     .map_err(ContractError::from)?;
 
     let balance_before = to_client.balance(&this);

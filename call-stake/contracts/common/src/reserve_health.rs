@@ -111,8 +111,10 @@ pub fn publish_reserve_health(
         timestamp: env.ledger().timestamp(),
     };
 
-    env.events()
-        .publish((symbol_short!("reserve"), symbol_short!("health")), event.clone());
+    env.events().publish(
+        (symbol_short!("reserve"), symbol_short!("health")),
+        event.clone(),
+    );
 
     event
 }

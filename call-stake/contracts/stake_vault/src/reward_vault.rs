@@ -308,7 +308,9 @@ mod tests {
 
     // Minimal token mock for testing.
     mod token_mock {
-        use soroban_sdk::{contract, contractimpl, contracttype, token, Address, Env, MuxedAddress};
+        use soroban_sdk::{
+            contract, contractimpl, contracttype, token, Address, Env, MuxedAddress,
+        };
 
         #[contracttype]
         pub enum DataKey {
@@ -331,8 +333,7 @@ mod tests {
             fn allowance(_env: Env, _from: Address, _spender: Address) -> i128 {
                 0
             }
-            fn approve(_env: Env, _from: Address, _spender: Address, _amount: i128, _expiry: u32) {
-            }
+            fn approve(_env: Env, _from: Address, _spender: Address, _amount: i128, _expiry: u32) {}
             fn balance(env: Env, id: Address) -> i128 {
                 env.storage()
                     .instance()
@@ -404,8 +405,7 @@ mod tests {
         let provider = Address::generate(&env);
         let asset = Address::generate(&env);
         env.as_contract(&vault, || {
-            let err =
-                deposit_reward(&env, &depositor, provider, asset, 1_000, 1).unwrap_err();
+            let err = deposit_reward(&env, &depositor, provider, asset, 1_000, 1).unwrap_err();
             assert_eq!(err, RewardVaultError::UnsupportedAsset);
         });
     }
@@ -415,8 +415,7 @@ mod tests {
         let (env, vault) = setup();
         let provider = Address::generate(&env);
         env.as_contract(&vault, || {
-            let err =
-                batch_claim_rewards(&env, &provider, Vec::new(&env)).unwrap_err();
+            let err = batch_claim_rewards(&env, &provider, Vec::new(&env)).unwrap_err();
             assert_eq!(err, RewardVaultError::BatchSizeInvalid);
         });
     }
@@ -453,9 +452,7 @@ mod tests {
         let mut ids = Vec::new(&env);
         ids.push_back(bid);
         let results = env
-            .as_contract(&vault, || {
-                batch_claim_rewards(&env, &provider, ids.clone())
-            })
+            .as_contract(&vault, || batch_claim_rewards(&env, &provider, ids.clone()))
             .unwrap();
         assert_eq!(results.len(), 1);
         assert_eq!(results.get(0).unwrap().1, 5_000);

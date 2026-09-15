@@ -16,8 +16,8 @@
 //!                                                              deposit_operational
 //! ```
 
-use soroban_sdk::{contracttype, Env, Map, Vec};
 use call_stake_common::Asset;
+use soroban_sdk::{contracttype, Env, Map, Vec};
 
 use crate::errors::GovernanceError;
 use crate::{checked_add, checked_sub};

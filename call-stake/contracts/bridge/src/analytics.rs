@@ -1,7 +1,7 @@
 use crate::governance::{get_bridge, get_bridge_validators, is_validator};
 use crate::monitoring::{BridgeTransfer, TransferStatus};
-use soroban_sdk::{contracttype, Address, Env, Map, String, Vec};
 use call_stake_common::{BASIS_POINTS_DENOMINATOR, SECONDS_PER_DAY, SECONDS_PER_HOUR};
+use soroban_sdk::{contracttype, Address, Env, Map, String, Vec};
 
 #[contracttype]
 #[derive(Clone, Debug)]

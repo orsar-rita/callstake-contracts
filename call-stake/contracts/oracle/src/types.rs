@@ -1,5 +1,5 @@
-use soroban_sdk::{contracttype, Address, Bytes};
 use call_stake_common::AssetPair;
+use soroban_sdk::{contracttype, Address, Bytes};
 
 #[contracttype]
 #[derive(Clone, Debug)]

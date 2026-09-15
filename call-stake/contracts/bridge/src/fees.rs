@@ -2,8 +2,8 @@
 
 use crate::governance::get_bridge_validators;
 use crate::monitoring::{get_bridge_transfer, ChainId, TransferStatus};
-use soroban_sdk::{contracttype, Address, Env, String, Symbol, Vec};
 use call_stake_common::assets::Asset;
+use soroban_sdk::{contracttype, Address, Env, String, Symbol, Vec};
 
 #[contracttype]
 #[derive(Clone, Debug, PartialEq, Eq)]

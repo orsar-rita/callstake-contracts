@@ -1,8 +1,8 @@
 use crate::errors::{SignalEditError, VersioningError};
 use crate::events;
 use crate::types::{Signal, SignalStatus};
-use soroban_sdk::{contracttype, Address, Env, Map, String, Vec};
 use call_stake_common::SECONDS_PER_HOUR;
+use soroban_sdk::{contracttype, Address, Env, Map, String, Vec};
 
 const MAX_UPDATES_PER_SIGNAL: u32 = 5;
 const UPDATE_COOLDOWN_SECONDS: u64 = SECONDS_PER_HOUR; // 1 hour

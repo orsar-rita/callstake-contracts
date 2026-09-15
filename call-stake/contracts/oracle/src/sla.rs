@@ -3,8 +3,8 @@
 //! Tracks rolling average update intervals per asset pair and emits
 //! an `sla_breach` event when the rolling average exceeds the configured SLA.
 
-use soroban_sdk::{contracttype, symbol_short, Env, Symbol};
 use call_stake_common::AssetPair;
+use soroban_sdk::{contracttype, symbol_short, Env, Symbol};
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 

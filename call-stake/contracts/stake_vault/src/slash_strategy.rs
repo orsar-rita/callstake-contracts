@@ -113,7 +113,12 @@ pub fn set_slash_strategy(
             Symbol::new(env, "stake_vault"),
             topics::TOPIC_SLASH_STRATEGY_SET(),
         ),
-        (strategy_name, cfg.minor_bps, cfg.major_bps, cfg.critical_bps),
+        (
+            strategy_name,
+            cfg.minor_bps,
+            cfg.major_bps,
+            cfg.critical_bps,
+        ),
     );
 
     Ok(())
@@ -144,8 +149,7 @@ pub fn compute_slash_amount(
     balance: i128,
     severity: u32,
 ) -> Result<i128, SlashStrategyError> {
-    let cfg = get_slash_strategy(env, strategy_name)
-        .ok_or(SlashStrategyError::StrategyNotFound)?;
+    let cfg = get_slash_strategy(env, strategy_name).ok_or(SlashStrategyError::StrategyNotFound)?;
 
     let bps: u32 = match severity {
         0 => cfg.minor_bps,

@@ -370,19 +370,21 @@ fn invoke_router_swap(
     // host-level abort) are classified via the shared policy instead of
     // being collapsed into one opaque code — see shared::token_error
     // (Issue #1001). A failed swap must never be reported as successful.
-    shared::token_error::map_result(env.try_invoke_contract::<i128, soroban_sdk::Error>(
-        router,
-        &sym,
-        (
-            pull_from,
-            from_token.clone(),
-            to_token.clone(),
-            amount_in,
-            min_out,
-            recipient,
-        )
-            .into_val(env),
-    ))
+    shared::token_error::map_result(
+        env.try_invoke_contract::<i128, soroban_sdk::Error>(
+            router,
+            &sym,
+            (
+                pull_from,
+                from_token.clone(),
+                to_token.clone(),
+                amount_in,
+                min_out,
+                recipient,
+            )
+                .into_val(env),
+        ),
+    )
     .map_err(AutoTradeError::from)
 }
 

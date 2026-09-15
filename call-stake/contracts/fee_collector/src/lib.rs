@@ -74,13 +74,13 @@ use soroban_sdk::{
     String, Symbol, Val, Vec,
 };
 
-use shared::errors::{ErrorCategory, RecoveryStrategy};
-use shared::pausable;
-use shared::reentrancy::{self, ReentrancyError};
 use call_stake_common::health::{health_uninitialized, HealthStatus};
 use call_stake_common::token_metadata::{validate as validate_token_metadata, TokenMetadata};
 use call_stake_common::Asset;
 use call_stake_common::SECONDS_PER_DAY;
+use shared::errors::{ErrorCategory, RecoveryStrategy};
+use shared::pausable;
+use shared::reentrancy::{self, ReentrancyError};
 
 #[cfg(test)]
 mod tests;
@@ -1044,8 +1044,7 @@ impl FeeCollector {
         };
 
         // Use shared helper to check if retry is allowed
-        if call_stake_common::retry_backoff::should_retry(&retry_state, &retry_config).is_none()
-        {
+        if call_stake_common::retry_backoff::should_retry(&retry_state, &retry_config).is_none() {
             return Err(ContractError::RetryLimitExceeded);
         }
 

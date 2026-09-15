@@ -3,8 +3,8 @@
 use super::*;
 use crate::errors::AdminError;
 use crate::CriticalActionPayload;
-use soroban_sdk::{testutils::Address as _, testutils::Ledger, vec, Env, String};
 use call_stake_common::{MultisigTimelockConfig, ProposalStatus, DEFAULT_FEE_CHANGE_DELAY};
+use soroban_sdk::{testutils::Address as _, testutils::Ledger, vec, Env, String};
 
 fn setup_multisig_client(
     env: &Env,

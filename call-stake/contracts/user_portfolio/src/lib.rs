@@ -64,10 +64,10 @@ pub use preferences::{
     TradingStyle,
 };
 
+use call_stake_common::health::{health_uninitialized, HealthStatus};
 use soroban_sdk::{
     contract, contracterror, contractimpl, contracttype, Address, Env, String, Symbol, Vec,
 };
-use call_stake_common::health::{health_uninitialized, HealthStatus};
 use storage::DataKey;
 
 /// Compute the Herfindahl-Hirschman Index (HHI) concentration score for a user's open
@@ -1899,8 +1899,8 @@ mod migration_tests {
     use super::oracle_ok::OracleMockClient;
     use super::*;
     use crate::storage::DataKey;
-    use soroban_sdk::testutils::Address as _;
     use call_stake_common::OraclePrice;
+    use soroban_sdk::testutils::Address as _;
 
     fn close_test_position(env: &Env, client: &UserPortfolioClient, user: &Address, id: u64) {
         let provider = Address::generate(env);
@@ -2083,8 +2083,8 @@ mod anchor_deposit_tests {
 
 #[cfg(test)]
 mod oracle_ok {
-    use soroban_sdk::{contract, contractimpl, symbol_short, Env};
     use call_stake_common::OraclePrice;
+    use soroban_sdk::{contract, contractimpl, symbol_short, Env};
 
     #[contract]
     pub struct OracleMock;
@@ -2108,8 +2108,8 @@ mod oracle_ok {
 
 #[cfg(test)]
 mod oracle_fail {
-    use soroban_sdk::{contract, contractimpl, Env};
     use call_stake_common::OraclePrice;
+    use soroban_sdk::{contract, contractimpl, Env};
 
     #[contract]
     pub struct OraclePanic;
@@ -2128,8 +2128,8 @@ mod tests {
     use super::oracle_ok::OracleMock;
     use super::oracle_ok::OracleMockClient;
     use super::*;
-    use soroban_sdk::testutils::{Address as _, Events, Ledger};
     use call_stake_common::OraclePrice;
+    use soroban_sdk::testutils::{Address as _, Events, Ledger};
 
     #[allow(deprecated)]
     fn setup_portfolio(

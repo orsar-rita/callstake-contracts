@@ -937,8 +937,9 @@ mod tests {
         });
 
         // List by tag
-        let defi_providers =
-            env.as_contract(&cid, || list_providers_by_specialization(&env, String::from_str(&env, "DeFi")));
+        let defi_providers = env.as_contract(&cid, || {
+            list_providers_by_specialization(&env, String::from_str(&env, "DeFi"))
+        });
         assert_eq!(defi_providers.len(), 1);
         assert_eq!(defi_providers.get(0).unwrap(), provider1);
     }
@@ -1022,8 +1023,9 @@ mod tests {
         assert_eq!(stored2.get(0).unwrap(), String::from_str(&env, "Forex"));
 
         // Old tag should no longer list the provider
-        let defi_providers = env
-            .as_contract(&cid, || list_providers_by_specialization(&env, String::from_str(&env, "DeFi")));
+        let defi_providers = env.as_contract(&cid, || {
+            list_providers_by_specialization(&env, String::from_str(&env, "DeFi"))
+        });
         assert_eq!(defi_providers.len(), 0);
     }
 

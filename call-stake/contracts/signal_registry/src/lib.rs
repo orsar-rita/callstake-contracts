@@ -7,7 +7,6 @@ static ALLOC: dlmalloc::GlobalDlmalloc = dlmalloc::GlobalDlmalloc;
 mod admin;
 mod analytics;
 mod categories;
-pub mod reward_ledger;
 mod churn_risk;
 mod cohort_retention;
 mod collaboration;
@@ -33,6 +32,7 @@ mod query;
 mod reentrancy;
 mod reports;
 pub mod reputation;
+pub mod reward_ledger;
 mod scheduling;
 mod scoring;
 mod social;
@@ -69,15 +69,18 @@ use admin::{
     get_admin, get_admin_config, init_admin, is_trading_paused,
     require_not_paused_legacy as require_not_paused,
 };
-use shared::version::{
-    emit_contract_upgraded, get_contract_version as shared_get_contract_version, guard_upgrade,
-    set_contract_version, SIGNAL_REGISTRY_VERSION,
-};
 use call_stake_common::emergency::{PauseState, CAT_SIGNALS, CAT_TRADING};
 use call_stake_common::rate_limit::{self as rl, ActionType as RLAction, RateLimitConfig};
 use call_stake_common::SECONDS_PER_30_DAY_MONTH;
 use call_stake_common::{emit_health_event, HealthStatus};
+use shared::version::{
+    emit_contract_upgraded, get_contract_version as shared_get_contract_version, guard_upgrade,
+    set_contract_version, SIGNAL_REGISTRY_VERSION,
+};
 
+use call_stake_common::placeholder_admin;
+use call_stake_common::{validate_asset_pair as validate_asset_pair_common, AssetPairError};
+use call_stake_common::{ApprovalProposal, MultisigTimelockConfig, ProposalStatus};
 use combos::{
     cancel_combo, create_combo_signal, execute_combo_signal, get_combo, get_combo_executions_pub,
     get_combo_performance, ComboExecution, ComboPerformanceSummary, ComboSignal, ComboType,
@@ -106,9 +109,6 @@ use soroban_sdk::{
     contract, contractimpl, contracttype, Address, Bytes, BytesN, Env, IntoVal, Map, String,
     Symbol, Val, Vec,
 };
-use call_stake_common::placeholder_admin;
-use call_stake_common::{validate_asset_pair as validate_asset_pair_common, AssetPairError};
-use call_stake_common::{ApprovalProposal, MultisigTimelockConfig, ProposalStatus};
 pub use template_presets::{SignalTemplateOverrides, SignalTemplatePreset, StoredSignalTemplate};
 pub use templates::SignalTemplate;
 use templates::DEFAULT_TEMPLATE_EXPIRY_HOURS;
@@ -3696,7 +3696,11 @@ impl SignalRegistry {
     ) -> Result<reward_ledger::RewardWindow, AdminError> {
         admin::require_config_admin(&env, &caller)?;
         caller.require_auth();
-        Ok(reward_ledger::open_reward_window(&env, window_duration_ledgers, total_pool))
+        Ok(reward_ledger::open_reward_window(
+            &env,
+            window_duration_ledgers,
+            total_pool,
+        ))
     }
 
     /// Returns the currently active reward window, if any.

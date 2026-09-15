@@ -3,9 +3,9 @@ extern crate std;
 use crate::distribution::DistributionRecipients;
 use crate::proposals::GovernanceConfig;
 use crate::{Authority, GovernanceContract, GovernanceContractClient, GovernanceError};
+use call_stake_common::Asset;
 use soroban_sdk::testutils::{Address as _, Ledger as _};
 use soroban_sdk::{Address, Env, String, Vec};
-use call_stake_common::Asset;
 
 const SUPPLY: i128 = 1_000_000_000;
 const TWO_DAYS: u64 = 2 * 86_400;

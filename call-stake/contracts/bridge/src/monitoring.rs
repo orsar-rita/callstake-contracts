@@ -6,8 +6,8 @@
 #![allow(dead_code)]
 
 use crate::analytics::{update_transfer_analytics, update_validator_analytics};
-use soroban_sdk::{contracttype, Address, Env, String, Symbol, Vec};
 use call_stake_common::assets::Asset;
+use soroban_sdk::{contracttype, Address, Env, String, Symbol, Vec};
 
 /// Chain identifiers for multi-chain support
 #[contracttype]
@@ -830,19 +830,19 @@ mod tests {
     fn test_monitor_source_transaction() {
         let (env, contract_id) = setup_env();
         env.as_contract(&contract_id, || {
-        let tx_hash = String::from_str(&env, "0xabcd1234");
+            let tx_hash = String::from_str(&env, "0xabcd1234");
 
-        let result = monitor_source_transaction(&env, 1, tx_hash, ChainId::Ethereum, 100);
+            let result = monitor_source_transaction(&env, 1, tx_hash, ChainId::Ethereum, 100);
 
-        assert!(result.is_ok());
+            assert!(result.is_ok());
 
-        let monitored = get_monitored_tx(&env, 1);
-        assert!(monitored.is_some());
-        let tx = monitored.unwrap();
-        assert_eq!(tx.transfer_id, 1);
-        assert_eq!(tx.block_number, 100);
-        assert_eq!(tx.confirmations, 0);
-        assert_eq!(tx.status, MonitoringStatus::Pending);
+            let monitored = get_monitored_tx(&env, 1);
+            assert!(monitored.is_some());
+            let tx = monitored.unwrap();
+            assert_eq!(tx.transfer_id, 1);
+            assert_eq!(tx.block_number, 100);
+            assert_eq!(tx.confirmations, 0);
+            assert_eq!(tx.status, MonitoringStatus::Pending);
         });
     }
 
@@ -850,18 +850,18 @@ mod tests {
     fn test_update_confirmation_block_confirmations() {
         let (env, contract_id) = setup_env();
         env.as_contract(&contract_id, || {
-        let tx_hash = String::from_str(&env, "0xabcd1234");
+            let tx_hash = String::from_str(&env, "0xabcd1234");
 
-        // Create monitored transaction at block 100
-        monitor_source_transaction(&env, 1, tx_hash, ChainId::Ethereum, 100).unwrap();
+            // Create monitored transaction at block 100
+            monitor_source_transaction(&env, 1, tx_hash, ChainId::Ethereum, 100).unwrap();
 
-        // Update at block 132 (32 confirmations)
-        let is_finalized = update_transaction_confirmation_count(&env, 1, 132).unwrap();
+            // Update at block 132 (32 confirmations)
+            let is_finalized = update_transaction_confirmation_count(&env, 1, 132).unwrap();
 
-        assert!(is_finalized);
-        let monitored = get_monitored_tx(&env, 1).unwrap();
-        assert_eq!(monitored.confirmations, 32);
-        assert_eq!(monitored.status, MonitoringStatus::Finalized);
+            assert!(is_finalized);
+            let monitored = get_monitored_tx(&env, 1).unwrap();
+            assert_eq!(monitored.confirmations, 32);
+            assert_eq!(monitored.status, MonitoringStatus::Finalized);
         });
     }
 
@@ -869,18 +869,18 @@ mod tests {
     fn test_update_confirmation_polygon() {
         let (env, contract_id) = setup_env();
         env.as_contract(&contract_id, || {
-        let tx_hash = String::from_str(&env, "0xabcd1234");
+            let tx_hash = String::from_str(&env, "0xabcd1234");
 
-        // Polygon requires 128 confirmations
-        monitor_source_transaction(&env, 1, tx_hash, ChainId::Polygon, 1000).unwrap();
+            // Polygon requires 128 confirmations
+            monitor_source_transaction(&env, 1, tx_hash, ChainId::Polygon, 1000).unwrap();
 
-        // Update at 1100 (100 confirmations, not enough)
-        let is_finalized = update_transaction_confirmation_count(&env, 1, 1100).unwrap();
-        assert!(!is_finalized);
+            // Update at 1100 (100 confirmations, not enough)
+            let is_finalized = update_transaction_confirmation_count(&env, 1, 1100).unwrap();
+            assert!(!is_finalized);
 
-        // Update at 1128 (128 confirmations, exactly required)
-        let is_finalized = update_transaction_confirmation_count(&env, 1, 1128).unwrap();
-        assert!(is_finalized);
+            // Update at 1128 (128 confirmations, exactly required)
+            let is_finalized = update_transaction_confirmation_count(&env, 1, 1128).unwrap();
+            assert!(is_finalized);
         });
     }
 
@@ -888,19 +888,19 @@ mod tests {
     fn test_update_confirmation_bitcoin_probabilistic() {
         let (env, contract_id) = setup_env();
         env.as_contract(&contract_id, || {
-        let tx_hash = String::from_str(&env, "0xabcd1234");
+            let tx_hash = String::from_str(&env, "0xabcd1234");
 
-        // Bitcoin uses probabilistic finality
-        monitor_source_transaction(&env, 1, tx_hash, ChainId::Bitcoin, 5000).unwrap();
+            // Bitcoin uses probabilistic finality
+            monitor_source_transaction(&env, 1, tx_hash, ChainId::Bitcoin, 5000).unwrap();
 
-        // Update at 5006 (6 confirmations)
-        // Bitcoin requires 6 * 2 = 12 for probabilistic finality
-        let is_finalized = update_transaction_confirmation_count(&env, 1, 5006).unwrap();
-        assert!(!is_finalized);
+            // Update at 5006 (6 confirmations)
+            // Bitcoin requires 6 * 2 = 12 for probabilistic finality
+            let is_finalized = update_transaction_confirmation_count(&env, 1, 5006).unwrap();
+            assert!(!is_finalized);
 
-        // Update at 5012 (12 confirmations)
-        let is_finalized = update_transaction_confirmation_count(&env, 1, 5012).unwrap();
-        assert!(is_finalized);
+            // Update at 5012 (12 confirmations)
+            let is_finalized = update_transaction_confirmation_count(&env, 1, 5012).unwrap();
+            assert!(is_finalized);
         });
     }
 
@@ -908,13 +908,13 @@ mod tests {
     fn test_check_for_reorg_within_depth() {
         let (env, contract_id) = setup_env();
         env.as_contract(&contract_id, || {
-        let tx_hash = String::from_str(&env, "0xabcd1234");
+            let tx_hash = String::from_str(&env, "0xabcd1234");
 
-        monitor_source_transaction(&env, 1, tx_hash, ChainId::Ethereum, 9900).unwrap();
+            monitor_source_transaction(&env, 1, tx_hash, ChainId::Ethereum, 9900).unwrap();
 
-        // Check at current_block = 9920 (within reorg depth of 64)
-        let is_reorg = check_for_reorg(&env, 1, 9920).unwrap();
-        assert!(!is_reorg);
+            // Check at current_block = 9920 (within reorg depth of 64)
+            let is_reorg = check_for_reorg(&env, 1, 9920).unwrap();
+            assert!(!is_reorg);
         });
     }
 
@@ -922,23 +922,23 @@ mod tests {
     fn test_handle_reorg_resets_state() {
         let (env, contract_id) = setup_env();
         env.as_contract(&contract_id, || {
-        let tx_hash = String::from_str(&env, "0xabcd1234");
+            let tx_hash = String::from_str(&env, "0xabcd1234");
 
-        // Create monitored transaction
-        monitor_source_transaction(&env, 1, tx_hash, ChainId::Ethereum, 100).unwrap();
+            // Create monitored transaction
+            monitor_source_transaction(&env, 1, tx_hash, ChainId::Ethereum, 100).unwrap();
 
-        // Mark as finalized first
-        let mut monitored = get_monitored_tx(&env, 1).unwrap();
-        mark_as_finalized(&env, &mut monitored).unwrap();
+            // Mark as finalized first
+            let mut monitored = get_monitored_tx(&env, 1).unwrap();
+            mark_as_finalized(&env, &mut monitored).unwrap();
 
-        // Handle reorg
-        let result = handle_reorg(&env, 1);
-        assert!(result.is_ok());
+            // Handle reorg
+            let result = handle_reorg(&env, 1);
+            assert!(result.is_ok());
 
-        // Verify state reset
-        let monitored = get_monitored_tx(&env, 1).unwrap();
-        assert_eq!(monitored.status, MonitoringStatus::Reorged);
-        assert_eq!(monitored.confirmations, 0);
+            // Verify state reset
+            let monitored = get_monitored_tx(&env, 1).unwrap();
+            assert_eq!(monitored.status, MonitoringStatus::Reorged);
+            assert_eq!(monitored.confirmations, 0);
         });
     }
 
@@ -946,32 +946,32 @@ mod tests {
     fn test_create_bridge_transfer() {
         let (env, contract_id) = setup_env();
         env.as_contract(&contract_id, || {
-        let user = String::from_str(&env, "user123");
+            let user = String::from_str(&env, "user123");
 
-        let asset = Asset {
-            code: String::from_str(&env, "XLM"),
-            issuer: None,
-        };
-        let result = create_bridge_transfer(
-            &env,
-            1,
-            1, // bridge_id
-            ChainId::Ethereum,
-            ChainId::Polygon,
-            1000000,
-            100, // fee_paid
-            asset,
-            user,
-        );
+            let asset = Asset {
+                code: String::from_str(&env, "XLM"),
+                issuer: None,
+            };
+            let result = create_bridge_transfer(
+                &env,
+                1,
+                1, // bridge_id
+                ChainId::Ethereum,
+                ChainId::Polygon,
+                1000000,
+                100, // fee_paid
+                asset,
+                user,
+            );
 
-        assert!(result.is_ok());
+            assert!(result.is_ok());
 
-        let transfer = get_bridge_transfer(&env, 1);
-        assert!(transfer.is_some());
-        let t = transfer.unwrap();
-        assert_eq!(t.transfer_id, 1);
-        assert_eq!(t.amount, 1000000);
-        assert_eq!(t.status, TransferStatus::Pending);
+            let transfer = get_bridge_transfer(&env, 1);
+            assert!(transfer.is_some());
+            let t = transfer.unwrap();
+            assert_eq!(t.transfer_id, 1);
+            assert_eq!(t.amount, 1000000);
+            assert_eq!(t.status, TransferStatus::Pending);
         });
     }
 
@@ -979,37 +979,37 @@ mod tests {
     fn test_add_validator_signature() {
         let (env, contract_id) = setup_env();
         env.as_contract(&contract_id, || {
-        let user = String::from_str(&env, "user123");
-        let asset = Asset {
-            code: String::from_str(&env, "XLM"),
-            issuer: None,
-        };
-        create_bridge_transfer(
-            &env,
-            1,
-            1,
-            ChainId::Ethereum,
-            ChainId::Polygon,
-            1000000,
-            100,
-            asset,
-            user,
-        )
-        .unwrap();
+            let user = String::from_str(&env, "user123");
+            let asset = Asset {
+                code: String::from_str(&env, "XLM"),
+                issuer: None,
+            };
+            create_bridge_transfer(
+                &env,
+                1,
+                1,
+                ChainId::Ethereum,
+                ChainId::Polygon,
+                1000000,
+                100,
+                asset,
+                user,
+            )
+            .unwrap();
 
-        let val1 = Address::generate(&env);
-        let val2 = Address::generate(&env);
-        let sig1 = String::from_str(&env, "sig1");
-        let sig2 = String::from_str(&env, "sig2");
-        add_validator_signature(&env, 1, val1, sig1.clone()).unwrap();
-        let transfer = get_bridge_transfer(&env, 1).unwrap();
-        assert_eq!(transfer.validator_signatures.len(), 1);
-        assert_eq!(transfer.status, TransferStatus::Pending); // Not enough
+            let val1 = Address::generate(&env);
+            let val2 = Address::generate(&env);
+            let sig1 = String::from_str(&env, "sig1");
+            let sig2 = String::from_str(&env, "sig2");
+            add_validator_signature(&env, 1, val1, sig1.clone()).unwrap();
+            let transfer = get_bridge_transfer(&env, 1).unwrap();
+            assert_eq!(transfer.validator_signatures.len(), 1);
+            assert_eq!(transfer.status, TransferStatus::Pending); // Not enough
 
-        add_validator_signature(&env, 1, val2, sig2).unwrap();
-        let transfer = get_bridge_transfer(&env, 1).unwrap();
-        assert_eq!(transfer.validator_signatures.len(), 2);
-        assert_eq!(transfer.status, TransferStatus::ValidatorApproved);
+            add_validator_signature(&env, 1, val2, sig2).unwrap();
+            let transfer = get_bridge_transfer(&env, 1).unwrap();
+            assert_eq!(transfer.validator_signatures.len(), 2);
+            assert_eq!(transfer.status, TransferStatus::ValidatorApproved);
         });
     }
 
@@ -1052,43 +1052,43 @@ mod tests {
     fn test_approve_transfer_for_minting() {
         let (env, contract_id) = setup_env();
         env.as_contract(&contract_id, || {
-        let user = String::from_str(&env, "user123");
-        let asset = Asset {
-            code: String::from_str(&env, "XLM"),
-            issuer: None,
-        };
+            let user = String::from_str(&env, "user123");
+            let asset = Asset {
+                code: String::from_str(&env, "XLM"),
+                issuer: None,
+            };
 
-        create_bridge_transfer(
-            &env,
-            1,
-            1,
-            ChainId::Ethereum,
-            ChainId::Polygon,
-            1000000,
-            100,
-            asset,
-            user,
-        )
-        .unwrap();
+            create_bridge_transfer(
+                &env,
+                1,
+                1,
+                ChainId::Ethereum,
+                ChainId::Polygon,
+                1000000,
+                100,
+                asset,
+                user,
+            )
+            .unwrap();
 
-        // Try to approve without validator signatures - should fail
-        let result = approve_transfer_for_minting(&env, 1);
-        assert!(result.is_err());
+            // Try to approve without validator signatures - should fail
+            let result = approve_transfer_for_minting(&env, 1);
+            assert!(result.is_err());
 
-        // Add signatures
-        let sig1 = String::from_str(&env, "sig1");
-        let sig2 = String::from_str(&env, "sig2");
-        let val1 = Address::generate(&env);
-        let val2 = Address::generate(&env);
-        add_validator_signature(&env, 1, val1, sig1).unwrap();
-        add_validator_signature(&env, 1, val2, sig2).unwrap();
+            // Add signatures
+            let sig1 = String::from_str(&env, "sig1");
+            let sig2 = String::from_str(&env, "sig2");
+            let val1 = Address::generate(&env);
+            let val2 = Address::generate(&env);
+            add_validator_signature(&env, 1, val1, sig1).unwrap();
+            add_validator_signature(&env, 1, val2, sig2).unwrap();
 
-        // Now approve should succeed
-        let result = approve_transfer_for_minting(&env, 1);
-        assert!(result.is_ok());
+            // Now approve should succeed
+            let result = approve_transfer_for_minting(&env, 1);
+            assert!(result.is_ok());
 
-        let transfer = get_bridge_transfer(&env, 1).unwrap();
-        assert_eq!(transfer.status, TransferStatus::Minting);
+            let transfer = get_bridge_transfer(&env, 1).unwrap();
+            assert_eq!(transfer.status, TransferStatus::Minting);
         });
     }
 
@@ -1096,30 +1096,30 @@ mod tests {
     fn test_complete_transfer() {
         let (env, contract_id) = setup_env();
         env.as_contract(&contract_id, || {
-        let user = String::from_str(&env, "user123");
-        let asset = Asset {
-            code: String::from_str(&env, "XLM"),
-            issuer: None,
-        };
+            let user = String::from_str(&env, "user123");
+            let asset = Asset {
+                code: String::from_str(&env, "XLM"),
+                issuer: None,
+            };
 
-        create_bridge_transfer(
-            &env,
-            1,
-            1,
-            ChainId::Ethereum,
-            ChainId::Polygon,
-            1000000,
-            100,
-            asset,
-            user,
-        )
-        .unwrap();
+            create_bridge_transfer(
+                &env,
+                1,
+                1,
+                ChainId::Ethereum,
+                ChainId::Polygon,
+                1000000,
+                100,
+                asset,
+                user,
+            )
+            .unwrap();
 
-        let result = complete_transfer(&env, 1);
-        assert!(result.is_ok());
+            let result = complete_transfer(&env, 1);
+            assert!(result.is_ok());
 
-        let transfer = get_bridge_transfer(&env, 1).unwrap();
-        assert_eq!(transfer.status, TransferStatus::Complete);
+            let transfer = get_bridge_transfer(&env, 1).unwrap();
+            assert_eq!(transfer.status, TransferStatus::Complete);
         });
     }
 
@@ -1127,19 +1127,18 @@ mod tests {
     fn test_set_custom_chain_config() {
         let (env, contract_id) = setup_env();
         env.as_contract(&contract_id, || {
+            let custom_config = ChainFinalityConfig {
+                chain_id: ChainId::Ethereum,
+                required_confirmations: 64, // Custom: more than default 32
+                average_block_time: 12,
+                reorg_depth_limit: 128,
+                verification_method: VerificationMethod::BlockConfirmations,
+            };
 
-        let custom_config = ChainFinalityConfig {
-            chain_id: ChainId::Ethereum,
-            required_confirmations: 64, // Custom: more than default 32
-            average_block_time: 12,
-            reorg_depth_limit: 128,
-            verification_method: VerificationMethod::BlockConfirmations,
-        };
+            set_chain_finality_config(&env, &custom_config);
 
-        set_chain_finality_config(&env, &custom_config);
-
-        let retrieved = get_chain_finality_config(&env, ChainId::Ethereum).unwrap();
-        assert_eq!(retrieved.required_confirmations, 64);
+            let retrieved = get_chain_finality_config(&env, ChainId::Ethereum).unwrap();
+            assert_eq!(retrieved.required_confirmations, 64);
         });
     }
 
@@ -1149,8 +1148,8 @@ mod tests {
     fn test_get_transfer_status_not_found() {
         let (env, contract_id) = setup_env();
         env.as_contract(&contract_id, || {
-        let result = get_transfer_status(&env, 999);
-        assert!(result.is_none());
+            let result = get_transfer_status(&env, 999);
+            assert!(result.is_none());
         });
     }
 
@@ -1158,29 +1157,29 @@ mod tests {
     fn test_get_transfer_status_pending() {
         let (env, contract_id) = setup_env();
         env.as_contract(&contract_id, || {
-        let user = String::from_str(&env, "user123");
-        let asset = Asset {
-            code: String::from_str(&env, "XLM"),
-            issuer: None,
-        };
+            let user = String::from_str(&env, "user123");
+            let asset = Asset {
+                code: String::from_str(&env, "XLM"),
+                issuer: None,
+            };
 
-        create_bridge_transfer(
-            &env,
-            1,
-            1,
-            ChainId::Ethereum,
-            ChainId::Polygon,
-            1_000_000,
-            100,
-            asset,
-            user,
-        )
-        .unwrap();
+            create_bridge_transfer(
+                &env,
+                1,
+                1,
+                ChainId::Ethereum,
+                ChainId::Polygon,
+                1_000_000,
+                100,
+                asset,
+                user,
+            )
+            .unwrap();
 
-        let info = get_transfer_status(&env, 1).unwrap();
-        assert_eq!(info.transfer_id, 1);
-        assert_eq!(info.status, TransferStatus::Pending);
-        assert_eq!(info.last_status_change, 1000); // env timestamp
+            let info = get_transfer_status(&env, 1).unwrap();
+            assert_eq!(info.transfer_id, 1);
+            assert_eq!(info.status, TransferStatus::Pending);
+            assert_eq!(info.last_status_change, 1000); // env timestamp
         });
     }
 
@@ -1188,33 +1187,33 @@ mod tests {
     fn test_get_transfer_status_transitions_to_validator_approved() {
         let (env, contract_id) = setup_env();
         env.as_contract(&contract_id, || {
-        let user = String::from_str(&env, "user123");
-        let asset = Asset {
-            code: String::from_str(&env, "XLM"),
-            issuer: None,
-        };
+            let user = String::from_str(&env, "user123");
+            let asset = Asset {
+                code: String::from_str(&env, "XLM"),
+                issuer: None,
+            };
 
-        create_bridge_transfer(
-            &env,
-            1,
-            1,
-            ChainId::Ethereum,
-            ChainId::Polygon,
-            1_000_000,
-            100,
-            asset,
-            user,
-        )
-        .unwrap();
+            create_bridge_transfer(
+                &env,
+                1,
+                1,
+                ChainId::Ethereum,
+                ChainId::Polygon,
+                1_000_000,
+                100,
+                asset,
+                user,
+            )
+            .unwrap();
 
-        let val1 = Address::generate(&env);
-        let val2 = Address::generate(&env);
-        add_validator_signature(&env, 1, val1, String::from_str(&env, "sig1")).unwrap();
-        add_validator_signature(&env, 1, val2, String::from_str(&env, "sig2")).unwrap();
+            let val1 = Address::generate(&env);
+            let val2 = Address::generate(&env);
+            add_validator_signature(&env, 1, val1, String::from_str(&env, "sig1")).unwrap();
+            add_validator_signature(&env, 1, val2, String::from_str(&env, "sig2")).unwrap();
 
-        let info = get_transfer_status(&env, 1).unwrap();
-        assert_eq!(info.status, TransferStatus::ValidatorApproved);
-        assert!(info.last_status_change >= 1000);
+            let info = get_transfer_status(&env, 1).unwrap();
+            assert_eq!(info.status, TransferStatus::ValidatorApproved);
+            assert!(info.last_status_change >= 1000);
         });
     }
 
@@ -1222,29 +1221,29 @@ mod tests {
     fn test_get_transfer_status_transitions_to_complete() {
         let (env, contract_id) = setup_env();
         env.as_contract(&contract_id, || {
-        let user = String::from_str(&env, "user123");
-        let asset = Asset {
-            code: String::from_str(&env, "XLM"),
-            issuer: None,
-        };
+            let user = String::from_str(&env, "user123");
+            let asset = Asset {
+                code: String::from_str(&env, "XLM"),
+                issuer: None,
+            };
 
-        create_bridge_transfer(
-            &env,
-            1,
-            1,
-            ChainId::Ethereum,
-            ChainId::Polygon,
-            1_000_000,
-            100,
-            asset,
-            user,
-        )
-        .unwrap();
+            create_bridge_transfer(
+                &env,
+                1,
+                1,
+                ChainId::Ethereum,
+                ChainId::Polygon,
+                1_000_000,
+                100,
+                asset,
+                user,
+            )
+            .unwrap();
 
-        complete_transfer(&env, 1).unwrap();
+            complete_transfer(&env, 1).unwrap();
 
-        let info = get_transfer_status(&env, 1).unwrap();
-        assert_eq!(info.status, TransferStatus::Complete);
+            let info = get_transfer_status(&env, 1).unwrap();
+            assert_eq!(info.status, TransferStatus::Complete);
         });
     }
 
@@ -1252,30 +1251,30 @@ mod tests {
     fn test_get_transfer_status_transitions_to_failed() {
         let (env, contract_id) = setup_env();
         env.as_contract(&contract_id, || {
-        let tx_hash = String::from_str(&env, "0xabcd1234");
-        let user = String::from_str(&env, "user123");
-        let asset = Asset {
-            code: String::from_str(&env, "XLM"),
-            issuer: None,
-        };
+            let tx_hash = String::from_str(&env, "0xabcd1234");
+            let user = String::from_str(&env, "user123");
+            let asset = Asset {
+                code: String::from_str(&env, "XLM"),
+                issuer: None,
+            };
 
-        create_bridge_transfer(
-            &env,
-            1,
-            1,
-            ChainId::Ethereum,
-            ChainId::Polygon,
-            1_000_000,
-            100,
-            asset,
-            user,
-        )
-        .unwrap();
-        monitor_source_transaction(&env, 1, tx_hash, ChainId::Ethereum, 100).unwrap();
-        mark_transaction_failed(&env, 1).unwrap();
+            create_bridge_transfer(
+                &env,
+                1,
+                1,
+                ChainId::Ethereum,
+                ChainId::Polygon,
+                1_000_000,
+                100,
+                asset,
+                user,
+            )
+            .unwrap();
+            monitor_source_transaction(&env, 1, tx_hash, ChainId::Ethereum, 100).unwrap();
+            mark_transaction_failed(&env, 1).unwrap();
 
-        let info = get_transfer_status(&env, 1).unwrap();
-        assert_eq!(info.status, TransferStatus::Failed);
+            let info = get_transfer_status(&env, 1).unwrap();
+            assert_eq!(info.status, TransferStatus::Failed);
         });
     }
 
@@ -1283,60 +1282,60 @@ mod tests {
     fn test_get_transfer_status_full_lifecycle() {
         let (env, contract_id) = setup_env();
         env.as_contract(&contract_id, || {
-        let user = String::from_str(&env, "user123");
-        let tx_hash = String::from_str(&env, "0xabcd1234");
-        let asset = Asset {
-            code: String::from_str(&env, "XLM"),
-            issuer: None,
-        };
+            let user = String::from_str(&env, "user123");
+            let tx_hash = String::from_str(&env, "0xabcd1234");
+            let asset = Asset {
+                code: String::from_str(&env, "XLM"),
+                issuer: None,
+            };
 
-        // Step 1: Pending
-        create_bridge_transfer(
-            &env,
-            1,
-            1,
-            ChainId::Ethereum,
-            ChainId::Polygon,
-            1_000_000,
-            100,
-            asset,
-            user,
-        )
-        .unwrap();
-        assert_eq!(
-            get_transfer_status(&env, 1).unwrap().status,
-            TransferStatus::Pending
-        );
+            // Step 1: Pending
+            create_bridge_transfer(
+                &env,
+                1,
+                1,
+                ChainId::Ethereum,
+                ChainId::Polygon,
+                1_000_000,
+                100,
+                asset,
+                user,
+            )
+            .unwrap();
+            assert_eq!(
+                get_transfer_status(&env, 1).unwrap().status,
+                TransferStatus::Pending
+            );
 
-        // Step 2: Source monitoring starts (status stays Pending until validators sign)
-        monitor_source_transaction(&env, 1, tx_hash, ChainId::Ethereum, 100).unwrap();
-        assert_eq!(
-            get_transfer_status(&env, 1).unwrap().status,
-            TransferStatus::Pending
-        );
+            // Step 2: Source monitoring starts (status stays Pending until validators sign)
+            monitor_source_transaction(&env, 1, tx_hash, ChainId::Ethereum, 100).unwrap();
+            assert_eq!(
+                get_transfer_status(&env, 1).unwrap().status,
+                TransferStatus::Pending
+            );
 
-        // Step 3: ValidatorApproved
-        let val1 = Address::generate(&env);
-        let val2 = Address::generate(&env);
-        add_validator_signature(&env, 1, val1, String::from_str(&env, "s1")).unwrap();
-        add_validator_signature(&env, 1, val2, String::from_str(&env, "s2")).unwrap();
-        assert_eq!(
-            get_transfer_status(&env, 1).unwrap().status,
-            TransferStatus::ValidatorApproved
-        );
+            // Step 3: ValidatorApproved
+            let val1 = Address::generate(&env);
+            let val2 = Address::generate(&env);
+            add_validator_signature(&env, 1, val1, String::from_str(&env, "s1")).unwrap();
+            add_validator_signature(&env, 1, val2, String::from_str(&env, "s2")).unwrap();
+            assert_eq!(
+                get_transfer_status(&env, 1).unwrap().status,
+                TransferStatus::ValidatorApproved
+            );
 
-        // Step 4: Minting
-        approve_transfer_for_minting(&env, 1).unwrap();
-        assert_eq!(
-            get_transfer_status(&env, 1).unwrap().status,
-            TransferStatus::Minting
-        );
+            // Step 4: Minting
+            approve_transfer_for_minting(&env, 1).unwrap();
+            assert_eq!(
+                get_transfer_status(&env, 1).unwrap().status,
+                TransferStatus::Minting
+            );
 
-        // Step 5: Complete
-        complete_transfer(&env, 1).unwrap();
-        let final_info = get_transfer_status(&env, 1).unwrap();
-        assert_eq!(final_info.status, TransferStatus::Complete);
-        assert!(final_info.last_status_change >= 1000);
+            // Step 5: Complete
+            complete_transfer(&env, 1).unwrap();
+            let final_info = get_transfer_status(&env, 1).unwrap();
+            assert_eq!(final_info.status, TransferStatus::Complete);
+            assert!(final_info.last_status_change >= 1000);
         });
     }
 
@@ -1344,25 +1343,25 @@ mod tests {
     fn test_invalid_transfer_amount() {
         let (env, contract_id) = setup_env();
         env.as_contract(&contract_id, || {
-        let user = String::from_str(&env, "user123");
+            let user = String::from_str(&env, "user123");
 
-        let asset = Asset {
-            code: String::from_str(&env, "XLM"),
-            issuer: None,
-        };
-        let result = create_bridge_transfer(
-            &env,
-            1,
-            1,
-            ChainId::Ethereum,
-            ChainId::Polygon,
-            0, // Invalid amount
-            0,
-            asset,
-            user,
-        );
+            let asset = Asset {
+                code: String::from_str(&env, "XLM"),
+                issuer: None,
+            };
+            let result = create_bridge_transfer(
+                &env,
+                1,
+                1,
+                ChainId::Ethereum,
+                ChainId::Polygon,
+                0, // Invalid amount
+                0,
+                asset,
+                user,
+            );
 
-        assert!(result.is_err());
+            assert!(result.is_err());
         });
     }
 
@@ -1370,25 +1369,26 @@ mod tests {
     fn test_confirmation_progression() {
         let (env, contract_id) = setup_env();
         env.as_contract(&contract_id, || {
-        let tx_hash = String::from_str(&env, "0xabcd1234");
+            let tx_hash = String::from_str(&env, "0xabcd1234");
 
-        // Monitor transaction at block 100
-        monitor_source_transaction(&env, 1, tx_hash, ChainId::Ethereum, 100).unwrap();
+            // Monitor transaction at block 100
+            monitor_source_transaction(&env, 1, tx_hash, ChainId::Ethereum, 100).unwrap();
 
-        // EpochFinality finalizes at required_confirmations / 2 = 16 for Ethereum.
-        // Check progression: 8 confirmations (not final) -> 16 (final).
-        for block_num in [108u64, 116u64] {
-            let is_finalized = update_transaction_confirmation_count(&env, 1, block_num).unwrap();
+            // EpochFinality finalizes at required_confirmations / 2 = 16 for Ethereum.
+            // Check progression: 8 confirmations (not final) -> 16 (final).
+            for block_num in [108u64, 116u64] {
+                let is_finalized =
+                    update_transaction_confirmation_count(&env, 1, block_num).unwrap();
 
-            if block_num == 116 {
-                assert!(is_finalized);
-            } else {
-                assert!(!is_finalized);
+                if block_num == 116 {
+                    assert!(is_finalized);
+                } else {
+                    assert!(!is_finalized);
+                }
+
+                let monitored = get_monitored_tx(&env, 1).unwrap();
+                assert!(monitored.confirmations > 0);
             }
-
-            let monitored = get_monitored_tx(&env, 1).unwrap();
-            assert!(monitored.confirmations > 0);
-        }
         });
     }
 
@@ -1396,15 +1396,15 @@ mod tests {
     fn test_mark_transaction_failed() {
         let (env, contract_id) = setup_env();
         env.as_contract(&contract_id, || {
-        let tx_hash = String::from_str(&env, "0xabcd1234");
+            let tx_hash = String::from_str(&env, "0xabcd1234");
 
-        monitor_source_transaction(&env, 1, tx_hash, ChainId::Ethereum, 100).unwrap();
+            monitor_source_transaction(&env, 1, tx_hash, ChainId::Ethereum, 100).unwrap();
 
-        let result = mark_transaction_failed(&env, 1);
-        assert!(result.is_ok());
+            let result = mark_transaction_failed(&env, 1);
+            assert!(result.is_ok());
 
-        let monitored = get_monitored_tx(&env, 1).unwrap();
-        assert_eq!(monitored.status, MonitoringStatus::Failed);
+            let monitored = get_monitored_tx(&env, 1).unwrap();
+            assert_eq!(monitored.status, MonitoringStatus::Failed);
         });
     }
 
@@ -1412,14 +1412,14 @@ mod tests {
     fn test_finalization_with_epoch_finality() {
         let (env, contract_id) = setup_env();
         env.as_contract(&contract_id, || {
-        let tx_hash = String::from_str(&env, "0xabcd1234");
+            let tx_hash = String::from_str(&env, "0xabcd1234");
 
-        monitor_source_transaction(&env, 1, tx_hash, ChainId::Ethereum, 100).unwrap();
+            monitor_source_transaction(&env, 1, tx_hash, ChainId::Ethereum, 100).unwrap();
 
-        // Ethereum finality: 32 blocks
-        // EpochFinality method: requires 32/2 = 16+ confirmations
-        let is_finalized = update_transaction_confirmation_count(&env, 1, 116).unwrap();
-        assert!(is_finalized);
+            // Ethereum finality: 32 blocks
+            // EpochFinality method: requires 32/2 = 16+ confirmations
+            let is_finalized = update_transaction_confirmation_count(&env, 1, 116).unwrap();
+            assert!(is_finalized);
         });
     }
 
@@ -1427,47 +1427,47 @@ mod tests {
     fn test_full_transfer_workflow() {
         let (env, contract_id) = setup_env();
         env.as_contract(&contract_id, || {
-        let user = String::from_str(&env, "user123");
-        let tx_hash = String::from_str(&env, "0xabcd1234");
+            let user = String::from_str(&env, "user123");
+            let tx_hash = String::from_str(&env, "0xabcd1234");
 
-        let asset = Asset {
-            code: String::from_str(&env, "XLM"),
-            issuer: None,
-        };
-        // Step 1: Create transfer
-        create_bridge_transfer(
-            &env,
-            1,
-            1,
-            ChainId::Ethereum,
-            ChainId::Polygon,
-            1000000,
-            100,
-            asset,
-            user,
-        )
-        .unwrap();
+            let asset = Asset {
+                code: String::from_str(&env, "XLM"),
+                issuer: None,
+            };
+            // Step 1: Create transfer
+            create_bridge_transfer(
+                &env,
+                1,
+                1,
+                ChainId::Ethereum,
+                ChainId::Polygon,
+                1000000,
+                100,
+                asset,
+                user,
+            )
+            .unwrap();
 
-        // Step 2: Start monitoring
-        monitor_source_transaction(&env, 1, tx_hash, ChainId::Ethereum, 100).unwrap();
+            // Step 2: Start monitoring
+            monitor_source_transaction(&env, 1, tx_hash, ChainId::Ethereum, 100).unwrap();
 
-        // Step 3: Reach finality
-        update_transaction_confirmation_count(&env, 1, 132).unwrap();
+            // Step 3: Reach finality
+            update_transaction_confirmation_count(&env, 1, 132).unwrap();
 
-        // Step 4: Add validator signatures
-        let val1 = Address::generate(&env);
-        let val2 = Address::generate(&env);
-        add_validator_signature(&env, 1, val1, String::from_str(&env, "sig1")).unwrap();
-        add_validator_signature(&env, 1, val2, String::from_str(&env, "sig2")).unwrap();
+            // Step 4: Add validator signatures
+            let val1 = Address::generate(&env);
+            let val2 = Address::generate(&env);
+            add_validator_signature(&env, 1, val1, String::from_str(&env, "sig1")).unwrap();
+            add_validator_signature(&env, 1, val2, String::from_str(&env, "sig2")).unwrap();
 
-        // Step 5: Approve for minting
-        approve_transfer_for_minting(&env, 1).unwrap();
+            // Step 5: Approve for minting
+            approve_transfer_for_minting(&env, 1).unwrap();
 
-        // Step 6: Complete
-        complete_transfer(&env, 1).unwrap();
+            // Step 6: Complete
+            complete_transfer(&env, 1).unwrap();
 
-        let transfer = get_bridge_transfer(&env, 1).unwrap();
-        assert_eq!(transfer.status, TransferStatus::Complete);
+            let transfer = get_bridge_transfer(&env, 1).unwrap();
+            assert_eq!(transfer.status, TransferStatus::Complete);
         });
     }
 
@@ -1477,18 +1477,18 @@ mod tests {
     fn circuit_breaker_not_tripped_under_normal_latency() {
         let (env, contract_id) = setup_env();
         env.as_contract(&contract_id, || {
-        let config = LatencyCircuitBreakerConfig {
-            latency_threshold_secs: 500,
-            window_size: 3,
-        };
-        set_latency_circuit_breaker_config(&env, &config);
+            let config = LatencyCircuitBreakerConfig {
+                latency_threshold_secs: 500,
+                window_size: 3,
+            };
+            set_latency_circuit_breaker_config(&env, &config);
 
-        // Record 3 fast confirmations — well under the threshold.
-        record_finality_latency(&env, 100);
-        record_finality_latency(&env, 150);
-        record_finality_latency(&env, 120);
+            // Record 3 fast confirmations — well under the threshold.
+            record_finality_latency(&env, 100);
+            record_finality_latency(&env, 150);
+            record_finality_latency(&env, 120);
 
-        assert!(!is_circuit_breaker_tripped(&env));
+            assert!(!is_circuit_breaker_tripped(&env));
         });
     }
 
@@ -1496,18 +1496,18 @@ mod tests {
     fn circuit_breaker_trips_when_average_exceeds_threshold() {
         let (env, contract_id) = setup_env();
         env.as_contract(&contract_id, || {
-        let config = LatencyCircuitBreakerConfig {
-            latency_threshold_secs: 200,
-            window_size: 3,
-        };
-        set_latency_circuit_breaker_config(&env, &config);
+            let config = LatencyCircuitBreakerConfig {
+                latency_threshold_secs: 200,
+                window_size: 3,
+            };
+            set_latency_circuit_breaker_config(&env, &config);
 
-        // Push average above threshold.
-        record_finality_latency(&env, 300);
-        record_finality_latency(&env, 400);
-        record_finality_latency(&env, 500);
+            // Push average above threshold.
+            record_finality_latency(&env, 300);
+            record_finality_latency(&env, 400);
+            record_finality_latency(&env, 500);
 
-        assert!(is_circuit_breaker_tripped(&env));
+            assert!(is_circuit_breaker_tripped(&env));
         });
     }
 
@@ -1515,35 +1515,35 @@ mod tests {
     fn circuit_breaker_blocks_new_transfers_when_tripped() {
         let (env, contract_id) = setup_env();
         env.as_contract(&contract_id, || {
-        let config = LatencyCircuitBreakerConfig {
-            latency_threshold_secs: 100,
-            window_size: 2,
-        };
-        set_latency_circuit_breaker_config(&env, &config);
+            let config = LatencyCircuitBreakerConfig {
+                latency_threshold_secs: 100,
+                window_size: 2,
+            };
+            set_latency_circuit_breaker_config(&env, &config);
 
-        // Trip the breaker.
-        record_finality_latency(&env, 500);
-        record_finality_latency(&env, 600);
-        assert!(is_circuit_breaker_tripped(&env));
+            // Trip the breaker.
+            record_finality_latency(&env, 500);
+            record_finality_latency(&env, 600);
+            assert!(is_circuit_breaker_tripped(&env));
 
-        // Attempting a new transfer should now fail.
-        let user = String::from_str(&env, "user123");
-        let asset = Asset {
-            code: String::from_str(&env, "XLM"),
-            issuer: None,
-        };
-        let result = create_bridge_transfer(
-            &env,
-            99,
-            1,
-            ChainId::Ethereum,
-            ChainId::Polygon,
-            1_000_000,
-            100,
-            asset,
-            user,
-        );
-        assert!(result.is_err());
+            // Attempting a new transfer should now fail.
+            let user = String::from_str(&env, "user123");
+            let asset = Asset {
+                code: String::from_str(&env, "XLM"),
+                issuer: None,
+            };
+            let result = create_bridge_transfer(
+                &env,
+                99,
+                1,
+                ChainId::Ethereum,
+                ChainId::Polygon,
+                1_000_000,
+                100,
+                asset,
+                user,
+            );
+            assert!(result.is_err());
         });
     }
 
@@ -1551,39 +1551,39 @@ mod tests {
     fn circuit_breaker_cleared_allows_new_transfers() {
         let (env, contract_id) = setup_env();
         env.as_contract(&contract_id, || {
-        let config = LatencyCircuitBreakerConfig {
-            latency_threshold_secs: 100,
-            window_size: 2,
-        };
-        set_latency_circuit_breaker_config(&env, &config);
+            let config = LatencyCircuitBreakerConfig {
+                latency_threshold_secs: 100,
+                window_size: 2,
+            };
+            set_latency_circuit_breaker_config(&env, &config);
 
-        // Trip the breaker.
-        record_finality_latency(&env, 500);
-        record_finality_latency(&env, 500);
-        assert!(is_circuit_breaker_tripped(&env));
+            // Trip the breaker.
+            record_finality_latency(&env, 500);
+            record_finality_latency(&env, 500);
+            assert!(is_circuit_breaker_tripped(&env));
 
-        // Recovery.
-        clear_circuit_breaker(&env);
-        assert!(!is_circuit_breaker_tripped(&env));
+            // Recovery.
+            clear_circuit_breaker(&env);
+            assert!(!is_circuit_breaker_tripped(&env));
 
-        // New transfers should now succeed.
-        let user = String::from_str(&env, "user123");
-        let asset = Asset {
-            code: String::from_str(&env, "XLM"),
-            issuer: None,
-        };
-        let result = create_bridge_transfer(
-            &env,
-            99,
-            1,
-            ChainId::Ethereum,
-            ChainId::Polygon,
-            1_000_000,
-            100,
-            asset,
-            user,
-        );
-        assert!(result.is_ok());
+            // New transfers should now succeed.
+            let user = String::from_str(&env, "user123");
+            let asset = Asset {
+                code: String::from_str(&env, "XLM"),
+                issuer: None,
+            };
+            let result = create_bridge_transfer(
+                &env,
+                99,
+                1,
+                ChainId::Ethereum,
+                ChainId::Polygon,
+                1_000_000,
+                100,
+                asset,
+                user,
+            );
+            assert!(result.is_ok());
         });
     }
 
@@ -1591,24 +1591,24 @@ mod tests {
     fn finality_latency_recorded_on_finalization() {
         let (env, contract_id) = setup_env();
         env.as_contract(&contract_id, || {
-        let tx_hash = String::from_str(&env, "0xabcd1234");
+            let tx_hash = String::from_str(&env, "0xabcd1234");
 
-        monitor_source_transaction(&env, 1, tx_hash, ChainId::Ethereum, 100).unwrap();
+            monitor_source_transaction(&env, 1, tx_hash, ChainId::Ethereum, 100).unwrap();
 
-        // Advance time so there is a measurable latency.
-        env.ledger().set_timestamp(1500);
+            // Advance time so there is a measurable latency.
+            env.ledger().set_timestamp(1500);
 
-        // Finalize — should record latency (1500 - 1000 = 500 s).
-        let config = LatencyCircuitBreakerConfig {
-            latency_threshold_secs: 10_000,
-            window_size: 1,
-        };
-        set_latency_circuit_breaker_config(&env, &config);
+            // Finalize — should record latency (1500 - 1000 = 500 s).
+            let config = LatencyCircuitBreakerConfig {
+                latency_threshold_secs: 10_000,
+                window_size: 1,
+            };
+            set_latency_circuit_breaker_config(&env, &config);
 
-        update_transaction_confirmation_count(&env, 1, 132).unwrap();
+            update_transaction_confirmation_count(&env, 1, 132).unwrap();
 
-        // Circuit breaker NOT tripped (500 < 10000).
-        assert!(!is_circuit_breaker_tripped(&env));
+            // Circuit breaker NOT tripped (500 < 10000).
+            assert!(!is_circuit_breaker_tripped(&env));
         });
     }
 }

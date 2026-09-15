@@ -7,11 +7,11 @@
 //! - Oracle circuit breaker — auto-pauses trading when oracle is unavailable,
 //!   auto-resets when oracle recovers, admin can manually override
 
-use soroban_sdk::{contracttype, Address, Env, String, Symbol};
 use call_stake_common::oracle::{
     validate_price_bounds, IOracleClient, MockOracleClient, OnChainOracleClient, OracleError,
     OraclePrice,
 };
+use soroban_sdk::{contracttype, Address, Env, String, Symbol};
 
 use crate::admin::{require_admin, AdminStorageKey};
 use crate::errors::AutoTradeError;

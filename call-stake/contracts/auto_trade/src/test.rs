@@ -4,12 +4,12 @@ use super::*;
 use crate::auth;
 use crate::risk;
 use crate::storage;
+use call_stake_common::emergency::CAT_TRADING;
 use soroban_sdk::{
     symbol_short,
     testutils::{Address as _, Events as _, Ledger as _},
     Address, Env, IntoVal, Symbol, TryFromVal, Val,
 };
-use call_stake_common::emergency::CAT_TRADING;
 
 fn setup_env() -> Env {
     let env = Env::default();

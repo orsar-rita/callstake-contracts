@@ -6,12 +6,12 @@
 //! `close_position`. ROI is computed as total_pnl * 10_000 / total_invested (bps).
 
 use crate::{UserPortfolio, UserPortfolioClient};
+use call_stake_common::OraclePrice;
 use soroban_sdk::{
     contract, contractimpl, symbol_short,
     testutils::{Address as _, Ledger},
     Address, Env,
 };
-use call_stake_common::OraclePrice;
 
 // ── Oracle mock ───────────────────────────────────────────────────────────────
 

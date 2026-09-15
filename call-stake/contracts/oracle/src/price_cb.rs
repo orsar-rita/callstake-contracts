@@ -6,8 +6,8 @@
 //! maximum, the breaker trips and price-dependent entrypoints reject calls
 //! for the affected asset until an admin explicitly resets it.
 
-use soroban_sdk::{symbol_short, Address, Env};
 use call_stake_common::AssetPair;
+use soroban_sdk::{symbol_short, Address, Env};
 
 use crate::{errors::OracleError, storage};
 

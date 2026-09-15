@@ -1,12 +1,12 @@
 #![cfg(test)]
 
+use call_stake_common::Asset;
 use soroban_sdk::{
     contract, contractimpl,
     testutils::{Address as _, Events},
     token::{Client as TokenClient, StellarAssetClient},
     Address, Env, String,
 };
-use call_stake_common::Asset;
 
 use crate::{ContractError, FeeCollector, FeeCollectorClient};
 

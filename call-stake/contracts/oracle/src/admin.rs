@@ -1,5 +1,5 @@
-use soroban_sdk::{Address, Env, Map, String};
 use call_stake_common::emergency::{PauseState, CAT_ALL};
+use soroban_sdk::{Address, Env, Map, String};
 
 use crate::errors::OracleError;
 use crate::events::{emit_guardian_revoked, emit_guardian_set};

@@ -1,11 +1,11 @@
 #![cfg(test)]
 
 use crate::{AdminError, AdminRole, SignalRegistry, SignalRegistryClient};
+use call_stake_common::emergency::{CircuitBreakerConfig, CAT_TRADING};
 use soroban_sdk::{
     testutils::{Address as _, Ledger},
     Address, Env,
 };
-use call_stake_common::emergency::{CircuitBreakerConfig, CAT_TRADING};
 
 fn setup() -> (Env, Address, SignalRegistryClient<'static>) {
     let env = Env::default();

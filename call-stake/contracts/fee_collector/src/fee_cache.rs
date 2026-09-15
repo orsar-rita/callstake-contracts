@@ -1,7 +1,7 @@
 //! Transaction-scoped fee configuration cache for `collect_fee` hot path.
 
-use soroban_sdk::{contracttype, symbol_short, Address, Env, Symbol};
 use call_stake_common::perf::tx_cache_or_compute;
+use soroban_sdk::{contracttype, symbol_short, Address, Env, Symbol};
 
 use crate::storage::{
     bump_config_version as _, get_burn_rate, get_config_version, get_fee_optimization_config,

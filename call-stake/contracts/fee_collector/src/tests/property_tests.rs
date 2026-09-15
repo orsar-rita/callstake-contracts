@@ -1,12 +1,12 @@
 #![cfg(test)]
 
 use crate::{fee_amount_floor, FeeCollector, FeeCollectorClient};
+use call_stake_common::Asset;
 use proptest::prelude::*;
 use soroban_sdk::{
     testutils::{Address as _, Ledger},
     Address, Env, String,
 };
-use call_stake_common::Asset;
 
 fn setup_contract(env: &Env) -> FeeCollectorClient<'_> {
     let admin = Address::generate(env);

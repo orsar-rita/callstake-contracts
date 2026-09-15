@@ -1,13 +1,13 @@
 #![cfg(test)]
 
 use crate::{PnlSummary, UserPortfolio, UserPortfolioClient};
+use call_stake_common::OraclePrice;
 use proptest::prelude::*;
 use soroban_sdk::{
     contract, contractimpl, symbol_short,
     testutils::{Address as _, Ledger},
     Address, Env,
 };
-use call_stake_common::OraclePrice;
 
 #[contract]
 pub struct OracleMock;

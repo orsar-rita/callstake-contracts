@@ -83,7 +83,12 @@ pub fn validate_with_defaults(
     observed_at: u64,
     last_accepted_at: Option<u64>,
 ) -> Result<(), OracleError> {
-    validate_observation(&FreshnessPolicy::default(), now, observed_at, last_accepted_at)
+    validate_observation(
+        &FreshnessPolicy::default(),
+        now,
+        observed_at,
+        last_accepted_at,
+    )
 }
 
 #[cfg(test)]

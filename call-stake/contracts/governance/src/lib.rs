@@ -37,6 +37,7 @@ mod test_portableDD;
 #[cfg(test)]
 mod test_simulation;
 
+use call_stake_common::Asset;
 use committees::{
     list_committees as list_registered_committees, CommitteeAction, CommitteeElection,
     CommitteeReport, CommitteesState, CrossCommitteeRequest, ElectionResult, ElectionStatus,
@@ -92,7 +93,6 @@ use soroban_sdk::{
     contract, contractimpl, contracttype, symbol_short, Address, Bytes, Env, Map, String, Symbol,
     Vec,
 };
-use call_stake_common::Asset;
 use timelock::{
     cancel_admin_action, cancel_queued_action, emergency_execute, emergency_unblock_action,
     execute_admin_action, execute_multiple_actions, execute_queued_action, extend_execution_window,

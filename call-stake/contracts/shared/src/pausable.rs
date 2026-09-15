@@ -282,10 +282,7 @@ mod tests {
         // Each top-level invocation clears the event buffer at its start, so
         // everything observed after `unpause` belongs to that invocation.
         c.unpause();
-        assert!(
-            !env.events().all().is_empty(),
-            "unpause must emit an event"
-        );
+        assert!(!env.events().all().is_empty(), "unpause must emit an event");
     }
 
     // ── Scoped pause tests ─────────────────────────────────────────────────────

@@ -1,13 +1,13 @@
 #![no_std]
 
-use shared::reentrancy;
-use soroban_sdk::{
-    contract, contracterror, contractimpl, contracttype, Address, Env, String, Symbol, Vec,
-};
 use call_stake_common::token_metadata::{
     validate as validate_token_metadata, TokenMetadata, TokenMetadataError,
 };
 use call_stake_common::SECONDS_PER_DAY;
+use shared::reentrancy;
+use soroban_sdk::{
+    contract, contracterror, contractimpl, contracttype, Address, Env, String, Symbol, Vec,
+};
 
 mod validators;
 
@@ -329,9 +329,7 @@ impl BridgeContract {
             },
         );
         // Issue #988: store the deployer address as deployment_id for domain separation.
-        env.storage()
-            .instance()
-            .set(&DataKey::DeploymentId, &admin);
+        env.storage().instance().set(&DataKey::DeploymentId, &admin);
         Ok(())
     }
 
@@ -405,7 +403,13 @@ impl BridgeContract {
         }
         // ── #669: allowlist check ─────────────────────────────────────────────
         ensure_chain_allowed(&env, destination_chain)?;
-        validate_amount_and_limits(&env, amount, source_chain, destination_chain, wrapped_asset.clone())?;
+        validate_amount_and_limits(
+            &env,
+            amount,
+            source_chain,
+            destination_chain,
+            wrapped_asset.clone(),
+        )?;
         ensure_wrapped_asset_exists(&env, wrapped_asset.clone())?;
 
         // ── #988: domain-separated replay protection ─────────────────────────
@@ -615,7 +619,13 @@ impl BridgeContract {
         }
         // ── #669: allowlist check ─────────────────────────────────────────────
         ensure_chain_allowed(&env, destination_chain)?;
-        validate_amount_and_limits(&env, amount, source_chain, destination_chain, wrapped_asset.clone())?;
+        validate_amount_and_limits(
+            &env,
+            amount,
+            source_chain,
+            destination_chain,
+            wrapped_asset.clone(),
+        )?;
 
         let balance_key = DataKey::WrappedBalance(user.clone(), wrapped_asset.clone());
         let balance: i128 = env.storage().persistent().get(&balance_key).unwrap_or(0);
@@ -1121,10 +1131,8 @@ impl BridgeContract {
             .instance()
             .set(&DataKey::DeploymentId, &deployment_id);
         #[allow(deprecated)]
-        env.events().publish(
-            (Symbol::new(&env, "deployment_id_set"),),
-            deployment_id,
-        );
+        env.events()
+            .publish((Symbol::new(&env, "deployment_id_set"),), deployment_id);
         Ok(())
     }
 
@@ -1164,19 +1172,11 @@ impl BridgeContract {
             window_seconds,
         };
         env.storage().persistent().set(
-            &DataKey::WithdrawalRouteConfig(
-                source_chain,
-                destination_chain,
-                wrapped_asset.clone(),
-            ),
+            &DataKey::WithdrawalRouteConfig(source_chain, destination_chain, wrapped_asset.clone()),
             &config,
         );
         // Initialize or preserve the rolling window.
-        let window_key = DataKey::WithdrawalWindow(
-            source_chain,
-            destination_chain,
-            wrapped_asset,
-        );
+        let window_key = DataKey::WithdrawalWindow(source_chain, destination_chain, wrapped_asset);
         if !env.storage().persistent().has(&window_key) {
             env.storage().persistent().set(
                 &window_key,
@@ -1210,11 +1210,13 @@ impl BridgeContract {
         destination_chain: ChainId,
         wrapped_asset: String,
     ) -> Option<WithdrawalRouteConfig> {
-        env.storage().persistent().get(&DataKey::WithdrawalRouteConfig(
-            source_chain,
-            destination_chain,
-            wrapped_asset,
-        ))
+        env.storage()
+            .persistent()
+            .get(&DataKey::WithdrawalRouteConfig(
+                source_chain,
+                destination_chain,
+                wrapped_asset,
+            ))
     }
 
     // ── #990: Idempotent transfer failure / retry ─────────────────────────────
@@ -1266,11 +1268,7 @@ impl BridgeContract {
     /// re-approve and an admin can re-execute.  Only allowed when
     /// `retryable == true`.  Balances are not re-checked because the original
     /// `initiate_*` call already reserved the funds.
-    pub fn retry_transfer(
-        env: Env,
-        admin: Address,
-        transfer_id: u64,
-    ) -> Result<(), BridgeError> {
+    pub fn retry_transfer(env: Env, admin: Address, transfer_id: u64) -> Result<(), BridgeError> {
         require_admin(&env, &admin)?;
         if !cfg!(test) {
             admin.require_auth();
@@ -1385,19 +1383,22 @@ fn validate_amount_and_limits(
     }
 
     // ── #989: Per-message route limit ──────────────────────────────────────
-    if let Some(route_cfg) = env.storage().persistent().get::<_, WithdrawalRouteConfig>(
-        &DataKey::WithdrawalRouteConfig(source_chain, destination_chain, wrapped_asset.clone()),
-    ) {
+    if let Some(route_cfg) =
+        env.storage()
+            .persistent()
+            .get::<_, WithdrawalRouteConfig>(&DataKey::WithdrawalRouteConfig(
+                source_chain,
+                destination_chain,
+                wrapped_asset.clone(),
+            ))
+    {
         if route_cfg.per_message_limit > 0 && amount > route_cfg.per_message_limit {
             return Err(BridgeError::PerRouteLimitExceeded);
         }
         // Aggregate window check.
         if route_cfg.aggregate_window_limit > 0 && route_cfg.window_seconds > 0 {
-            let window_key = DataKey::WithdrawalWindow(
-                source_chain,
-                destination_chain,
-                wrapped_asset.clone(),
-            );
+            let window_key =
+                DataKey::WithdrawalWindow(source_chain, destination_chain, wrapped_asset.clone());
             let now = env.ledger().timestamp();
             let mut window: WithdrawalWindow = env
                 .storage()
@@ -1412,10 +1413,7 @@ fn validate_amount_and_limits(
                 window.window_start = now;
                 window.total_volume = 0;
             }
-            let new_total = window
-                .total_volume
-                .checked_add(amount)
-                .unwrap_or(i128::MAX);
+            let new_total = window.total_volume.checked_add(amount).unwrap_or(i128::MAX);
             if new_total > route_cfg.aggregate_window_limit {
                 return Err(BridgeError::AggregateWindowLimitExceeded);
             }
@@ -1439,7 +1437,9 @@ fn validate_amount_and_limits(
         volume.total_amount = 0;
     }
 
-    if volume.total_amount.checked_add(amount).unwrap_or(i128::MAX) > config.security.daily_transfer_limit {
+    if volume.total_amount.checked_add(amount).unwrap_or(i128::MAX)
+        > config.security.daily_transfer_limit
+    {
         return Err(BridgeError::DailyLimitExceeded);
     }
 
@@ -1907,16 +1907,8 @@ mod test {
         let new_id = Address::generate(&env);
         env.as_contract(&contract_id, || {
             init(&env, &admin, &validators);
-            BridgeContract::set_deployment_id(
-                env.clone(),
-                admin.clone(),
-                new_id.clone(),
-            )
-            .unwrap();
-            assert_eq!(
-                BridgeContract::get_deployment_id(env.clone()),
-                new_id
-            );
+            BridgeContract::set_deployment_id(env.clone(), admin.clone(), new_id.clone()).unwrap();
+            assert_eq!(BridgeContract::get_deployment_id(env.clone()), new_id);
         });
     }
 
@@ -1944,12 +1936,7 @@ mod test {
 
             // Change deployment ID — same tx hash + nonce should succeed
             let other_id = Address::generate(&env);
-            BridgeContract::set_deployment_id(
-                env.clone(),
-                admin.clone(),
-                other_id,
-            )
-            .unwrap();
+            BridgeContract::set_deployment_id(env.clone(), admin.clone(), other_id).unwrap();
 
             let result = BridgeContract::initiate_lock_mint(
                 env.clone(),
@@ -2033,9 +2020,9 @@ mod test {
                 ChainId::Ethereum,
                 ChainId::Polygon,
                 String::from_str(&env, "wETH"),
-                0,       // no per-message limit
-                500,     // aggregate limit
-                3600,    // 1 hour window
+                0,    // no per-message limit
+                500,  // aggregate limit
+                3600, // 1 hour window
             )
             .unwrap();
 

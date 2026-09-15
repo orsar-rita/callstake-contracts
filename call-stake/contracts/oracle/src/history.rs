@@ -1,8 +1,8 @@
 //! Historical price storage and TWAP calculation
 
 use crate::errors::OracleError;
-use soroban_sdk::{symbol_short, Env};
 use call_stake_common::AssetPair;
+use soroban_sdk::{symbol_short, Env};
 
 const BUCKET_SIZE: u64 = 300; // 5 minutes
 const MAX_BUCKETS: u64 = 2016; // 7 days at 5-min intervals
@@ -99,11 +99,11 @@ pub fn get_twap_deviation(
 #[cfg(test)]
 mod tests {
     use super::*;
+    use call_stake_common::Asset;
     use soroban_sdk::{
         testutils::{Address as _, Ledger},
         Address, Env, String,
     };
-    use call_stake_common::Asset;
 
     fn test_pair(env: &Env) -> AssetPair {
         AssetPair {

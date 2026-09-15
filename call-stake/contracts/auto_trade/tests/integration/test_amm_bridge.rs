@@ -7,9 +7,9 @@ use auto_trade::amm_bridge::mock_router::{MockAmmRouter, MockAmmRouterClient};
 use auto_trade::smart_routing;
 use auto_trade::smart_routing::{LiquidityVenue, VenueLiquidity};
 use auto_trade::{AutoTradeContract, Signal};
+use call_stake_common::amm_bridge::{AmmSourceConfig, AmmSourceKind};
 use soroban_sdk::testutils::Ledger;
 use soroban_sdk::{symbol_short, Address, Env};
-use call_stake_common::amm_bridge::{AmmSourceConfig, AmmSourceKind};
 
 fn signal(id: u64) -> Signal {
     Signal {

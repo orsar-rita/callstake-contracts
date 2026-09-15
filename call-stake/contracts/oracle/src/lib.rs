@@ -23,6 +23,8 @@ mod staleness;
 mod storage;
 mod types;
 
+use call_stake_common::emergency::{PauseState, CAT_ALL};
+use call_stake_common::{health_uninitialized, placeholder_admin, Asset, AssetPair, HealthStatus};
 use errors::OracleError;
 use reputation::{
     adjust_oracle_weight, calculate_reputation, get_oracle_stats, should_remove_oracle,
@@ -31,10 +33,6 @@ use reputation::{
 use sdex::{calculate_spot_price, OrderBook};
 use soroban_sdk::{contract, contractimpl, symbol_short, Address, BytesN, Env, Map, String, Vec};
 use staleness::{OracleHealth, OracleStatus, StalenessLevel};
-use call_stake_common::emergency::{PauseState, CAT_ALL};
-use call_stake_common::{
-    health_uninitialized, placeholder_admin, Asset, AssetPair, HealthStatus,
-};
 use types::{
     ConsensusPriceData, ExternalPrice, OracleReputation, PriceData, PriceSubmission, StorageKey,
 };

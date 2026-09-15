@@ -7,8 +7,8 @@
 
 use crate::governance::get_bridge_validators;
 use crate::monitoring::ChainId;
-use soroban_sdk::{contracttype, Address, Bytes, Env, String, Symbol};
 use call_stake_common::SECONDS_PER_DAY;
+use soroban_sdk::{contracttype, Address, Bytes, Env, String, Symbol};
 
 // ── Constants ────────────────────────────────────────────────────────────────
 
@@ -673,8 +673,10 @@ mod tests {
 
             relay_message_to_target_chain(&env, id, validators.get(0).unwrap(), proof(&env))
                 .unwrap();
-            assert!(confirm_message_delivery(&env, id, validators.get(1).unwrap(), empty(&env))
-                .is_err());
+            assert!(
+                confirm_message_delivery(&env, id, validators.get(1).unwrap(), empty(&env))
+                    .is_err()
+            );
         });
     }
 
@@ -742,8 +744,14 @@ mod tests {
             relay_message_to_target_chain(&env, id, validators.get(0).unwrap(), proof(&env))
                 .unwrap();
             confirm_message_delivery(&env, id, validators.get(1).unwrap(), proof(&env)).unwrap();
-            receive_message_callback(&env, id, validators.get(2).unwrap(), payload(&env), proof(&env))
-                .unwrap();
+            receive_message_callback(
+                &env,
+                id,
+                validators.get(2).unwrap(),
+                payload(&env),
+                proof(&env),
+            )
+            .unwrap();
             assert!(get_cross_chain_message(&env, id).is_none());
         });
     }
@@ -773,10 +781,14 @@ mod tests {
                 .persistent()
                 .set(&MessagingKey::Message(id), &msg);
 
-            assert!(
-                receive_message_callback(&env, id, validators.get(1).unwrap(), payload(&env), proof(&env))
-                    .is_err()
-            );
+            assert!(receive_message_callback(
+                &env,
+                id,
+                validators.get(1).unwrap(),
+                payload(&env),
+                proof(&env)
+            )
+            .is_err());
         });
     }
 
@@ -798,10 +810,14 @@ mod tests {
             relay_message_to_target_chain(&env, id, validators.get(0).unwrap(), proof(&env))
                 .unwrap();
             // Skip confirm_message_delivery
-            assert!(
-                receive_message_callback(&env, id, validators.get(1).unwrap(), payload(&env), proof(&env))
-                    .is_err()
-            );
+            assert!(receive_message_callback(
+                &env,
+                id,
+                validators.get(1).unwrap(),
+                payload(&env),
+                proof(&env)
+            )
+            .is_err());
         });
     }
 
@@ -823,10 +839,14 @@ mod tests {
             relay_message_to_target_chain(&env, id, validators.get(0).unwrap(), proof(&env))
                 .unwrap();
             confirm_message_delivery(&env, id, validators.get(1).unwrap(), proof(&env)).unwrap();
-            assert!(
-                receive_message_callback(&env, id, validators.get(2).unwrap(), payload(&env), empty(&env))
-                    .is_err()
-            );
+            assert!(receive_message_callback(
+                &env,
+                id,
+                validators.get(2).unwrap(),
+                payload(&env),
+                empty(&env)
+            )
+            .is_err());
         });
     }
 
@@ -1002,8 +1022,14 @@ mod tests {
                 MessageStatus::Delivered
             );
 
-            receive_message_callback(&env, id, validators.get(2).unwrap(), payload(&env), proof(&env))
-                .unwrap();
+            receive_message_callback(
+                &env,
+                id,
+                validators.get(2).unwrap(),
+                payload(&env),
+                proof(&env),
+            )
+            .unwrap();
             assert!(get_cross_chain_message(&env, id).is_none());
         });
     }

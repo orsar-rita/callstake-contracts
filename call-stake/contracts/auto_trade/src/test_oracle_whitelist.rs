@@ -3,11 +3,11 @@
 use super::*;
 use crate::admin;
 use crate::oracle;
+use call_stake_common::oracle::OraclePrice;
 use soroban_sdk::{
     testutils::{Address as _, Ledger as _},
     Env, Symbol,
 };
-use call_stake_common::oracle::OraclePrice;
 
 fn setup() -> (Env, Address, Address, AutoTradeContractClient<'static>) {
     let env = Env::default();

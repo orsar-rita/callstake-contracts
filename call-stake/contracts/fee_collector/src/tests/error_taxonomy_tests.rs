@@ -7,16 +7,16 @@
 //! so off-chain clients can branch on the *kind* of failure without hard-coding
 //! per-contract numbers. See `docs/error_taxonomy.md`.
 
+use call_stake_common::{
+    collateral_oracle::{self, CollateralError},
+    join_rate_limit::{self, JoinRateLimitConfig, JoinRateLimitError},
+    oracle::{OraclePrice, MAX_PRICE_AGE_SECS},
+};
 use shared::errors::{ErrorCategory, RecoveryStrategy};
 use soroban_sdk::{
     symbol_short,
     testutils::{Address as _, Ledger},
     Address, Env,
-};
-use call_stake_common::{
-    collateral_oracle::{self, CollateralError},
-    join_rate_limit::{self, JoinRateLimitConfig, JoinRateLimitError},
-    oracle::{OraclePrice, MAX_PRICE_AGE_SECS},
 };
 
 use crate::{ContractError, FeeCollector, FeeCollectorClient};

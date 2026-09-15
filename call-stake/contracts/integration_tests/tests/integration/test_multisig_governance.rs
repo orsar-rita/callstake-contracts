@@ -1,8 +1,8 @@
 #![cfg(test)]
 
+use call_stake_common::{MultisigTimelockConfig, ProposalStatus};
 use signal_registry::{CriticalActionPayload, SignalRegistry, SignalRegistryClient};
 use soroban_sdk::{testutils::Address as _, testutils::Ledger, vec, Address, Env, String};
-use call_stake_common::{MultisigTimelockConfig, ProposalStatus};
 
 #[test]
 fn test_multisig_governance_full_flow() {

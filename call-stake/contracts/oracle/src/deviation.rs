@@ -5,8 +5,8 @@
 //! when the deviation exceeds an admin-configured threshold — independently
 //! of whether aggregation or fallback logic triggers.
 
-use soroban_sdk::{contracttype, Address, Env, Symbol, Vec};
 use call_stake_common::AssetPair;
+use soroban_sdk::{contracttype, Address, Env, Symbol, Vec};
 
 use crate::errors::OracleError;
 

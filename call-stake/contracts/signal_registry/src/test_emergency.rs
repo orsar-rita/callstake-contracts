@@ -1,11 +1,11 @@
 #![cfg(test)]
 
 use super::*;
+use call_stake_common::emergency::{CircuitBreakerConfig, CAT_ALL, CAT_SIGNALS};
 use soroban_sdk::{
     testutils::{Address as _, Ledger},
     Address, Env, String,
 };
-use call_stake_common::emergency::{CircuitBreakerConfig, CAT_ALL, CAT_SIGNALS};
 
 #[test]
 fn test_granular_pause() {
