@@ -25,7 +25,7 @@ Exit codes:
   1  One or more checks failed.
 
 Usage:
-  python3 stellar-swipe/scripts/test_error_baselines.py
+  python3 call-stake/scripts/test_error_baselines.py
 """
 
 import json
@@ -90,7 +90,7 @@ def check_file(path: Path) -> List[str]:
 
     # 4. Crate name in file should be related to the file name.
     # The Rust package name may differ from the directory name (e.g.
-    # "stellar_swipe_common" vs file "common.json"), so we only flag cases
+    # "call_stake_common" vs file "common.json"), so we only flag cases
     # where the field looks entirely unrelated (neither a substring nor a
     # transformed variant of the file stem).
     declared_crate: str = data["crate"]
@@ -182,7 +182,7 @@ def main() -> int:
         if crate not in existing_crates:
             overall_failures.append(
                 f"[{crate}] no baseline file found in {BASELINES_DIR} — "
-                f"run 'python3 stellar-swipe/scripts/check_error_codes.py' "
+                f"run 'python3 call-stake/scripts/check_error_codes.py' "
                 f"to generate it"
             )
 

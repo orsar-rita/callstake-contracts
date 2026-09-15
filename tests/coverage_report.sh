@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # =============================================================================
-# StellarSwipe Contract Coverage Report Generator
+# CallStake Contract Coverage Report Generator
 # =============================================================================
 # Usage:
 #   chmod +x tests/coverage_report.sh
@@ -14,7 +14,7 @@
 #
 # Requirements:
 #   - cargo-tarpaulin: cargo install cargo-tarpaulin
-#   - Run from the repository root or stellar-swipe/ directory
+#   - Run from the repository root or call-stake/ directory
 # =============================================================================
 
 set -euo pipefail
@@ -25,7 +25,7 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
-WORKSPACE_DIR="${REPO_ROOT}/stellar-swipe"
+WORKSPACE_DIR="${REPO_ROOT}/call-stake"
 OUTPUT_DIR="${SCRIPT_DIR}/coverage_output"
 REPORT_FILE="${OUTPUT_DIR}/coverage_summary.txt"
 
@@ -72,7 +72,7 @@ check_dependency() {
 # Pre-flight checks
 # ---------------------------------------------------------------------------
 
-log "StellarSwipe Coverage Report Generator"
+log "CallStake Coverage Report Generator"
 log "======================================="
 
 check_dependency cargo "curl https://sh.rustup.rs -sSf | sh"
@@ -164,7 +164,7 @@ OVERALL_PASS=true
 
 {
   echo "============================================================"
-  echo "  StellarSwipe Contract Coverage Report"
+  echo "  CallStake Contract Coverage Report"
   echo "  Generated: $(date '+%Y-%m-%d %H:%M:%S')"
   echo "============================================================"
   echo ""

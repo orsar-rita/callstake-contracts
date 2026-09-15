@@ -1,4 +1,4 @@
-# Contributing to StellarSwipe-Contract
+# Contributing to CallStake-Contract
 
 ## Scaffold a new contract crate
 
@@ -7,20 +7,20 @@ shared **Pausable**, **Initializable**, and **StorageTrait** conventions:
 
 ```bash
 # From the repository root
-./stellar-swipe/scripts/scaffold_contract.sh <contract_name>
+./call-stake/scripts/scaffold_contract.sh <contract_name>
 ```
 
 ### Example
 
 ```bash
-./stellar-swipe/scripts/scaffold_contract.sh reward_distributor
+./call-stake/scripts/scaffold_contract.sh reward_distributor
 ```
 
 This creates:
 
 ```
-stellar-swipe/contracts/reward_distributor/
-├── Cargo.toml          # depends on soroban-sdk + stellar-swipe-common
+call-stake/contracts/reward_distributor/
+├── Cargo.toml          # depends on soroban-sdk + call-stake-common
 └── src/
     ├── lib.rs          # initialize / pause / unpause / storage_write / storage_read
     └── tests.rs        # starter tests covering init, pause, storage round-trip
@@ -31,9 +31,9 @@ The workspace `Cargo.toml` is updated automatically to include the new crate.
 ### Verify the scaffold
 
 ```bash
-cd stellar-swipe
-cargo test   -p stellar-swipe-reward-distributor
-cargo clippy -p stellar-swipe-reward-distributor -- -D warnings
+cd call-stake
+cargo test   -p call-stake-reward-distributor
+cargo clippy -p call-stake-reward-distributor -- -D warnings
 ```
 
 Both should pass with no manual fixes required.
@@ -57,10 +57,10 @@ Stellar 7-decimal `i128`) must not use raw `+`, `-`, `*`, `/` operators, since
 those panic on overflow in debug builds and wrap or panic unpredictably
 otherwise (Soroban release profile sets `overflow-checks = true`).
 
-Use `stellar_swipe_common::Amount` instead:
+Use `call_stake_common::Amount` instead:
 
 ```rust
-use stellar_swipe_common::Amount;
+use call_stake_common::Amount;
 
 let total = Amount::new(a).checked_add(Amount::new(b))?; // Result<Amount, AmountError>
 let fee = principal.checked_mul_rate(fee_bps, 10_000)?;   // principal * fee_bps / 10_000
@@ -111,22 +111,22 @@ To run it locally:
 
 ```bash
 cargo install cargo-fuzz   # one-time
-cd stellar-swipe/contracts/signal_registry/fuzz
+cd call-stake/contracts/signal_registry/fuzz
 cargo +nightly fuzz run fuzz_create_signal -- -max_total_time=60
 ```
 
 The fuzz crate is a **detached workspace** (its own `[workspace]` /
-`Cargo.lock`, separate from `stellar-swipe/Cargo.toml`) so `libfuzzer-sys`,
+`Cargo.lock`, separate from `call-stake/Cargo.toml`) so `libfuzzer-sys`,
 `arbitrary`, and the nightly sanitizer build it needs never become
 dependencies of the deployed contract workspace or its `cargo-deny` /
 reproducible-build checks. Its `Cargo.toml` pins every `soroban-*` crate (and
-`ed25519-dalek`) to the exact versions in `stellar-swipe/Cargo.lock` — left
+`ed25519-dalek`) to the exact versions in `call-stake/Cargo.lock` — left
 unpinned, a fresh resolve of `soroban-env-host`'s `ed25519-dalek = ">=2.0.0"`
 requirement picks up `ed25519-dalek` 3.x, which breaks
 `soroban-env-host`'s own `testutils` build (its `with_test_prng` helper
 predates ed25519-dalek 3's `CryptoRng` bound). If `cargo fuzz build` ever
 fails with a `ChaCha20Rng: CryptoRng` trait error, re-sync those pinned
-versions with the current `stellar-swipe/Cargo.lock` and run
+versions with the current `call-stake/Cargo.lock` and run
 `cargo update -p ed25519-dalek@<new-version> --precise 2.2.0` (or whatever
 version the parent lockfile carries) inside `fuzz/` to force the two
 `ed25519-dalek` copies back into one.
@@ -161,7 +161,7 @@ run before a contract is deployed or upgraded.
 ## Contract interface (ABI) changes
 
 Every Soroban contract's exported function names and `contractspecv0` hash are
-snapshotted in [`stellar-swipe/abi-baselines/`](stellar-swipe/abi-baselines/).
+snapshotted in [`call-stake/abi-baselines/`](call-stake/abi-baselines/).
 CI detects and reports any ABI difference automatically, posting a
 [**WASM ABI Export Diff Report**](#) as a PR comment.
 

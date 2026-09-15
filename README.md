@@ -1,6 +1,6 @@
-# StellarSwipe
+# CallStake
 
-StellarSwipe is a decentralized trading-signal platform built on Stellar
+CallStake is a decentralized trading-signal platform built on Stellar
 using Soroban smart contracts. Signal providers register trade calls,
 stake against their reputation, and get paid from protocol fees; users
 follow, vote on, and (increasingly) auto-execute those signals. See
@@ -9,7 +9,7 @@ follow, vote on, and (increasingly) auto-execute those signals. See
 ## Repository layout
 
 ```
-stellar-swipe/       Live Soroban contract workspace (Rust) — see below
+call-stake/          Live Soroban contract workspace (Rust) — see below
 frontend/            Next.js + React frontend, Freighter wallet integration
 scripts/             Deployment, snapshot/replay, and e2e tooling (TypeScript/Python)
 config/              Per-network config (mainnet.json, testnet.json, rpc_endpoints.json)
@@ -18,15 +18,15 @@ docs/                Architecture, security, and per-feature reference docs
 tests/               End-to-end and regression suites (separate from per-crate unit tests)
 ```
 
-**`stellar-swipe/` is the only live contract workspace.** Its
+**`call-stake/` is the only live contract workspace.** Its
 `Cargo.toml` defines the workspace members, and every CI workflow under
-`.github/workflows/` builds and tests from inside it — `cd stellar-swipe
+`.github/workflows/` builds and tests from inside it — `cd call-stake
 && cargo test --workspace --all-targets` is the baseline gate. A legacy,
 much smaller `contracts/` tree used to sit at the repo root; it predated
 this workspace, wasn't a Cargo workspace member, wasn't referenced by
 CI or by any script/doc, and has been removed.
 
-### Contracts (`stellar-swipe/contracts/`)
+### Contracts (`call-stake/contracts/`)
 
 | Crate | Role |
 |---|---|
@@ -48,7 +48,7 @@ CI or by any script/doc, and has been removed.
 
 ```bash
 rustup target add wasm32-unknown-unknown
-cd stellar-swipe
+cd call-stake
 cargo test --workspace --all-targets   # run the full contract test suite
 cargo fmt --all -- --check             # matches CI's format gate
 cargo clippy --workspace --all-targets -- -D warnings   # matches CI's lint gate
@@ -72,7 +72,7 @@ and [CONTRIBUTING.md](CONTRIBUTING.md) for scaffolding a new contract crate.
 - [docs/faq.md](docs/faq.md) — Soroban/workspace-specific FAQ
 - [docs/security/](docs/security/) — threat model, disclosure process, per-topic security analyses
 - [SECURITY.md](SECURITY.md) — vulnerability disclosure policy
-- `stellar-swipe/docs/` — implementation-level docs for individual contract patterns (cross-contract auth, event macros, governance timelocks, etc.)
+- `call-stake/docs/` — implementation-level docs for individual contract patterns (cross-contract auth, event macros, governance timelocks, etc.)
 
 ## Contributing
 

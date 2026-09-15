@@ -3,7 +3,7 @@
 # each artifact with `stellar contract optimize` (wasm-opt pipeline).
 #
 # Run from the workspace root (this directory's parent):
-#   cd stellar-swipe && ./scripts/build.sh
+#   cd call-stake && ./scripts/build.sh
 #
 # Options:
 #   ./scripts/build.sh           Release build + optimize → target/wasm-optimized/

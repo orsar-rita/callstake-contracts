@@ -541,7 +541,7 @@ def main() -> int:
     if not wasm_dir.is_dir():
         print(
             f"WASM directory not found: {wasm_dir}\n"
-            f"Build the contracts first: cd stellar-swipe && ./scripts/build.sh",
+            f"Build the contracts first: cd call-stake && ./scripts/build.sh",
             file=sys.stderr,
         )
         return 1

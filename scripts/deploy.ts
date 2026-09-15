@@ -1,6 +1,6 @@
 #!/usr/bin/env ts-node
 /**
- * deploy.ts — Network-aware deploy script for StellarSwipe contracts.
+ * deploy.ts — Network-aware deploy script for CallStake contracts.
  *
  * Usage:
  *   STELLAR_NETWORK=testnet STELLAR_SOURCE_ACCOUNT=<key> STELLAR_ADMIN_ADDRESS=<G...> npx ts-node scripts/deploy.ts
@@ -79,7 +79,7 @@ function deployContract(wasmPath: string): string {
 // Deploy signal_registry
 const wasmDir = path.resolve(
   __dirname,
-  "../stellar-swipe/target/wasm32-unknown-unknown/release"
+  "../call-stake/target/wasm32-unknown-unknown/release"
 );
 
 const signalRegistryId = deployContract(`${wasmDir}/signal_registry.wasm`);

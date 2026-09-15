@@ -24,7 +24,7 @@ Exit codes
   1  Breaking change — a key was removed or renamed.
   2  New keys added — baseline updated (only in --update mode; commit the JSON).
 
-The baseline files live in stellar-swipe/storage-baselines/<contract>.json.
+The baseline files live in call-stake/storage-baselines/<contract>.json.
 """
 
 import argparse

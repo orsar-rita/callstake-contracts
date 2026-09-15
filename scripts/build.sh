@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
-# Wrapper: Soroban workspace lives under stellar-swipe/.
-exec "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/../stellar-swipe/scripts/build.sh" "$@"
+# Wrapper: Soroban workspace lives under call-stake/.
+exec "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/../call-stake/scripts/build.sh" "$@"

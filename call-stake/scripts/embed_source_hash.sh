@@ -7,13 +7,13 @@
 #                                            # caller's environment
 #
 # The hash covers:
-#   - Every *.rs and *.toml file under stellar-swipe/ (excluding target/)
+#   - Every *.rs and *.toml file under call-stake/ (excluding target/)
 #   - Sorted by path for reproducibility across platforms
 #
 # Third-party verification:
 #   1. Fetch the source archive that matches the commit recorded in the
 #      deployed contract metadata (key "GitCommit").
-#   2. Run this script from the stellar-swipe/ workspace root.
+#   2. Run this script from the call-stake/ workspace root.
 #   3. Compare STELLAR_SOURCE_HASH against the value read from the deployed
 #      WASM with:  stellar contract inspect --wasm <file.wasm>
 #

@@ -10,8 +10,8 @@ on:
     branches: [ main ]
     paths:
       # Only trigger when dependency manifests change.
-      - 'stellar-swipe/Cargo.toml'
-      - 'stellar-swipe/Cargo.lock'
+      - 'call-stake/Cargo.toml'
+      - 'call-stake/Cargo.lock'
 
 permissions:
   contents: read
@@ -42,7 +42,7 @@ jobs:
         run: |
           set -euo pipefail
 
-          CARGO_TOML="stellar-swipe/Cargo.toml"
+          CARGO_TOML="call-stake/Cargo.toml"
 
           # Extract version from the current (PR) branch.
           new_ver=$(grep -E '^soroban-sdk\s*=' "$CARGO_TOML" \
@@ -91,14 +91,14 @@ jobs:
       - name: Cache dependencies
         uses: Swatinem/rust-cache@v2
         with:
-          workspaces: stellar-swipe
+          workspaces: call-stake
 
       # ── Run benchmark suite on the NEW (post-bump) version ───────────────────
       - name: Run storage rent benchmarks (new SDK ${{ needs.detect-sdk-bump.outputs.new_version }})
         id: bench_new
         run: |
           set -euo pipefail
-          cd stellar-swipe
+          cd call-stake
           cargo test -p trade_executor \
             storage_rent \
             -- --nocapture 2>&1 | tee /tmp/bench_new.txt
@@ -117,7 +117,7 @@ jobs:
         id: bench_old
         run: |
           set -euo pipefail
-          cd stellar-swipe
+          cd call-stake
           cargo test -p trade_executor \
             storage_rent \
             -- --nocapture 2>&1 | tee /tmp/bench_old.txt || true

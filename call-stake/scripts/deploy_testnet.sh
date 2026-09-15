@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
-# Deploy and initialize StellarSwipe Soroban contracts on testnet in dependency order.
+# Deploy and initialize CallStake Soroban contracts on testnet in dependency order.
 #
 # Logical order (see deployments/testnet.json keys):
-#   common types  → no WASM (stellar_swipe_common is a library only)
+#   common types  → no WASM (call_stake_common is a library only)
 #   StakeVault    → governance package
 #   SignalRegistry → signal_registry package
 #   FeeCollector  → oracle package
@@ -23,7 +23,7 @@
 #   STELLAR_RPC_URL            Soroban RPC (overrides network default if set)
 #   STELLAR_NETWORK_PASSPHRASE default: Test SDF Network ; September 2015
 #   WASM_DIR                   default: target/wasm32-unknown-unknown/release
-#   ROOT                       workspace root (parent of stellar-swipe); auto-detected
+#   ROOT                       workspace root (parent of call-stake); auto-detected
 #   DEPLOY_TRADE_EXECUTOR      default 1; set 0 to skip bridge (no #[contract] on some branches)
 #   GOVERNANCE_INIT_SKIP       set 1 to deploy governance WASM but skip initialize (manual CLI)
 #   RECIPIENT_TEAM, RECIPIENT_EARLY_INVESTORS, ... (G...) override DistributionRecipients;
@@ -86,7 +86,7 @@ if [[ ! -f "$STATE" ]]; then
       network: $net,
       rpc_url: $rpc,
       network_passphrase: $ph,
-      note: "common/stellar_swipe_common is library-only; no deploy",
+      note: "common/call_stake_common is library-only; no deploy",
       contracts: {}
     }' >"$STATE"
 fi
@@ -164,7 +164,7 @@ deploy_if_needed() {
   local wasm="$WASM_DIR/${package}.wasm"
   local existing cid out
 
-  [[ -f "$wasm" ]] || die "missing WASM: $wasm (build with: cd stellar-swipe && cargo build --workspace --target wasm32-unknown-unknown --release)"
+  [[ -f "$wasm" ]] || die "missing WASM: $wasm (build with: cd call-stake && cargo build --workspace --target wasm32-unknown-unknown --release)"
 
   existing="$(get_cid "$logical")"
   if [[ -n "$existing" ]]; then
@@ -243,7 +243,7 @@ init_governance() {
   # Nested struct flags (stellar-cli); if this fails on your CLI version, set GOVERNANCE_INIT_SKIP=1 and invoke manually.
   invoke_init "$logical" "$cid" \
     --admin "$ADMIN" \
-    --name "StellarSwipe Gov" \
+    --name "CallStake Gov" \
     --symbol "SSG" \
     --decimals 7 \
     --total_supply "$supply" \

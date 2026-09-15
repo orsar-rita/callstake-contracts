@@ -49,7 +49,7 @@ jobs:
       # release. Validate them before anything else so a misconfigured
       # manifest fails fast, cheaply, and before any build/test work.
       - name: Validate deployment manifests
-        run: python3 stellar-swipe/scripts/validate_deployment_manifest.py
+        run: python3 call-stake/scripts/validate_deployment_manifest.py
 
       # Setup Rust toolchain with required components and target
       - name: Setup Rust
@@ -62,19 +62,19 @@ jobs:
       - name: Cache dependencies
         uses: Swatinem/rust-cache@v2
         with:
-          workspaces: stellar-swipe
+          workspaces: call-stake
 
       # Format check for entire workspace
       - name: Format check
-        run: cd stellar-swipe && cargo fmt --all -- --check
+        run: cd call-stake && cargo fmt --all -- --check
 
       # Clippy: any warning blocks the release gate.
       - name: Clippy
-        run: cd stellar-swipe && cargo clippy --workspace --all-targets -- -D warnings
+        run: cd call-stake && cargo clippy --workspace --all-targets -- -D warnings
 
       # Run tests for all workspace crates
       - name: Tests
-        run: cd stellar-swipe && cargo test --workspace --all-targets
+        run: cd call-stake && cargo test --workspace --all-targets
 
       # Guard against renumbering or reusing #[contracterror] discriminants.
       # Exit 0 = clean; exit 2 = new codes added (baseline auto-updated, not
@@ -82,7 +82,7 @@ jobs:
       # renumbering/reuse detected -> fail the build.
       - name: Check error code baselines
         run: |
-          python3 stellar-swipe/scripts/check_error_codes.py
+          python3 call-stake/scripts/check_error_codes.py
           rc=$?
           if [ $rc -eq 1 ]; then
             echo "ERROR: error code violation detected — see output above." >&2
@@ -90,5 +90,5 @@ jobs:
           fi
           if [ $rc -eq 2 ]; then
             echo "INFO: new error codes added; baseline updated locally."
-            echo "This is not a gate failure — commit the updated stellar-swipe/error-baselines/*.json files."
+            echo "This is not a gate failure — commit the updated call-stake/error-baselines/*.json files."
           fi

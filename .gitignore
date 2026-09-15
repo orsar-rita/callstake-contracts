@@ -8,6 +8,6 @@ somzilla.md
 /package-lock.json
 
 # Accidental local `cargo check ... > file.txt` / `2> file.txt` redirects
-# under stellar-swipe/ that sometimes get committed by mistake.
-stellar-swipe/compile_errors.txt
-stellar-swipe/shared_errors.txt
+# under call-stake/ that sometimes get committed by mistake.
+call-stake/compile_errors.txt
+call-stake/shared_errors.txt

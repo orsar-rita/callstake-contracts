@@ -9,13 +9,13 @@ regressions before they reach production.
 
 Usage:
     # CI (pipe wasm dir, read baseline, exit 1 on regression):
-    python3 stellar-swipe/scripts/check_wasm_size.py
+    python3 call-stake/scripts/check_wasm_size.py
 
     # Update the baseline after an intentional size change:
-    python3 stellar-swipe/scripts/check_wasm_size.py --update
+    python3 call-stake/scripts/check_wasm_size.py --update
 
     # Point at a non-default wasm directory:
-    python3 stellar-swipe/scripts/check_wasm_size.py --wasm-dir path/to/wasm
+    python3 call-stake/scripts/check_wasm_size.py --wasm-dir path/to/wasm
 
 Exit codes:
     0  All contracts are within the allowed threshold.
@@ -27,7 +27,7 @@ Threshold:
     _threshold_pct in the baseline JSON or --threshold-pct on the CLI.
 
 Baseline file:
-    stellar-swipe/baselines/wasm_size_baseline.json
+    call-stake/baselines/wasm_size_baseline.json
 
     Format:
     {
@@ -40,8 +40,8 @@ Updating the baseline:
     Run with --update.  The script will overwrite baselines/wasm_size_baseline.json
     with the current measurements.  Review the diff, then commit:
 
-        python3 stellar-swipe/scripts/check_wasm_size.py --update
-        git add stellar-swipe/baselines/wasm_size_baseline.json
+        python3 call-stake/scripts/check_wasm_size.py --update
+        git add call-stake/baselines/wasm_size_baseline.json
         git commit -m "chore: update WASM size baseline — <reason>"
 """
 
@@ -80,7 +80,7 @@ def save_baseline(data: dict, threshold_pct: int) -> None:
     out = {k: v for k, v in data.items() if not k.startswith("_")}
     out["_comment"] = (
         "Baseline WASM byte sizes for optimized Soroban contracts. "
-        "Update via: python3 stellar-swipe/scripts/check_wasm_size.py --update"
+        "Update via: python3 call-stake/scripts/check_wasm_size.py --update"
     )
     out["_threshold_pct"] = threshold_pct
     BASELINE_FILE.write_text(json.dumps(out, indent=2, sort_keys=True) + "\n")
@@ -121,7 +121,7 @@ def main() -> int:
     if not wasm_dir.is_dir():
         print(
             f"WASM directory not found: {wasm_dir}\n"
-            "  Build optimized WASM first: cd stellar-swipe && ./scripts/build.sh",
+            "  Build optimized WASM first: cd call-stake && ./scripts/build.sh",
             file=sys.stderr,
         )
         return 1
@@ -134,7 +134,7 @@ def main() -> int:
     if not measurements:
         print(
             f"No *.wasm files found in {wasm_dir}.\n"
-            "  Build optimized WASM first: cd stellar-swipe && ./scripts/build.sh",
+            "  Build optimized WASM first: cd call-stake && ./scripts/build.sh",
             file=sys.stderr,
         )
         return 1
@@ -186,8 +186,8 @@ def main() -> int:
                   f"limit {_human(limit)}, over by {_human(delta)})")
         print()
         print("To accept these regressions after review:")
-        print("  python3 stellar-swipe/scripts/check_wasm_size.py --update")
-        print("  git add stellar-swipe/baselines/wasm_size_baseline.json")
+        print("  python3 call-stake/scripts/check_wasm_size.py --update")
+        print("  git add call-stake/baselines/wasm_size_baseline.json")
         print("  git commit -m 'chore: update WASM size baseline — <reason>'")
         return 1
 
@@ -196,7 +196,7 @@ def main() -> int:
             baseline[name] = measurements[name]
         save_baseline(baseline, threshold_pct)
         print(f"INFO: {len(new_contracts)} new contract(s) added to baseline.")
-        print("Please commit the updated stellar-swipe/baselines/wasm_size_baseline.json.")
+        print("Please commit the updated call-stake/baselines/wasm_size_baseline.json.")
         return 2
 
     total = sum(measurements.values())
