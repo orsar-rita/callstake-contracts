@@ -13,6 +13,7 @@ import { AdminModule } from './admin/admin.module';
 import { NotificationsModule } from './notifications/notifications.module';
 import { AnalyticsModule } from './analytics/analytics.module';
 import { CacheConfigModule } from './cache/cache.module';
+import { QueueModule } from './queue/queue.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { CacheConfigModule } from './cache/cache.module';
     AdminModule,
     NotificationsModule,
     AnalyticsModule,
+    QueueModule,
   ],
   providers: [{ provide: APP_GUARD, useClass: ThrottlerGuard }],
 })
