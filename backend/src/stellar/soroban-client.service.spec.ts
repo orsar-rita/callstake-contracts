@@ -1,4 +1,4 @@
-import { Account, Keypair, nativeToScVal, rpc } from '@stellar/stellar-sdk';
+import { Account, Keypair, nativeToScVal, rpc, StrKey } from '@stellar/stellar-sdk';
 import { SorobanClientService } from './soroban-client.service';
 import { ContractRegistryService } from '../config/contract-registry.service';
 
@@ -27,7 +27,7 @@ function makeRegistry() {
 
 describe('SorobanClientService', () => {
   const sourceKeypair = Keypair.random();
-  const contractAddress = 'CA' + 'A'.repeat(54);
+  const contractAddress = StrKey.encodeContract(Buffer.alloc(32, 1));
 
   function makeServiceWithFakeServer() {
     const fakeServer = {

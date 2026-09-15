@@ -5,7 +5,12 @@ import { UsersService } from './users.service';
 function makeService(userOverrides: Partial<{ id: string; walletAddress: string }> = {}) {
   const user = { id: 'user-1', walletAddress: Keypair.random().publicKey(), displayName: null, bio: null, createdAt: new Date(), ...userOverrides };
   const usersRepo = {
-    findOne: jest.fn().mockResolvedValue(user),
+    findOne: jest.fn().mockImplementation(async ({ where }: { where: Record<string, unknown> }) => {
+      if (where.id === user.id || where.walletAddress === user.walletAddress) {
+        return user;
+      }
+      return null;
+    }),
     save: jest.fn().mockImplementation(async (u) => u),
   };
   const linkedWalletsRepo = {

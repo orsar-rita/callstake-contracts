@@ -102,6 +102,7 @@ describe('AuthService', () => {
         walletAddress: keypair.publicKey(),
         displayName: 'Trader',
         bio: null,
+        isAdmin: false,
         createdAt: new Date(),
         updatedAt: new Date(),
       };

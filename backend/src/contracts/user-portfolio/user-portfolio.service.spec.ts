@@ -1,10 +1,10 @@
 import { ServiceUnavailableException } from '@nestjs/common';
 import { UserPortfolioService } from './user-portfolio.service';
 
-function makeService(address: string | undefined = 'CUSERPORTFOLIO') {
+function makeService(opts: { address?: string } = { address: 'CUSERPORTFOLIO' }) {
   const soroban = { callReadOnly: jest.fn() };
   const values: Record<string, string | undefined> = {
-    'stellar.userPortfolioContractAddress': address,
+    'stellar.userPortfolioContractAddress': opts.address,
     'stellar.simulationAccount': 'GSIMULATIONACCOUNT',
   };
   const configService = { get: (key: string) => values[key] };
@@ -13,7 +13,7 @@ function makeService(address: string | undefined = 'CUSERPORTFOLIO') {
 
 describe('UserPortfolioService', () => {
   it('throws ServiceUnavailableException when no address override is configured', async () => {
-    const { service } = makeService(undefined);
+    const { service } = makeService({ address: undefined });
     await expect(service.getPnl('GUSER')).rejects.toThrow(ServiceUnavailableException);
   });
 

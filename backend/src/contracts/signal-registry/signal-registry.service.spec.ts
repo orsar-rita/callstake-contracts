@@ -17,7 +17,7 @@ function makeService(opts: { address?: string | null; simulationAccount?: string
     }),
   };
   const configService = {
-    get: jest.fn(() => opts.simulationAccount ?? 'GSIMULATIONACCOUNT'),
+    get: jest.fn((): string | undefined => opts.simulationAccount ?? 'GSIMULATIONACCOUNT'),
   };
   const service = new SignalRegistryService(soroban as any, registry as any, configService as any);
   return { service, soroban, registry, configService };
