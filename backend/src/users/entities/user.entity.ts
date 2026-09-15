@@ -22,6 +22,9 @@ export class User {
   @Column({ name: 'bio', type: 'varchar', length: 280, nullable: true })
   bio!: string | null;
 
+  @Column({ name: 'is_admin', type: 'boolean', default: false })
+  isAdmin!: boolean;
+
   @CreateDateColumn({ name: 'created_at' })
   createdAt!: Date;
 
