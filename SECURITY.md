@@ -2,7 +2,7 @@
 
 ## Security Vulnerability Disclosure Program
 
-StellarSwipe is committed to ensuring the security of our smart contract platform and protecting our users' assets. We welcome the security research community to help us maintain the highest security standards.
+CallStake is committed to ensuring the security of our smart contract platform and protecting our users' assets. We welcome the security research community to help us maintain the highest security standards.
 
 ---
 
@@ -88,7 +88,7 @@ We are particularly interested in vulnerabilities related to:
 ### Primary Contact Methods
 
 **1. Security Email (Preferred)**
-- **Email**: security@stellarswipe.io
+- **Email**: security@callstake.io
 - **PGP Key**: Available at `docs/security/pgp-key.asc`
 - **Response Time**: Within 48 hours
 
@@ -98,11 +98,11 @@ We are particularly interested in vulnerabilities related to:
 - **For**: Structured submissions with bounty eligibility
 
 **3. Private GitHub Security Advisory**
-- **URL**: https://github.com/AgesEmpire/StellarSwipe-Contract/security/advisories
+- **URL**: https://github.com/AgesEmpire/CallStake-Contract/security/advisories
 - **For**: Detailed technical reports with code references
 
 **4. Encrypted Communication**
-- **Keybase**: stellarswipe_security
+- **Keybase**: callstake_security
 - **Signal**: [To be announced]
 - **For**: Sensitive or time-critical disclosures
 
@@ -502,7 +502,7 @@ When reviewing our code, pay special attention to:
 
 ### Safe Harbor Provision
 
-StellarSwipe commits to not pursuing legal action against security researchers who:
+CallStake commits to not pursuing legal action against security researchers who:
 
 1. **Act in Good Faith**
    - Make a good faith effort to comply with this policy
@@ -584,18 +584,18 @@ You may choose to:
 ### Security Team
 
 **Primary Contact:**
-- Email: security@stellarswipe.io
+- Email: security@callstake.io
 - PGP: See `docs/security/pgp-key.asc`
 
 **Emergency Contact:**
 - For critical vulnerabilities requiring immediate attention
-- Email: emergency-security@stellarswipe.io
+- Email: emergency-security@callstake.io
 
 **Bug Bounty Platform:**
 - [To be announced]
 
 **Social Media:**
-- Twitter: @StellarSwipe
+- Twitter: @CallStake
 - Discord: [Community server]
 - Telegram: [Security channel]
 
@@ -648,6 +648,6 @@ This security policy may be updated periodically. Changes will be:
 
 ---
 
-**Thank you for helping keep StellarSwipe secure!**
+**Thank you for helping keep CallStake secure!**
 
-For questions about this policy, contact: security@stellarswipe.io
+For questions about this policy, contact: security@callstake.io
