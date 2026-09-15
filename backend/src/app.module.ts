@@ -12,11 +12,13 @@ import { ContractsModule } from './contracts/contracts.module';
 import { AdminModule } from './admin/admin.module';
 import { NotificationsModule } from './notifications/notifications.module';
 import { AnalyticsModule } from './analytics/analytics.module';
+import { CacheConfigModule } from './cache/cache.module';
 
 @Module({
   imports: [
     ConfigModule,
     ThrottlerModule.forRoot([{ ttl: 60_000, limit: 120 }]),
+    CacheConfigModule,
     DatabaseModule,
     RedisModule,
     StellarModule,

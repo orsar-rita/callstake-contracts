@@ -1,4 +1,5 @@
-import { Body, Controller, Get, Param, ParseIntPipe, Post, Query } from '@nestjs/common';
+import { Body, Controller, Get, Param, ParseIntPipe, Post, Query, UseInterceptors } from '@nestjs/common';
+import { CacheInterceptor, CacheTTL } from '@nestjs/cache-manager';
 import { ApiTags } from '@nestjs/swagger';
 import { SignalRegistryService } from './signal-registry.service';
 import { CreateSignalDto } from './dto/create-signal.dto';
@@ -35,6 +36,8 @@ export class SignalRegistryController {
   }
 
   @Get('leaderboard/top-providers')
+  @UseInterceptors(CacheInterceptor)
+  @CacheTTL(30_000)
   getTopProviders(@Query('limit', new ParseIntPipe({ optional: true })) limit = 10) {
     return this.service.getTopProviders(limit);
   }
