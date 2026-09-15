@@ -72,6 +72,31 @@ only if commits remain.
     into Postgres, integration tests on the core money-path, CI,
     Docker Compose for local dev.
 
+## Scope update discovered while building
+
+The plan above assumed a "trade execution relay" over `auto_trade`/
+`trade_executor` would be buildable once `signal_registry`/`stake_vault`/
+`fee_collector`/`governance`/`oracle` were done. Building the contract
+integration layer surfaced that this isn't addressable yet:
+`deployments/testnet.manifest.json`'s `"user_portfolio"` slot actually
+deploys the `auto_trade` package, and its `"trade_executor"` slot
+deploys `bridge` — the real `user_portfolio` and `trade_executor`
+crates have **no deployment slot at all** under their own names
+anywhere in this repo. `auto_trade`, `bridge`, `stake_vault` and
+`trade_executor` are also 4 of the workspace's 14 crates that don't
+currently compile (`cargo build --workspace`), independent of this
+manifest issue.
+
+Given that, `user_portfolio` integration was scaled back to what's
+genuinely resolvable: read-only portfolio/PnL/KYC-status endpoints
+behind an explicit `USER_PORTFOLIO_CONTRACT_ADDRESS` env override
+(rather than guessing an address or quietly calling the wrong
+contract), plus a real, tested `KycGuard` ready to protect a future
+trade-relay endpoint. A full `auto_trade`/`trade_executor` order-
+submission relay is deferred until the manifest correctly addresses
+those crates and they build — flagging that mapping is worth this
+repo's attention independent of the backend.
+
 ## Deferred entirely (with reasoning)
 
 - **SSO/SAML, multi-tenancy, data residency, i18n** — enterprise/B2B

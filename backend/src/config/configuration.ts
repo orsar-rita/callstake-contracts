@@ -32,6 +32,7 @@ export default function configuration() {
       network: env.STELLAR_NETWORK,
       contractRegistryPath: env.CONTRACT_REGISTRY_PATH,
       simulationAccount: env.SOROBAN_SIMULATION_ACCOUNT,
+      userPortfolioContractAddress: env.USER_PORTFOLIO_CONTRACT_ADDRESS,
     },
   };
 }
