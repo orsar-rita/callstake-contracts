@@ -9,7 +9,7 @@ export default function Home() {
       <section className="hero">
         <div className="brand-row">
           <span className="brand-mark">✦</span>
-          <span className="brand-name">StellarSwipe</span>
+          <span className="brand-name">CallStake</span>
         </div>
 
         <div className="hero-copy">

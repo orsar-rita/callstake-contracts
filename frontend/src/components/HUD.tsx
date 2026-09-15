@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useDebouncedPolling } from "../hooks/useDebouncedPolling";
-import { FetchError } from "../utils/stellarswipe-adapter";
+import { FetchError } from "../utils/callstake-adapter";
 
 interface TycoonStats {
   cash: number;

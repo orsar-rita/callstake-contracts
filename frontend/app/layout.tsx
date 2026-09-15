@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "StellarSwipe",
+  title: "CallStake",
   description: "Network-aware decentralized swipe-to-copy-trade on Stellar",
 };
 

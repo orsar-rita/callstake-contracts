@@ -4,7 +4,7 @@ import {
   type RpcEndpointConfig,
 } from "../config/rpc-endpoints";
 
-export interface StellarSwipeStats {
+export interface CallStakeStats {
   cash: number;
   incomeRate: number;
   boosts: number;
@@ -19,7 +19,7 @@ export class FetchError extends Error {
   }
 }
 
-export class StellarSwipeHUDAdapter {
+export class CallStakeHUDAdapter {
   private contractAddress: string;
   private network: RpcEndpointConfig;
 
@@ -52,7 +52,7 @@ export class StellarSwipeHUDAdapter {
     );
   }
 
-  async fetchTycoonStats(): Promise<StellarSwipeStats> {
+  async fetchTycoonStats(): Promise<CallStakeStats> {
     const errors: string[] = [];
 
     for (const baseUrl of this.rpcCandidates) {
@@ -65,7 +65,7 @@ export class StellarSwipeHUDAdapter {
           continue;
         }
 
-        const data = (await response.json()) as Partial<StellarSwipeStats> & {
+        const data = (await response.json()) as Partial<CallStakeStats> & {
           income_rate?: number;
           active_boosts?: number;
         };
@@ -88,7 +88,7 @@ export class StellarSwipeHUDAdapter {
     );
   }
 
-  async batchFetchStats(requests: string[]): Promise<StellarSwipeStats[]> {
+  async batchFetchStats(requests: string[]): Promise<CallStakeStats[]> {
     const errors: string[] = [];
 
     for (const baseUrl of this.rpcCandidates) {
@@ -104,7 +104,7 @@ export class StellarSwipeHUDAdapter {
           continue;
         }
 
-        return (await response.json()) as StellarSwipeStats[];
+        return (await response.json()) as CallStakeStats[];
       } catch (error) {
         errors.push(error instanceof Error ? error.message : String(error));
       }
