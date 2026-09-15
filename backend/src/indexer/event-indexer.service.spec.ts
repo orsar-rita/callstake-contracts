@@ -4,7 +4,10 @@ function makeService() {
   const soroban = { getEvents: jest.fn() };
   const registry = { resolve: jest.fn() };
   const notifications = { publish: jest.fn() };
-  const eventsRepo = { save: jest.fn().mockImplementation(async (e) => e), create: jest.fn((d) => d) };
+  const eventsRepo = {
+    save: jest.fn().mockImplementation(async (e) => e),
+    create: jest.fn((d) => d),
+  };
   const cursorsRepo = {
     findOne: jest.fn(),
     save: jest.fn().mockImplementation(async (c) => c),
@@ -50,7 +53,9 @@ describe('EventIndexerService', () => {
     expect(cursorsRepo.save).toHaveBeenCalledWith(
       expect.objectContaining({ contractSlot: 'signal_registry', lastLedger: '500' }),
     );
-    expect(notifications.publish).toHaveBeenCalledWith('signal_registry', 'ContractEvent', { signalId: 1 });
+    expect(notifications.publish).toHaveBeenCalledWith('signal_registry', 'ContractEvent', {
+      signalId: 1,
+    });
   });
 
   it('resumes from cursor.lastLedger + 1 on a subsequent run', async () => {

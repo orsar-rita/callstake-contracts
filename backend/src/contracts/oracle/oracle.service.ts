@@ -38,7 +38,12 @@ export class OracleService {
   }
 
   async getBaseCurrency() {
-    const result = await this.soroban.callReadOnly(this.address(), 'get_base_currency', [], this.simAccount());
+    const result = await this.soroban.callReadOnly(
+      this.address(),
+      'get_base_currency',
+      [],
+      this.simAccount(),
+    );
     return result.value;
   }
 

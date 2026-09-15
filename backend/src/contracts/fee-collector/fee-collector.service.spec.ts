@@ -8,7 +8,10 @@ function makeService() {
   };
   const registry = { requireAddress: jest.fn(() => 'CFEECOLLECTOR') };
   const configService = { get: jest.fn(() => 'GSIMULATIONACCOUNT') };
-  return { service: new FeeCollectorService(soroban as any, registry as any, configService as any), soroban };
+  return {
+    service: new FeeCollectorService(soroban as any, registry as any, configService as any),
+    soroban,
+  };
 }
 
 describe('FeeCollectorService', () => {

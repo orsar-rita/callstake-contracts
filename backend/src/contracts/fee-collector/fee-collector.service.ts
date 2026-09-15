@@ -52,7 +52,12 @@ export class FeeCollectorService {
   }
 
   async getFeeRate() {
-    const result = await this.soroban.callReadOnly(this.address(), 'fee_rate', [], this.simAccount());
+    const result = await this.soroban.callReadOnly(
+      this.address(),
+      'fee_rate',
+      [],
+      this.simAccount(),
+    );
     return result.value;
   }
 

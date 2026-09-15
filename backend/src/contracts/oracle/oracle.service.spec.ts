@@ -6,7 +6,10 @@ function makeService() {
   };
   const registry = { requireAddress: jest.fn(() => 'CORACLE') };
   const configService = { get: jest.fn(() => 'GSIMULATIONACCOUNT') };
-  return { service: new OracleService(soroban as any, registry as any, configService as any), soroban };
+  return {
+    service: new OracleService(soroban as any, registry as any, configService as any),
+    soroban,
+  };
 }
 
 describe('OracleService', () => {

@@ -50,7 +50,9 @@ describe('AuthService', () => {
       const challenges = {
         consume: jest.fn(),
       } as unknown as ChallengeStoreService;
-      const jwtService = { sign: jest.fn().mockReturnValue('signed.jwt.token') } as unknown as JwtService;
+      const jwtService = {
+        sign: jest.fn().mockReturnValue('signed.jwt.token'),
+      } as unknown as JwtService;
       const service = new AuthService(usersRepo as any, challenges, jwtService);
       return { service, usersRepo, challenges, jwtService };
     }
@@ -69,7 +71,10 @@ describe('AuthService', () => {
       (challenges.consume as jest.Mock).mockResolvedValue('the-nonce');
 
       await expect(
-        service.verifyAndLogin(Keypair.random().publicKey(), Buffer.from('garbage').toString('base64')),
+        service.verifyAndLogin(
+          Keypair.random().publicKey(),
+          Buffer.from('garbage').toString('base64'),
+        ),
       ).rejects.toThrow(UnauthorizedException);
       expect(usersRepo.save).not.toHaveBeenCalled();
     });

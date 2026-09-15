@@ -29,16 +29,28 @@ describe('money path integration (login -> stake -> signal -> fee claim)', () =>
     const soroban = {
       buildInvocation: jest
         .fn()
-        .mockImplementation(async (_address, method) => ({ xdr: `unsigned-xdr-for-${method}`, latestLedger: 1 })),
+        .mockImplementation(async (_address, method) => ({
+          xdr: `unsigned-xdr-for-${method}`,
+          latestLedger: 1,
+        })),
     };
     const registry = {
-      requireAddress: jest.fn((slot: string) => `C${slot.toUpperCase()}ADDRESS`.padEnd(56, '0').slice(0, 56)),
+      requireAddress: jest.fn((slot: string) =>
+        `C${slot.toUpperCase()}ADDRESS`.padEnd(56, '0').slice(0, 56),
+      ),
     };
     const configService = { get: jest.fn(() => 'GSIMULATIONACCOUNT') };
     const usersRepo = {
       findOne: jest.fn().mockResolvedValue(null),
       create: jest.fn((data) => data),
-      save: jest.fn().mockImplementation(async (u) => ({ id: 'user-1', displayName: null, isAdmin: false, ...u })),
+      save: jest
+        .fn()
+        .mockImplementation(async (u) => ({
+          id: 'user-1',
+          displayName: null,
+          isAdmin: false,
+          ...u,
+        })),
     };
     // A minimal in-memory stand-in for the Redis wire protocol, real enough
     // for ChallengeStoreService's own get/set/del usage.
@@ -74,7 +86,11 @@ describe('money path integration (login -> stake -> signal -> fee claim)', () =>
     expect(stakeInvocation.xdr).toBe('unsigned-xdr-for-deposit_stake');
 
     // Step 3: submit a signal, same provider.
-    const signalRegistry = new SignalRegistryService(soroban as any, registry as any, configService as any);
+    const signalRegistry = new SignalRegistryService(
+      soroban as any,
+      registry as any,
+      configService as any,
+    );
     await signalRegistry.buildCreateSignal({
       provider: provider.publicKey(),
       assetPair: 'XLM/USDC',
@@ -94,8 +110,15 @@ describe('money path integration (login -> stake -> signal -> fee claim)', () =>
     );
 
     // Step 4: claim the provider's fee share, same identity throughout.
-    const feeCollector = new FeeCollectorService(soroban as any, registry as any, configService as any);
-    await feeCollector.buildClaimFees(provider.publicKey(), 'CTOKEN0000000000000000000000000000000000000000000000');
+    const feeCollector = new FeeCollectorService(
+      soroban as any,
+      registry as any,
+      configService as any,
+    );
+    await feeCollector.buildClaimFees(
+      provider.publicKey(),
+      'CTOKEN0000000000000000000000000000000000000000000000',
+    );
     expect(soroban.buildInvocation).toHaveBeenLastCalledWith(
       expect.any(String),
       'claim_fees',

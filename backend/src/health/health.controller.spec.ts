@@ -1,11 +1,17 @@
 import { HealthController } from './health.controller';
 
-function makeController(opts: { dbOk?: boolean; redisOk?: boolean } = { dbOk: true, redisOk: true }) {
+function makeController(
+  opts: { dbOk?: boolean; redisOk?: boolean } = { dbOk: true, redisOk: true },
+) {
   const dataSource = {
-    query: opts.dbOk ? jest.fn().mockResolvedValue([{ '?column?': 1 }]) : jest.fn().mockRejectedValue(new Error('db down')),
+    query: opts.dbOk
+      ? jest.fn().mockResolvedValue([{ '?column?': 1 }])
+      : jest.fn().mockRejectedValue(new Error('db down')),
   };
   const redis = {
-    ping: opts.redisOk ? jest.fn().mockResolvedValue('PONG') : jest.fn().mockRejectedValue(new Error('redis down')),
+    ping: opts.redisOk
+      ? jest.fn().mockResolvedValue('PONG')
+      : jest.fn().mockRejectedValue(new Error('redis down')),
   };
   return new HealthController(dataSource as any, redis as any);
 }

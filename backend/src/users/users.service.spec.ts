@@ -1,9 +1,21 @@
-import { BadRequestException, ConflictException, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import {
+  BadRequestException,
+  ConflictException,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { Keypair } from '@stellar/stellar-sdk';
 import { UsersService } from './users.service';
 
 function makeService(userOverrides: Partial<{ id: string; walletAddress: string }> = {}) {
-  const user = { id: 'user-1', walletAddress: Keypair.random().publicKey(), displayName: null, bio: null, createdAt: new Date(), ...userOverrides };
+  const user = {
+    id: 'user-1',
+    walletAddress: Keypair.random().publicKey(),
+    displayName: null,
+    bio: null,
+    createdAt: new Date(),
+    ...userOverrides,
+  };
   const usersRepo = {
     findOne: jest.fn().mockImplementation(async ({ where }: { where: Record<string, unknown> }) => {
       if (where.id === user.id || where.walletAddress === user.walletAddress) {
@@ -26,7 +38,12 @@ function makeService(userOverrides: Partial<{ id: string; walletAddress: string 
   const authService = {
     verifySignature: jest.fn(),
   };
-  const service = new UsersService(usersRepo as any, linkedWalletsRepo as any, challenges as any, authService as any);
+  const service = new UsersService(
+    usersRepo as any,
+    linkedWalletsRepo as any,
+    challenges as any,
+    authService as any,
+  );
   return { service, usersRepo, linkedWalletsRepo, challenges, authService, user };
 }
 
@@ -45,20 +62,26 @@ describe('UsersService', () => {
 
   it('createLinkChallenge rejects linking the account primary address to itself', async () => {
     const { service, user } = makeService();
-    await expect(service.createLinkChallenge(user.id, user.walletAddress)).rejects.toThrow(BadRequestException);
+    await expect(service.createLinkChallenge(user.id, user.walletAddress)).rejects.toThrow(
+      BadRequestException,
+    );
   });
 
   it('verifyLinkWallet rejects when there is no pending challenge', async () => {
     const { service, challenges, user } = makeService();
     challenges.consume.mockResolvedValue(null);
-    await expect(service.verifyLinkWallet(user.id, 'GOTHER', 'AA==')).rejects.toThrow(UnauthorizedException);
+    await expect(service.verifyLinkWallet(user.id, 'GOTHER', 'AA==')).rejects.toThrow(
+      UnauthorizedException,
+    );
   });
 
   it('verifyLinkWallet rejects an invalid signature', async () => {
     const { service, challenges, authService, user } = makeService();
     challenges.consume.mockResolvedValue('the-nonce');
     authService.verifySignature.mockReturnValue(false);
-    await expect(service.verifyLinkWallet(user.id, 'GOTHER', 'AA==')).rejects.toThrow(UnauthorizedException);
+    await expect(service.verifyLinkWallet(user.id, 'GOTHER', 'AA==')).rejects.toThrow(
+      UnauthorizedException,
+    );
   });
 
   it('verifyLinkWallet rejects an address already linked to another account', async () => {
@@ -66,7 +89,9 @@ describe('UsersService', () => {
     challenges.consume.mockResolvedValue('the-nonce');
     authService.verifySignature.mockReturnValue(true);
     linkedWalletsRepo.findOne.mockResolvedValue({ id: 'existing-link' });
-    await expect(service.verifyLinkWallet(user.id, 'GOTHER', 'AA==')).rejects.toThrow(ConflictException);
+    await expect(service.verifyLinkWallet(user.id, 'GOTHER', 'AA==')).rejects.toThrow(
+      ConflictException,
+    );
   });
 
   it('verifyLinkWallet links the address on a valid, unclaimed signature', async () => {

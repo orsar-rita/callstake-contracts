@@ -23,22 +23,42 @@ export class GovernanceService {
   }
 
   async getProposal(proposalId: number) {
-    const result = await this.soroban.callReadOnly(this.address(), 'proposal', [proposalId], this.simAccount());
+    const result = await this.soroban.callReadOnly(
+      this.address(),
+      'proposal',
+      [proposalId],
+      this.simAccount(),
+    );
     return result.value;
   }
 
   async listProposals() {
-    const result = await this.soroban.callReadOnly(this.address(), 'proposals', [], this.simAccount());
+    const result = await this.soroban.callReadOnly(
+      this.address(),
+      'proposals',
+      [],
+      this.simAccount(),
+    );
     return result.value;
   }
 
   async getVotingPower(holder: string) {
-    const result = await this.soroban.callReadOnly(this.address(), 'voting_power', [holder], this.simAccount());
+    const result = await this.soroban.callReadOnly(
+      this.address(),
+      'voting_power',
+      [holder],
+      this.simAccount(),
+    );
     return result.value;
   }
 
   async getGovernanceConfig() {
-    const result = await this.soroban.callReadOnly(this.address(), 'governance_config', [], this.simAccount());
+    const result = await this.soroban.callReadOnly(
+      this.address(),
+      'governance_config',
+      [],
+      this.simAccount(),
+    );
     return result.value;
   }
 
@@ -67,7 +87,12 @@ export class GovernanceService {
   }
 
   async buildCastVote(proposalId: number, voter: string, voteType: string) {
-    return this.soroban.buildInvocation(this.address(), 'cast_vote', [proposalId, voter, voteType], voter);
+    return this.soroban.buildInvocation(
+      this.address(),
+      'cast_vote',
+      [proposalId, voter, voteType],
+      voter,
+    );
   }
 
   async submitSignedTransaction(signedXdr: string) {

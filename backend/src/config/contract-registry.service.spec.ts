@@ -3,7 +3,9 @@ import { ContractNotDeployedError, ContractRegistryService } from './contract-re
 
 function makeService(overrides: Record<string, unknown> = {}) {
   const values: Record<string, unknown> = { 'stellar.network': 'testnet', ...overrides };
-  const configService = { get: (key: string, fallback?: unknown) => values[key] ?? fallback } as ConfigService;
+  const configService = {
+    get: (key: string, fallback?: unknown) => values[key] ?? fallback,
+  } as ConfigService;
   const service = new ContractRegistryService(configService);
   service.onModuleInit();
   return service;
@@ -59,6 +61,8 @@ describe('ContractRegistryService', () => {
   it('listAll includes both registry-tracked and static-only slots', () => {
     const service = makeService();
     const slots = service.listAll().map((c) => c.key);
-    expect(slots).toEqual(expect.arrayContaining(['stake_vault', 'signal_registry', 'oracle', 'governance']));
+    expect(slots).toEqual(
+      expect.arrayContaining(['stake_vault', 'signal_registry', 'oracle', 'governance']),
+    );
   });
 });

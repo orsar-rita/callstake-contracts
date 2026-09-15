@@ -16,7 +16,9 @@ export class CreateSignalDto {
   @IsString()
   action!: string;
 
-  @ApiProperty({ description: 'Price as a stringified i128 (stroops-equivalent scale used by the contract)' })
+  @ApiProperty({
+    description: 'Price as a stringified i128 (stroops-equivalent scale used by the contract)',
+  })
   @IsNumberString()
   price!: string;
 

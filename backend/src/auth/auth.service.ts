@@ -27,7 +27,9 @@ export class AuthService {
   async verifyAndLogin(walletAddress: string, signatureBase64: string): Promise<LoginResult> {
     const nonce = await this.challenges.consume(walletAddress);
     if (!nonce) {
-      throw new UnauthorizedException('No pending login challenge for this address — request one first');
+      throw new UnauthorizedException(
+        'No pending login challenge for this address — request one first',
+      );
     }
 
     if (!this.verifySignature(walletAddress, nonce, signatureBase64)) {

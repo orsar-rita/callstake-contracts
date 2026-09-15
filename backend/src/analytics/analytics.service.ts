@@ -38,7 +38,9 @@ export class AnalyticsService {
         try {
           treasuryBalanceByToken[token] = await this.feeCollector.getTreasuryBalance(token);
         } catch (error) {
-          this.logger.warn(`Treasury balance lookup failed for ${token}: ${(error as Error).message}`);
+          this.logger.warn(
+            `Treasury balance lookup failed for ${token}: ${(error as Error).message}`,
+          );
           treasuryBalanceByToken[token] = { error: (error as Error).message };
         }
       }),

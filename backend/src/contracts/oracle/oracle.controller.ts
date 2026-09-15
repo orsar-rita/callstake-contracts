@@ -1,7 +1,11 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { OracleService } from './oracle.service';
-import { AssetPairQueryDto, ConvertToBaseDto, HistoricalPriceQueryDto } from './dto/oracle-query.dto';
+import {
+  AssetPairQueryDto,
+  ConvertToBaseDto,
+  HistoricalPriceQueryDto,
+} from './dto/oracle-query.dto';
 
 /**
  * Asset/AssetPair are structured on-chain types (see

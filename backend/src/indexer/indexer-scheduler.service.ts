@@ -12,7 +12,9 @@ export class IndexerSchedulerService implements OnModuleInit {
   constructor(@InjectQueue(INDEXER_QUEUE) private readonly indexerQueue: Queue) {}
 
   async onModuleInit() {
-    await this.indexerQueue.upsertJobScheduler('event-indexer-repeat', { every: INDEXER_INTERVAL_MS });
+    await this.indexerQueue.upsertJobScheduler('event-indexer-repeat', {
+      every: INDEXER_INTERVAL_MS,
+    });
     this.logger.log(`Scheduled event indexing every ${INDEXER_INTERVAL_MS}ms`);
   }
 }

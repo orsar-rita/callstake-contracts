@@ -53,7 +53,12 @@ export class UserPortfolioService {
   }
 
   async getPnl(user: string) {
-    const result = await this.soroban.callReadOnly(this.address(), 'get_pnl', [user], this.simAccount());
+    const result = await this.soroban.callReadOnly(
+      this.address(),
+      'get_pnl',
+      [user],
+      this.simAccount(),
+    );
     return result.value;
   }
 

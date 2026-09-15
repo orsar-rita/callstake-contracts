@@ -24,4 +24,16 @@ module.exports = {
     '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
     'no-duplicate-imports': 'error',
   },
+  overrides: [
+    {
+      // `as any` on a hand-built mock/fake is the normal, accepted way to
+      // satisfy a constructor's real parameter types in a unit test
+      // without reimplementing the whole interface — not worth a warning
+      // on every spec file.
+      files: ['*.spec.ts'],
+      rules: {
+        '@typescript-eslint/no-explicit-any': 'off',
+      },
+    },
+  ],
 };

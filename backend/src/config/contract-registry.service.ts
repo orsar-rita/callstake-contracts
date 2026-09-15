@@ -67,7 +67,9 @@ export class ContractRegistryService implements OnModuleInit {
 
   private readJson<T>(relativePath: string): T {
     const overridePath = this.configService.get<string>('stellar.contractRegistryPath');
-    const path = overridePath ? join(overridePath, relativePath) : join(this.repoRoot, relativePath);
+    const path = overridePath
+      ? join(overridePath, relativePath)
+      : join(this.repoRoot, relativePath);
     return JSON.parse(readFileSync(path, 'utf8')) as T;
   }
 

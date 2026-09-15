@@ -107,7 +107,10 @@ export class SorobanClientService {
   }
 
   async submitSignedTransaction(signedXdr: string): Promise<{ hash: string; status: string }> {
-    const transaction = TransactionBuilder.fromXDR(signedXdr, this.registry.getRpcConfig().network_passphrase);
+    const transaction = TransactionBuilder.fromXDR(
+      signedXdr,
+      this.registry.getRpcConfig().network_passphrase,
+    );
     const sendResult = await this.server.sendTransaction(transaction);
 
     if (sendResult.status === 'ERROR') {

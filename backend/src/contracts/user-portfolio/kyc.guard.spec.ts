@@ -23,6 +23,8 @@ describe('KycGuard', () => {
   it('rejects the request when the wallet is not permitted to trade', async () => {
     const userPortfolio = { isTradingAllowed: jest.fn().mockResolvedValue(false) };
     const guard = new KycGuard(userPortfolio as any);
-    await expect(guard.canActivate(makeContext({ walletAddress: 'GUSER' }))).rejects.toThrow(ForbiddenException);
+    await expect(guard.canActivate(makeContext({ walletAddress: 'GUSER' }))).rejects.toThrow(
+      ForbiddenException,
+    );
   });
 });

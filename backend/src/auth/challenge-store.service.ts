@@ -41,7 +41,10 @@ export class ChallengeStoreService {
   }
 
   /** Consumes (deletes) the nonce so a captured signature can't be replayed against a second use. */
-  async consume(walletAddress: string, purpose: ChallengePurpose = 'login'): Promise<string | null> {
+  async consume(
+    walletAddress: string,
+    purpose: ChallengePurpose = 'login',
+  ): Promise<string | null> {
     const key = challengeKey(purpose, walletAddress);
     const nonce = await this.redis.get(key);
     if (nonce) {

@@ -72,8 +72,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
       const message =
         typeof exceptionResponse === 'string'
           ? exceptionResponse
-          : ((exceptionResponse as { message?: string | string[] }).message ??
-            exception.message);
+          : ((exceptionResponse as { message?: string | string[] }).message ?? exception.message);
 
       return {
         status,

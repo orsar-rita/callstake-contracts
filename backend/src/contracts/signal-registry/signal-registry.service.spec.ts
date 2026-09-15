@@ -65,7 +65,17 @@ describe('SignalRegistryService', () => {
     expect(soroban.buildInvocation).toHaveBeenCalledWith(
       'CSIGNALREGISTRYADDRESS',
       'create_signal',
-      ['GPROVIDER', 'XLM/USDC', 'Buy', 12345n, 'looks bullish', 1893456000, 'Spot', ['momentum'], 'Medium'],
+      [
+        'GPROVIDER',
+        'XLM/USDC',
+        'Buy',
+        12345n,
+        'looks bullish',
+        1893456000,
+        'Spot',
+        ['momentum'],
+        'Medium',
+      ],
       'GPROVIDER',
     );
   });

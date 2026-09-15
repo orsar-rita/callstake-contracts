@@ -1,4 +1,10 @@
-import { BadRequestException, ConflictException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import {
+  BadRequestException,
+  ConflictException,
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { AuthService } from '../auth/auth.service';
@@ -66,7 +72,9 @@ export class UsersService {
 
     const nonce = await this.challenges.consume(address, 'link-wallet');
     if (!nonce) {
-      throw new UnauthorizedException('No pending link challenge for this address — request one first');
+      throw new UnauthorizedException(
+        'No pending link challenge for this address — request one first',
+      );
     }
     if (!this.authService.verifySignature(address, nonce, signatureBase64)) {
       throw new UnauthorizedException('Signature does not match the issued challenge');

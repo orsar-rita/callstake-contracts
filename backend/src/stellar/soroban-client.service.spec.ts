@@ -93,7 +93,11 @@ describe('SorobanClientService', () => {
 
     // A minimal, syntactically valid signed envelope is enough here — this
     // test verifies relaying behavior, not transaction construction.
-    const { TransactionBuilder, Account: RealAccount, Operation } = jest.requireActual('@stellar/stellar-sdk');
+    const {
+      TransactionBuilder,
+      Account: RealAccount,
+      Operation,
+    } = jest.requireActual('@stellar/stellar-sdk');
     const account = new RealAccount(sourceKeypair.publicKey(), '100');
     const tx = new TransactionBuilder(account, {
       fee: '100',
@@ -111,8 +115,11 @@ describe('SorobanClientService', () => {
 
   it('buildInvocation returns unsigned XDR built from the prepared transaction, never signing it', async () => {
     const { service, fakeServer } = makeServiceWithFakeServer();
-    const { TransactionBuilder: RealTransactionBuilder, Account: RealAccount, Operation } =
-      jest.requireActual('@stellar/stellar-sdk');
+    const {
+      TransactionBuilder: RealTransactionBuilder,
+      Account: RealAccount,
+      Operation,
+    } = jest.requireActual('@stellar/stellar-sdk');
     const account = new RealAccount(sourceKeypair.publicKey(), '100');
     const preparedTx = new RealTransactionBuilder(account, {
       fee: '1000',
@@ -123,7 +130,12 @@ describe('SorobanClientService', () => {
       .build();
     fakeServer.prepareTransaction.mockResolvedValue(preparedTx);
 
-    const result = await service.buildInvocation(contractAddress, 'deposit_stake', [1000n], sourceKeypair.publicKey());
+    const result = await service.buildInvocation(
+      contractAddress,
+      'deposit_stake',
+      [1000n],
+      sourceKeypair.publicKey(),
+    );
 
     expect(result.xdr).toBe(preparedTx.toXDR());
     expect(result.latestLedger).toBe(555);
@@ -152,6 +164,8 @@ describe('SorobanClientService', () => {
       filters: [{ type: 'contract', contractIds: [contractAddress] }],
     });
     expect(result.latestLedger).toBe(777);
-    expect(result.events).toEqual([{ ledger: 700, txHash: 'abc123', topics: ['SignalCreated'], data: 42 }]);
+    expect(result.events).toEqual([
+      { ledger: 700, txHash: 'abc123', topics: ['SignalCreated'], data: 42 },
+    ]);
   });
 });

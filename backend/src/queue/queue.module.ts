@@ -3,7 +3,10 @@ import { BullModule } from '@nestjs/bullmq';
 import { ConfigService } from '@nestjs/config';
 import { ContractsModule } from '../contracts/contracts.module';
 import { NotificationsModule } from '../notifications/notifications.module';
-import { LEADERBOARD_QUEUE, LeaderboardRefreshProcessor } from './jobs/leaderboard-refresh.processor';
+import {
+  LEADERBOARD_QUEUE,
+  LeaderboardRefreshProcessor,
+} from './jobs/leaderboard-refresh.processor';
 import { QueueSchedulerService } from './queue-scheduler.service';
 
 @Module({

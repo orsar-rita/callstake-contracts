@@ -22,7 +22,12 @@ export class StakeVaultService {
   }
 
   async getStake(staker: string) {
-    const result = await this.soroban.callReadOnly(this.address(), 'get_stake', [staker], this.simAccount());
+    const result = await this.soroban.callReadOnly(
+      this.address(),
+      'get_stake',
+      [staker],
+      this.simAccount(),
+    );
     return result.value;
   }
 
@@ -37,7 +42,12 @@ export class StakeVaultService {
   }
 
   async getMinimumStake() {
-    const result = await this.soroban.callReadOnly(this.address(), 'get_minimum_stake', [], this.simAccount());
+    const result = await this.soroban.callReadOnly(
+      this.address(),
+      'get_minimum_stake',
+      [],
+      this.simAccount(),
+    );
     return result.value;
   }
 
@@ -52,7 +62,12 @@ export class StakeVaultService {
   }
 
   async isPaused() {
-    const result = await this.soroban.callReadOnly(this.address(), 'is_paused', [], this.simAccount());
+    const result = await this.soroban.callReadOnly(
+      this.address(),
+      'is_paused',
+      [],
+      this.simAccount(),
+    );
     return result.value;
   }
 

@@ -8,14 +8,22 @@ function makeService() {
   };
   const registry = { requireAddress: jest.fn(() => 'CGOVERNANCE') };
   const configService = { get: jest.fn(() => 'GSIMULATIONACCOUNT') };
-  return { service: new GovernanceService(soroban as any, registry as any, configService as any), soroban };
+  return {
+    service: new GovernanceService(soroban as any, registry as any, configService as any),
+    soroban,
+  };
 }
 
 describe('GovernanceService', () => {
   it('listProposals calls the contract with no arguments', async () => {
     const { service, soroban } = makeService();
     await service.listProposals();
-    expect(soroban.callReadOnly).toHaveBeenCalledWith('CGOVERNANCE', 'proposals', [], 'GSIMULATIONACCOUNT');
+    expect(soroban.callReadOnly).toHaveBeenCalledWith(
+      'CGOVERNANCE',
+      'proposals',
+      [],
+      'GSIMULATIONACCOUNT',
+    );
   });
 
   it('buildCastVote is signed by the voter, not the backend', async () => {

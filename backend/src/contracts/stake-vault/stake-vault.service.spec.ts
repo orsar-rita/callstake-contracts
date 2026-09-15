@@ -8,14 +8,22 @@ function makeService() {
   };
   const registry = { requireAddress: jest.fn(() => 'CSTAKEVAULT') };
   const configService = { get: jest.fn(() => 'GSIMULATIONACCOUNT') };
-  return { service: new StakeVaultService(soroban as any, registry as any, configService as any), soroban };
+  return {
+    service: new StakeVaultService(soroban as any, registry as any, configService as any),
+    soroban,
+  };
 }
 
 describe('StakeVaultService', () => {
   it('getStake reads the staker balance', async () => {
     const { service, soroban } = makeService();
     const value = await service.getStake('GSTAKER');
-    expect(soroban.callReadOnly).toHaveBeenCalledWith('CSTAKEVAULT', 'get_stake', ['GSTAKER'], 'GSIMULATIONACCOUNT');
+    expect(soroban.callReadOnly).toHaveBeenCalledWith(
+      'CSTAKEVAULT',
+      'get_stake',
+      ['GSTAKER'],
+      'GSIMULATIONACCOUNT',
+    );
     expect(value).toBe(1_000_000n);
   });
 
@@ -34,7 +42,19 @@ describe('StakeVaultService', () => {
     const { service, soroban } = makeService();
     await service.buildRequestWithdrawal('GSTAKER');
     await service.buildWithdrawStake('GSTAKER');
-    expect(soroban.buildInvocation).toHaveBeenNthCalledWith(1, 'CSTAKEVAULT', 'request_withdrawal', ['GSTAKER'], 'GSTAKER');
-    expect(soroban.buildInvocation).toHaveBeenNthCalledWith(2, 'CSTAKEVAULT', 'withdraw_stake', ['GSTAKER'], 'GSTAKER');
+    expect(soroban.buildInvocation).toHaveBeenNthCalledWith(
+      1,
+      'CSTAKEVAULT',
+      'request_withdrawal',
+      ['GSTAKER'],
+      'GSTAKER',
+    );
+    expect(soroban.buildInvocation).toHaveBeenNthCalledWith(
+      2,
+      'CSTAKEVAULT',
+      'withdraw_stake',
+      ['GSTAKER'],
+      'GSTAKER',
+    );
   });
 });

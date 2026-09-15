@@ -7,7 +7,7 @@ export class DepositStakeDto {
   @IsStellarAddress()
   staker!: string;
 
-  @ApiProperty({ description: 'Amount as a stringified i128, in the stake token\'s smallest unit' })
+  @ApiProperty({ description: "Amount as a stringified i128, in the stake token's smallest unit" })
   @IsNumberString()
   amount!: string;
 }
