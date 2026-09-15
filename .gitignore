@@ -1,3 +1,13 @@
 scripts/node_modules/
 # Issue tracking document (contains implementation instructions)
 somzilla.md
+
+# There is no root package.json — node projects live in frontend/ and
+# scripts/, each with their own lockfile. A root-level lockfile is a sign
+# `npm install` was run by accident at the repo root.
+/package-lock.json
+
+# Accidental local `cargo check ... > file.txt` / `2> file.txt` redirects
+# under stellar-swipe/ that sometimes get committed by mistake.
+stellar-swipe/compile_errors.txt
+stellar-swipe/shared_errors.txt
