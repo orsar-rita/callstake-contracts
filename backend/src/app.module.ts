@@ -6,8 +6,18 @@ import { HealthModule } from './health/health.module';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { StellarModule } from './stellar/stellar.module';
+import { ContractsModule } from './contracts/contracts.module';
 
 @Module({
-  imports: [ConfigModule, DatabaseModule, RedisModule, StellarModule, HealthModule, AuthModule, UsersModule],
+  imports: [
+    ConfigModule,
+    DatabaseModule,
+    RedisModule,
+    StellarModule,
+    HealthModule,
+    AuthModule,
+    UsersModule,
+    ContractsModule,
+  ],
 })
 export class AppModule {}
