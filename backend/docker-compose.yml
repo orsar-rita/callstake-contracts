@@ -1,0 +1,52 @@
+version: '3.8'
+
+# Local dev stack for the CallStake backend: Postgres + Redis + the backend
+# itself, all matching backend/.env.example's defaults out of the box.
+#
+#   docker compose up -d postgres redis   # infra only, run the backend with `npm run start:dev`
+#   docker compose up --build              # everything, including the backend
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: callstake
+      POSTGRES_PASSWORD: callstake
+      POSTGRES_DB: callstake
+    ports:
+      - '5432:5432'
+    volumes:
+      - callstake_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U callstake']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - '6379:6379'
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build: .
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    environment:
+      DATABASE_HOST: postgres
+      REDIS_HOST: redis
+      JWT_SECRET: local-dev-only-secret-not-for-production
+      STELLAR_NETWORK: testnet
+    ports:
+      - '3000:3000'
+
+volumes:
+  callstake_postgres_data:
