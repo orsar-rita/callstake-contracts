@@ -1,6 +1,6 @@
-# StellarSwipe Soroban contract upgrade procedure
+# CallStake Soroban contract upgrade procedure
 
-This document is the **authoritative checklist** for upgrading deployed StellarSwipe contracts. Contract upgrades are high-risk; follow every section in order unless an emergency subsection explicitly says otherwise.
+This document is the **authoritative checklist** for upgrading deployed CallStake contracts. Contract upgrades are high-risk; follow every section in order unless an emergency subsection explicitly says otherwise.
 
 **Related runbooks**
 

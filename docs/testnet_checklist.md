@@ -1,4 +1,4 @@
-# StellarSwipe Testnet Deployment Checklist
+# CallStake Testnet Deployment Checklist
 
 Use this checklist for every testnet deployment. Mark each item `[x]` as you complete it.
 A deployment is only considered successful when every item passes.
@@ -31,12 +31,12 @@ A deployment is only considered successful when every item passes.
 
 - [ ] All unit tests pass locally:
   ```bash
-  cd stellar-swipe && cargo test --workspace 2>&1 | tail -20
+  cd call-stake && cargo test --workspace 2>&1 | tail -20
   ```
   Pass criterion: `test result: ok` for every crate, zero failures.
 - [ ] WASM artifacts built (release):
   ```bash
-  cd stellar-swipe && cargo build --workspace --target wasm32-unknown-unknown --release
+  cd call-stake && cargo build --workspace --target wasm32-unknown-unknown --release
   ```
   Pass criterion: all `.wasm` files present in `target/wasm32-unknown-unknown/release/`.
 - [ ] (Optional) WASM optimized with `stellar contract optimize` for each artifact

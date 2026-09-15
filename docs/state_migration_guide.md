@@ -2,7 +2,7 @@
 
 ## Overview
 
-The StellarSwipe State Migration Framework provides a robust, production-ready system for managing contract upgrades with full backward compatibility, data validation, and rollback capabilities. This guide covers everything you need to know to safely migrate contract state across versions.
+The CallStake State Migration Framework provides a robust, production-ready system for managing contract upgrades with full backward compatibility, data validation, and rollback capabilities. This guide covers everything you need to know to safely migrate contract state across versions.
 
 ## Table of Contents
 

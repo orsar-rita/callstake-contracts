@@ -1,6 +1,6 @@
 # Contract Upgrade Testing Framework
 
-This document outlines the upgrade testing framework used by Stellar Swipe integration tests.
+This document outlines the upgrade testing framework used by Call Stake integration tests.
 
 ## Framework design
 
@@ -17,6 +17,6 @@ This document outlines the upgrade testing framework used by Stellar Swipe integ
 
 ## How to add new tests
 
-1. Add a new integration test in `stellar-swipe/contracts/integration_tests/tests/integration/`.
+1. Add a new integration test in `call-stake/contracts/integration_tests/tests/integration/`.
 2. Use `env.register_at(&cid, ContractV2, ())` to simulate the upgrade.
 3. Assert both backward compatibility and new behavior after upgrade.

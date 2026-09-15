@@ -19,7 +19,7 @@ contract has grown more than the allowed threshold (default: **10%**).
 ### Baseline file
 
 ```
-stellar-swipe/baselines/wasm_size_baseline.json
+call-stake/baselines/wasm_size_baseline.json
 ```
 
 ```json
@@ -64,7 +64,7 @@ WASM SIZE REGRESSIONS DETECTED:
 When a size increase is justified (new feature, dependency upgrade, etc.):
 
 ```bash
-cd stellar-swipe
+cd call-stake
 
 # 1. Build the optimized WASM
 ./scripts/build.sh
@@ -127,14 +127,14 @@ The test output is piped into `check_budget_baseline.py` during CI:
 
 ```yaml
 - name: Tests
-  run: cd stellar-swipe && cargo test --workspace --all-targets 2>&1 \
+  run: cd call-stake && cargo test --workspace --all-targets 2>&1 \
        | tee /tmp/test_output.txt | python3 scripts/check_budget_baseline.py
 ```
 
 ### Baseline file
 
 ```
-stellar-swipe/baselines/instruction_budget_baseline.json
+call-stake/baselines/instruction_budget_baseline.json
 ```
 
 ```json
@@ -150,7 +150,7 @@ stellar-swipe/baselines/instruction_budget_baseline.json
 ### Updating the baseline
 
 ```bash
-cd stellar-swipe
+cd call-stake
 cargo test --workspace --all-targets 2>&1 \
   | python3 scripts/check_budget_baseline.py --update
 

@@ -15,8 +15,8 @@ unexpected balance/reward drift) across releases.
 - A regression test runs the canonical scenario, computes the same invariants
   and state hash, and diffs against the stored snapshot — failing loudly with
   a readable diff if state drifted unexpectedly.
-- Snapshot files are checked into `stellar-swipe/storage-snapshots/` (existing
-  directory) and `stellar-swipe/baselines/` (existing directory) to reuse
+- Snapshot files are checked into `call-stake/storage-snapshots/` (existing
+  directory) and `call-stake/baselines/` (existing directory) to reuse
   current conventions.
 
 ## Benefits
