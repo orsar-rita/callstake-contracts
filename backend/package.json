@@ -4,6 +4,9 @@
   "description": "CallStake backend API — NestJS service integrating the CallStake Soroban contracts with a Postgres/Redis-backed read model.",
   "private": true,
   "license": "MIT",
+  "engines": {
+    "node": ">=22.0.0"
+  },
   "scripts": {
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\"",
