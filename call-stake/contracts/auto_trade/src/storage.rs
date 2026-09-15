@@ -1,6 +1,6 @@
 #![allow(dead_code)]
 use soroban_sdk::{contracttype, symbol_short, Address, Env};
-use stellar_swipe_common::storage_crud::{
+use call_stake_common::storage_crud::{
     crud_get, crud_get_or, crud_has, crud_remove, crud_set, StorageTier,
 };
 

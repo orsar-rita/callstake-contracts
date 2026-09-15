@@ -2,7 +2,7 @@
 
 ## Overview
 
-StellarSwipe core trading contracts are optimized for high-frequency copy-trade scenarios under Soroban's 100M CPU instruction budget per transaction. This document describes profiling methodology, optimizations applied, and regression guardrails.
+CallStake core trading contracts are optimized for high-frequency copy-trade scenarios under Soroban's 100M CPU instruction budget per transaction. This document describes profiling methodology, optimizations applied, and regression guardrails.
 
 ---
 
@@ -18,7 +18,7 @@ let instructions = env.cost_estimate().budget().cpu_instruction_cost();
 
 The budget auto-resets before each top-level contract call, so this approximates per-operation cost.
 
-### Baseline constants (`stellar_swipe_common::perf`)
+### Baseline constants (`call_stake_common::perf`)
 
 | Constant | Purpose |
 |---|---|
@@ -105,13 +105,13 @@ Passed via `BatchExecutionContext` to each trade, avoiding repeated instance sto
 ## Running Benchmarks
 
 ```bash
-cd stellar-swipe
+cd call-stake
 
 # Core perf module
-cargo test -p stellar_swipe_common perf
+cargo test -p call_stake_common perf
 
 # Rate limit regression
-cargo test -p stellar_swipe_common rate_limit
+cargo test -p call_stake_common rate_limit
 
 # Trade executor latency
 cargo test -p trade_executor test_latency

@@ -23,7 +23,7 @@ struct OracleDummy;
 
 #[contractimpl]
 impl OracleDummy {
-    pub fn get_price(_env: Env, _asset_pair: u32) -> stellar_swipe_common::OraclePrice {
+    pub fn get_price(_env: Env, _asset_pair: u32) -> call_stake_common::OraclePrice {
         panic!("oracle not used in tax tests")
     }
 }

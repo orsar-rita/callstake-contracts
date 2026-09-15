@@ -6,7 +6,7 @@
 #![allow(dead_code)]
 
 use soroban_sdk::{contracttype, Address, Env, Map, String, Symbol, Vec};
-use stellar_swipe_common::{
+use call_stake_common::{
     emit_health_event, health_uninitialized, placeholder_admin, HealthStatus,
 };
 

@@ -3,7 +3,7 @@ use soroban_sdk::{symbol_short, Address, Env, String, Symbol};
 use crate::staleness::OracleStatus;
 
 pub fn emit_oracle_removed(env: &Env, oracle: Address, reason: &str) {
-    stellar_swipe_common::emit_event!(
+    call_stake_common::emit_event!(
         env,
         "oracle_removed",
         (oracle, String::from_str(env, reason))
@@ -17,7 +17,7 @@ pub fn emit_weight_adjusted(
     new_weight: u32,
     reputation: u32,
 ) {
-    stellar_swipe_common::emit_event!(
+    call_stake_common::emit_event!(
         env,
         "oracle_weight_adjusted",
         (oracle, old_weight, new_weight, reputation)

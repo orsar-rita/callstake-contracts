@@ -4,7 +4,7 @@ use crate::errors::OracleError;
 use crate::storage::{get_base_currency, get_feed_decimals, get_price, rescale_price};
 use shared::math::normalize_amount;
 use soroban_sdk::{contracttype, vec, Env, Map, Vec};
-use stellar_swipe_common::{Asset, AssetPair};
+use call_stake_common::{Asset, AssetPair};
 
 const MAX_PATH_LENGTH: u32 = 3;
 

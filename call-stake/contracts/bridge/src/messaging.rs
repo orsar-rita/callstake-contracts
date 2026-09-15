@@ -8,7 +8,7 @@
 use crate::governance::get_bridge_validators;
 use crate::monitoring::ChainId;
 use soroban_sdk::{contracttype, Address, Bytes, Env, String, Symbol};
-use stellar_swipe_common::SECONDS_PER_DAY;
+use call_stake_common::SECONDS_PER_DAY;
 
 // ── Constants ────────────────────────────────────────────────────────────────
 

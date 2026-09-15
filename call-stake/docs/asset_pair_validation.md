@@ -8,7 +8,7 @@ Centralized asset-pair validation for `auto_trade` and `trade_executor`. Before 
 
 ## Where validation lives
 
-Shared logic lives in `stellar_swipe_common::pair_validation`:
+Shared logic lives in `call_stake_common::pair_validation`:
 
 | Function | Check |
 |----------|-------|

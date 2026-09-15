@@ -1,5 +1,5 @@
 use soroban_sdk::{Address, Env, Map, Vec};
-use stellar_swipe_common::{SECONDS_PER_30_DAY_MONTH, SECONDS_PER_DAY};
+use call_stake_common::{SECONDS_PER_30_DAY_MONTH, SECONDS_PER_DAY};
 
 use crate::events::{emit_signal_expired, emit_signals_pruned};
 use crate::types::{Signal, SignalStatus};

@@ -8,7 +8,7 @@
 //! # Example
 //!
 //! ```rust,ignore
-//! use stellar_swipe_common::test_time::{advance_time, set_time, current_time};
+//! use call_stake_common::test_time::{advance_time, set_time, current_time};
 //! use soroban_sdk::testutils::Ledger;
 //!
 //! let env = Env::default();

@@ -1,7 +1,7 @@
 //! Multisig approval workflow for signal_registry critical admin operations.
 
 use soroban_sdk::{Address, Env, String, Vec};
-use stellar_swipe_common::multisig::{
+use call_stake_common::multisig::{
     self, ApprovalProposal, CriticalActionType, MultisigError, MultisigTimelockConfig,
     ProposalStatus,
 };

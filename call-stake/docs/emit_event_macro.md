@@ -1,6 +1,6 @@
 # `emit_event!` macro — usage guide
 
-The `emit_event!` macro, defined in `stellar_swipe_common::emit`, provides a
+The `emit_event!` macro, defined in `call_stake_common::emit`, provides a
 single, consistent way to publish Soroban contract events across all crates in
 this workspace.
 
@@ -22,7 +22,7 @@ uniform 1-element topic tuple for all standard events.
 ## Syntax
 
 ```rust
-stellar_swipe_common::emit_event!(env, "event_name", data_payload);
+call_stake_common::emit_event!(env, "event_name", data_payload);
 ```
 
 | Parameter | Type | Description |
@@ -44,17 +44,17 @@ env.events().publish(
 
 ```rust
 // Single-field payload
-stellar_swipe_common::emit_event!(env, "guardian_set", guardian_address);
+call_stake_common::emit_event!(env, "guardian_set", guardian_address);
 
 // Tuple payload
-stellar_swipe_common::emit_event!(
+call_stake_common::emit_event!(
     env,
     "admin_transfer_completed",
     (old_admin, new_admin)
 );
 
 // Struct payload (must derive #[contracttype])
-stellar_swipe_common::emit_event!(env, "fee_collected", fee_event_struct);
+call_stake_common::emit_event!(env, "fee_collected", fee_event_struct);
 ```
 
 ## When to use

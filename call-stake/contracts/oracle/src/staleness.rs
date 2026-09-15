@@ -1,5 +1,5 @@
 use soroban_sdk::{contracttype, Env};
-use stellar_swipe_common::AssetPair;
+use call_stake_common::AssetPair;
 
 pub const MAX_PRICE_AGE_LEDGERS: u32 = 60;
 pub const ORACLE_DEAD_THRESHOLD_LEDGERS: u32 = 1_440;

@@ -19,7 +19,7 @@
 #![allow(dead_code)]
 
 use soroban_sdk::{contracttype, Env};
-use stellar_swipe_common::storage_crud::{crud_get_or, crud_set, StorageTier};
+use call_stake_common::storage_crud::{crud_get_or, crud_set, StorageTier};
 
 // ── Constants ────────────────────────────────────────────────────────────────
 

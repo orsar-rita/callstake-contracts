@@ -7,7 +7,7 @@ use soroban_sdk::{
     testutils::{Address as _, Ledger},
     Address, Env, String, Vec,
 };
-use stellar_swipe_common::rate_limit::ActionType;
+use call_stake_common::rate_limit::ActionType;
 
 fn setup() -> (Env, Address, Address, SignalRegistryClient<'static>) {
     let env = Env::default();

@@ -7,7 +7,7 @@ use soroban_sdk::{Address, Bytes, Env, Map};
 use crate::errors::ExportError;
 use crate::types::{Signal, SignalAction, SignalStatus, TradeExecution};
 use crate::StorageKey;
-use stellar_swipe_common::{SECONDS_PER_30_DAY_MONTH, SECONDS_PER_DAY, SECONDS_PER_WEEK};
+use call_stake_common::{SECONDS_PER_30_DAY_MONTH, SECONDS_PER_DAY, SECONDS_PER_WEEK};
 
 // ---------------------------------------------------------------------------
 // Constants

@@ -11,7 +11,7 @@
 /// env.events().publish(topics, (field1, field2));
 ///
 /// // Write:
-/// stellar_swipe_common::emit_event!(env, "my_event", (field1, field2));
+/// call_stake_common::emit_event!(env, "my_event", (field1, field2));
 /// ```
 ///
 /// The macro expands to a single `env.events().publish(...)` call with a

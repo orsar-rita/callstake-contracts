@@ -2,7 +2,7 @@ use crate::categories::SignalCategory;
 use crate::social::get_follower_count;
 use crate::types::{Signal, SignalStatus};
 use soroban_sdk::{contracttype, Address, Env, Map, String, Vec};
-use stellar_swipe_common::{DEFAULT_INSTRUCTION_BUDGET, SECONDS_PER_DAY, SECONDS_PER_HOUR};
+use call_stake_common::{DEFAULT_INSTRUCTION_BUDGET, SECONDS_PER_DAY, SECONDS_PER_HOUR};
 
 const MIN_SIGNALS_FOR_ANALYTICS: u32 = 10;
 

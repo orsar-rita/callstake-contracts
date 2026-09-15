@@ -1,6 +1,6 @@
 use crate::{Error, StorageKey};
 use soroban_sdk::{contracttype, panic_with_error, Address, Env, Vec};
-use stellar_swipe_common::{LEDGERS_PER_DAY, PLACEHOLDER_ADMIN_STR, SECONDS_PER_DAY};
+use call_stake_common::{LEDGERS_PER_DAY, PLACEHOLDER_ADMIN_STR, SECONDS_PER_DAY};
 /// Temporary daily buckets are extended toward this horizon (~30 days of ledgers).
 pub const TEMP_FEE_BUCKET_TTL_LEDGERS: u32 = LEDGERS_PER_DAY * 30;
 

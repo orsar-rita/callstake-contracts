@@ -1,5 +1,5 @@
 [package]
-name = "stellar-swipe-common-fuzz"
+name = "call-stake-common-fuzz"
 version = "0.0.0"
 edition = "2021"
 publish = false
@@ -18,7 +18,7 @@ libfuzzer-sys = "0.4"
 soroban-sdk = { version = "23", features = ["testutils"] }
 
 [dev-dependencies]
-stellar_swipe_common = { path = "..", features = ["testutils"] }
+call_stake_common = { path = "..", features = ["testutils"] }
 
 [[bin]]
 name = "storage_key_derivation"

@@ -77,10 +77,10 @@ use soroban_sdk::{
 use shared::errors::{ErrorCategory, RecoveryStrategy};
 use shared::pausable;
 use shared::reentrancy::{self, ReentrancyError};
-use stellar_swipe_common::health::{health_uninitialized, HealthStatus};
-use stellar_swipe_common::token_metadata::{validate as validate_token_metadata, TokenMetadata};
-use stellar_swipe_common::Asset;
-use stellar_swipe_common::SECONDS_PER_DAY;
+use call_stake_common::health::{health_uninitialized, HealthStatus};
+use call_stake_common::token_metadata::{validate as validate_token_metadata, TokenMetadata};
+use call_stake_common::Asset;
+use call_stake_common::SECONDS_PER_DAY;
 
 #[cfg(test)]
 mod tests;
@@ -1012,7 +1012,7 @@ impl FeeCollector {
 
     /// Retry a previously queued fee collection request.
     ///
-    /// Uses the shared `stellar_swipe_common::retry_backoff` helper for
+    /// Uses the shared `call_stake_common::retry_backoff` helper for
     /// exponential backoff and attempt counting (Issue #699).
     pub fn retry_failed_fee_collection(
         env: Env,
@@ -1034,23 +1034,23 @@ impl FeeCollector {
             get_failed_fee_collection(&env, &id).ok_or(ContractError::FailedCollectionNotFound)?;
 
         let config = get_fee_optimization_config(&env);
-        let retry_config = stellar_swipe_common::retry_backoff::RetryConfig {
+        let retry_config = call_stake_common::retry_backoff::RetryConfig {
             max_attempts: config.max_retry_attempts,
             base_delay_ledgers: 5,        // ~25 seconds at 5s/ledger
             max_delay_ledgers: Some(200), // ~16 minutes max
         };
-        let retry_state = stellar_swipe_common::retry_backoff::RetryState {
+        let retry_state = call_stake_common::retry_backoff::RetryState {
             attempt: failed.retry_count,
         };
 
         // Use shared helper to check if retry is allowed
-        if stellar_swipe_common::retry_backoff::should_retry(&retry_state, &retry_config).is_none()
+        if call_stake_common::retry_backoff::should_retry(&retry_state, &retry_config).is_none()
         {
             return Err(ContractError::RetryLimitExceeded);
         }
 
         let mut retry_record = failed.clone();
-        let next = stellar_swipe_common::retry_backoff::next_retry_state(&retry_state);
+        let next = call_stake_common::retry_backoff::next_retry_state(&retry_state);
         retry_record.retry_count = next.attempt;
         set_failed_fee_collection(&env, &retry_record);
 

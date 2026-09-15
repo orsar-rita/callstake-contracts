@@ -4,7 +4,7 @@ use crate::validation::{
     check_duplicate_signal, check_price_reasonableness, validate_rationale_hash_string,
 };
 use soroban_sdk::{contracttype, Address, Env, Map, String};
-use stellar_swipe_common::sanitize_string;
+use call_stake_common::sanitize_string;
 
 #[contracttype]
 #[derive(Clone, Debug, PartialEq)]

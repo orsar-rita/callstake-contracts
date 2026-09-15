@@ -5,8 +5,8 @@ use auto_trade::{
     authorize_user_with_limits, set_signal, AutoTradeContract, OrderType, Signal, TradeStatus,
 };
 use soroban_sdk::{symbol_short, testutils::Address as _, Address, Env};
-use stellar_swipe_common::budget_regression::measure_and_emit;
-use stellar_swipe_common::perf::{regression_budget_limit, BASELINE_AUTO_TRADE_INSTRUCTIONS};
+use call_stake_common::budget_regression::measure_and_emit;
+use call_stake_common::perf::{regression_budget_limit, BASELINE_AUTO_TRADE_INSTRUCTIONS};
 
 const TRADE_AMOUNT: i128 = 1_000;
 

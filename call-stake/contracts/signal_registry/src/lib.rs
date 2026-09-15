@@ -73,10 +73,10 @@ use shared::version::{
     emit_contract_upgraded, get_contract_version as shared_get_contract_version, guard_upgrade,
     set_contract_version, SIGNAL_REGISTRY_VERSION,
 };
-use stellar_swipe_common::emergency::{PauseState, CAT_SIGNALS, CAT_TRADING};
-use stellar_swipe_common::rate_limit::{self as rl, ActionType as RLAction, RateLimitConfig};
-use stellar_swipe_common::SECONDS_PER_30_DAY_MONTH;
-use stellar_swipe_common::{emit_health_event, HealthStatus};
+use call_stake_common::emergency::{PauseState, CAT_SIGNALS, CAT_TRADING};
+use call_stake_common::rate_limit::{self as rl, ActionType as RLAction, RateLimitConfig};
+use call_stake_common::SECONDS_PER_30_DAY_MONTH;
+use call_stake_common::{emit_health_event, HealthStatus};
 
 use combos::{
     cancel_combo, create_combo_signal, execute_combo_signal, get_combo, get_combo_executions_pub,
@@ -106,9 +106,9 @@ use soroban_sdk::{
     contract, contractimpl, contracttype, Address, Bytes, BytesN, Env, IntoVal, Map, String,
     Symbol, Val, Vec,
 };
-use stellar_swipe_common::placeholder_admin;
-use stellar_swipe_common::{validate_asset_pair as validate_asset_pair_common, AssetPairError};
-use stellar_swipe_common::{ApprovalProposal, MultisigTimelockConfig, ProposalStatus};
+use call_stake_common::placeholder_admin;
+use call_stake_common::{validate_asset_pair as validate_asset_pair_common, AssetPairError};
+use call_stake_common::{ApprovalProposal, MultisigTimelockConfig, ProposalStatus};
 pub use template_presets::{SignalTemplateOverrides, SignalTemplatePreset, StoredSignalTemplate};
 pub use templates::SignalTemplate;
 use templates::DEFAULT_TEMPLATE_EXPIRY_HOURS;
@@ -650,8 +650,8 @@ impl SignalRegistry {
     /// Extend the top-level `StorageKey::Signals` map so active signal data
     /// is never unexpectedly archived.  Open to any caller.
     pub fn bump_signals_ttl(env: Env) {
-        stellar_swipe_common::ttl_manager::force_bump_persistent(&env, &StorageKey::Signals);
-        stellar_swipe_common::ttl_manager::force_bump_persistent(
+        call_stake_common::ttl_manager::force_bump_persistent(&env, &StorageKey::Signals);
+        call_stake_common::ttl_manager::force_bump_persistent(
             &env,
             &StorageKey::ActiveSignalsByCategory,
         );
@@ -815,20 +815,20 @@ impl SignalRegistry {
     pub fn set_circuit_breaker_config(
         env: Env,
         caller: Address,
-        config: stellar_swipe_common::emergency::CircuitBreakerConfig,
+        config: call_stake_common::emergency::CircuitBreakerConfig,
     ) -> Result<(), AdminError> {
         admin::set_circuit_breaker_config(&env, &caller, config)
     }
 
     pub fn get_circuit_breaker_config(
         env: Env,
-    ) -> Option<stellar_swipe_common::emergency::CircuitBreakerConfig> {
+    ) -> Option<call_stake_common::emergency::CircuitBreakerConfig> {
         admin::get_circuit_breaker_config(&env)
     }
 
     pub fn get_circuit_breaker_stats(
         env: Env,
-    ) -> stellar_swipe_common::emergency::CircuitBreakerStats {
+    ) -> call_stake_common::emergency::CircuitBreakerStats {
         admin::get_circuit_breaker_stats(&env)
     }
 
@@ -2018,7 +2018,7 @@ impl SignalRegistry {
         // Oracle price sanity: prices must not exceed 10^18.
         // Prevents overflow in `calculate_roi` which multiplies price_diff by
         // BASIS_POINTS_DENOMINATOR (10 000). Mirrors MAX_ORACLE_PRICE in
-        // stellar_swipe_common::oracle so settlement rejects the same values
+        // call_stake_common::oracle so settlement rejects the same values
         // that the oracle layer would reject at ingestion time.
         const MAX_SETTLEMENT_PRICE: i128 = 1_000_000_000_000_000_000;
         if entry_price > MAX_SETTLEMENT_PRICE || exit_price > MAX_SETTLEMENT_PRICE {

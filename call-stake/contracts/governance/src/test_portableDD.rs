@@ -5,7 +5,7 @@ use crate::proposals::{ProposalCategory, ProposalType, VoteType as GovernanceVot
 use crate::{GovernanceContract, GovernanceContractClient, GovernanceError};
 use soroban_sdk::testutils::{Address as _, Events, Ledger};
 use soroban_sdk::{Address, Bytes, Env, String, Symbol, TryFromVal, Val};
-use stellar_swipe_common::Asset;
+use call_stake_common::Asset;
 
 const SUPPLY: i128 = 1_000_000_000;
 
@@ -33,7 +33,7 @@ fn init(
 ) {
     client.initialize(
         admin,
-        &String::from_str(env, "StellarSwipe Gov"),
+        &String::from_str(env, "CallStake Gov"),
         &String::from_str(env, "SSG"),
         &7u32,
         &SUPPLY,

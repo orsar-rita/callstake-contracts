@@ -9,18 +9,18 @@ crate-type = ["lib", "cdylib"]
 doctest = false
 
 [features]
-testutils = ["soroban-sdk/testutils", "stellar_swipe_common/testutils", "shared/testutils"]
+testutils = ["soroban-sdk/testutils", "call_stake_common/testutils", "shared/testutils"]
 proptest = ["testutils"]
 
 [dependencies]
 soroban-sdk = { workspace = true }
-stellar_swipe_common = { path = "../common" }
+call_stake_common = { path = "../common" }
 shared = { path = "../shared" }
 dlmalloc = { version = "0.2", default-features = false, features = ["global"] }
 
 [dev-dependencies]
 soroban-sdk = { workspace = true, features = ["testutils"] }
-stellar_swipe_common = { path = "../common", features = ["testutils"] }
+call_stake_common = { path = "../common", features = ["testutils"] }
 shared = { path = "../shared", features = ["testutils"] }
 proptest = { version = "1", default-features = false, features = ["std"] }
 

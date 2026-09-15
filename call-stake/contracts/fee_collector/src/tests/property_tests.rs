@@ -6,7 +6,7 @@ use soroban_sdk::{
     testutils::{Address as _, Ledger},
     Address, Env, String,
 };
-use stellar_swipe_common::Asset;
+use call_stake_common::Asset;
 
 fn setup_contract(env: &Env) -> FeeCollectorClient<'_> {
     let admin = Address::generate(env);

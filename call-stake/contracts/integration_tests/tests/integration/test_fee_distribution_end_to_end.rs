@@ -23,7 +23,7 @@ use soroban_sdk::{
     token::{Client as TokenClient, StellarAssetClient},
     Address, Env, String,
 };
-use stellar_swipe_common::Asset;
+use call_stake_common::Asset;
 
 const SECONDS_PER_DAY: u64 = 86_400;
 

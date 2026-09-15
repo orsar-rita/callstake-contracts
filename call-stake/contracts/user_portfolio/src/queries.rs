@@ -6,8 +6,8 @@ use crate::{
     TradeHistoryPage,
 };
 use soroban_sdk::{Address, Env, Vec};
-use stellar_swipe_common::checked_amount::Amount;
-use stellar_swipe_common::{
+use call_stake_common::checked_amount::Amount;
+use call_stake_common::{
     oracle_price_to_i128, validate_freshness, IOracleClient, OnChainOracleClient,
 };
 

@@ -4,7 +4,7 @@
 //! an `sla_breach` event when the rolling average exceeds the configured SLA.
 
 use soroban_sdk::{contracttype, symbol_short, Env, Symbol};
-use stellar_swipe_common::AssetPair;
+use call_stake_common::AssetPair;
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 

@@ -1,11 +1,11 @@
 use shared::errors::{ErrorCategory, RecoveryStrategy};
 use shared::initializable;
 use soroban_sdk::{contracttype, Address, Env, String, Vec};
-use stellar_swipe_common::storage_crud::{
+use call_stake_common::storage_crud::{
     crud_get, crud_get_or, crud_has, crud_remove, crud_set, StorageTier,
 };
-use stellar_swipe_common::token_metadata::TokenMetadata;
-use stellar_swipe_common::Asset;
+use call_stake_common::token_metadata::TokenMetadata;
+use call_stake_common::Asset;
 
 // ── #690: Fee Distribution Waterfall ────────────────────────────────────────
 

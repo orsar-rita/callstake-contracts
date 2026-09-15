@@ -5,7 +5,7 @@ use soroban_sdk::{
     testutils::{Address as _, Ledger},
     Address, Env,
 };
-use stellar_swipe_common::emergency::{CircuitBreakerConfig, CAT_TRADING};
+use call_stake_common::emergency::{CircuitBreakerConfig, CAT_TRADING};
 
 fn setup() -> (Env, Address, SignalRegistryClient<'static>) {
     let env = Env::default();

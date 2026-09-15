@@ -69,8 +69,8 @@ pub use storage::{authorize_user_with_limits, set_signal, Signal};
 
 use crate::storage::DataKey;
 use advanced_risk::AutoSellResult;
-use stellar_swipe_common::emergency::{PauseState, CAT_ALL, CAT_TRADING};
-use stellar_swipe_common::{health_uninitialized, HealthStatus};
+use call_stake_common::emergency::{PauseState, CAT_ALL, CAT_TRADING};
+use call_stake_common::{health_uninitialized, HealthStatus};
 
 use risk_parity::{AssetRisk, RebalanceTrade};
 
@@ -81,7 +81,7 @@ pub use iceberg::{
     FullOrderView, IcebergOrder, OrderSide, OrderStatus, PublicOrderView,
 };
 pub use smart_routing::{LiquidityVenue, RouteSegment, RoutingPlan, VenueLiquidity};
-use stellar_swipe_common::amm_bridge::AmmSourceConfig;
+use call_stake_common::amm_bridge::AmmSourceConfig;
 
 // ==========================
 // Types
@@ -455,7 +455,7 @@ impl AutoTradeContract {
         env: Env,
         caller: Address,
         asset_pair: u32,
-        price: stellar_swipe_common::oracle::OraclePrice,
+        price: call_stake_common::oracle::OraclePrice,
     ) -> Result<(), AutoTradeError> {
         oracle::push_price_update(&env, &caller, asset_pair, price)
     }
@@ -585,7 +585,7 @@ impl AutoTradeContract {
     pub fn set_circuit_breaker_config(
         env: Env,
         caller: Address,
-        config: stellar_swipe_common::emergency::CircuitBreakerConfig,
+        config: call_stake_common::emergency::CircuitBreakerConfig,
     ) -> Result<(), AutoTradeError> {
         admin::set_cb_config(&env, &caller, config)
     }
@@ -959,7 +959,7 @@ impl AutoTradeContract {
         env: Env,
         signal_id: u64,
         probe_amount: i128,
-    ) -> Vec<stellar_swipe_common::amm_bridge::AmmQuote> {
+    ) -> Vec<call_stake_common::amm_bridge::AmmQuote> {
         amm_bridge::discover_quotes(&env, signal_id, probe_amount)
     }
 
@@ -968,7 +968,7 @@ impl AutoTradeContract {
         signal_id: u64,
         amount: i128,
         max_slippage_bps: u32,
-    ) -> Result<stellar_swipe_common::amm_bridge::AmmRoutePlan, AutoTradeError> {
+    ) -> Result<call_stake_common::amm_bridge::AmmRoutePlan, AutoTradeError> {
         let signal = storage::get_signal(&env, signal_id).ok_or(AutoTradeError::SignalNotFound)?;
         amm_bridge::plan_amm_route(&env, &signal, amount, max_slippage_bps)
     }
@@ -2185,7 +2185,7 @@ mod oracle_tests {
         testutils::{Address as _, Ledger as _},
         Env, Symbol,
     };
-    use stellar_swipe_common::oracle::{MockOracleClient, OraclePrice};
+    use call_stake_common::oracle::{MockOracleClient, OraclePrice};
 
     fn setup() -> (Env, Address) {
         let env = Env::default();
@@ -2296,7 +2296,7 @@ mod oracle_tests {
     #[test]
     fn test_mock_oracle_price_not_found() {
         let (env, contract_id) = setup();
-        use stellar_swipe_common::oracle::OracleError;
+        use call_stake_common::oracle::OracleError;
 
         env.as_contract(&contract_id, || {
             let result = oracle::get_mock_oracle_price(&env, 99);
@@ -2308,7 +2308,7 @@ mod oracle_tests {
     #[test]
     fn test_stale_oracle_price_rejected() {
         let (env, contract_id) = setup();
-        use stellar_swipe_common::oracle::OracleError;
+        use call_stake_common::oracle::OracleError;
 
         env.as_contract(&contract_id, || {
             // Seed a price with timestamp far in the past
@@ -2350,7 +2350,7 @@ mod oracle_cb_tests {
         testutils::{Address as _, Ledger as _},
         Env, Symbol,
     };
-    use stellar_swipe_common::oracle::{MockOracleClient, OraclePrice};
+    use call_stake_common::oracle::{MockOracleClient, OraclePrice};
 
     fn setup() -> (Env, Address, Address) {
         let env = Env::default();

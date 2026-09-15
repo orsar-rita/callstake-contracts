@@ -2,12 +2,12 @@
 
 use soroban_sdk::{contracttype, Address, Env, IntoVal, Symbol, Vec};
 
-use stellar_swipe_common::amm_bridge::{
+use call_stake_common::amm_bridge::{
     build_fallback_chain, emit_fallback_used, emit_quote_discovered, emit_route_planned,
     min_amount_out_with_slippage, plan_multi_source_route, rank_quotes_by_price, AmmQuote,
     AmmRoutePlan, AmmSourceConfig, AmmSourceKind, FN_GET_BEST_ASK,
 };
-use stellar_swipe_common::pair_validation::{self, PairValidationError};
+use call_stake_common::pair_validation::{self, PairValidationError};
 
 use crate::errors::AutoTradeError;
 use crate::sdex::{execute_market_order, ExecutionResult};
@@ -145,7 +145,7 @@ pub fn discover_quotes(env: &Env, signal_id: u64, probe_amount: i128) -> Vec<Amm
                     continue;
                 }
                 let expected_out =
-                    probe_amount * price / stellar_swipe_common::amm_bridge::BPS_DENOMINATOR;
+                    probe_amount * price / call_stake_common::amm_bridge::BPS_DENOMINATOR;
                 let q = AmmQuote {
                     kind: source.kind,
                     source_id: source.source_id,
@@ -173,7 +173,7 @@ fn quote_from_venue(
     if alloc <= 0 {
         return Err(AutoTradeError::InvalidAmount);
     }
-    let expected_out = alloc * venue.price / stellar_swipe_common::amm_bridge::BPS_DENOMINATOR;
+    let expected_out = alloc * venue.price / call_stake_common::amm_bridge::BPS_DENOMINATOR;
     Ok(AmmQuote {
         kind,
         source_id: venue.venue_id,
@@ -260,8 +260,8 @@ pub fn validate_signal_pair(env: &Env, signal_id: u64) -> Result<(), AutoTradeEr
     }
 }
 
-fn map_bridge_error(err: stellar_swipe_common::amm_bridge::AmmBridgeError) -> AutoTradeError {
-    use stellar_swipe_common::amm_bridge::AmmBridgeError;
+fn map_bridge_error(err: call_stake_common::amm_bridge::AmmBridgeError) -> AutoTradeError {
+    use call_stake_common::amm_bridge::AmmBridgeError;
     match err {
         AmmBridgeError::InvalidAmount => AutoTradeError::InvalidAmount,
         AmmBridgeError::NoLiquidity | AmmBridgeError::SourceUnavailable => {
@@ -312,7 +312,7 @@ fn execute_amm_plan(
 fn execute_segment(
     env: &Env,
     signal_id: u64,
-    segment: &stellar_swipe_common::amm_bridge::AmmRouteSegment,
+    segment: &call_stake_common::amm_bridge::AmmRouteSegment,
 ) -> Result<(), AutoTradeError> {
     let venue = kind_to_venue(segment.kind);
     if smart_routing::debit_venue_liquidity(
@@ -362,7 +362,7 @@ fn invoke_router_swap(
     amount_in: i128,
     min_out: i128,
 ) -> Result<i128, AutoTradeError> {
-    let sym = Symbol::new(env, stellar_swipe_common::amm_bridge::FN_SWAP);
+    let sym = Symbol::new(env, call_stake_common::amm_bridge::FN_SWAP);
     let pull_from = env.current_contract_address();
     let recipient = pull_from.clone();
 
@@ -441,7 +441,7 @@ pub fn execute_swap_with_fallback(
             {
                 if qty >= amount && price > 0 {
                     let expected_out =
-                        amount * price / stellar_swipe_common::amm_bridge::BPS_DENOMINATOR;
+                        amount * price / call_stake_common::amm_bridge::BPS_DENOMINATOR;
                     let min_out =
                         min_amount_out_with_slippage(expected_out, max_slippage_bps).unwrap_or(0);
                     if invoke_router_swap(

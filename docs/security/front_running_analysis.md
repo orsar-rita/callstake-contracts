@@ -1,6 +1,6 @@
 # Front-running: signal submission and trade execution
 
-This document explains ordering risk on Stellar, how it applies to StellarSwipe’s
+This document explains ordering risk on Stellar, how it applies to CallStake’s
 **signal submission** and **trade / copy execution**, and optional mitigations
 (including **commit–reveal** and **operational** measures).
 
@@ -57,7 +57,7 @@ fully public until broadcast:
   the same** signal-side trade, **worsen the user’s fill** (e.g. earlier
   trades move the pool), or **arbitrage** the resulting imbalance—depending
   on venue, path, and liquidity.
-- The **StellarSwipe** `execute_trade` style flows route through **Soroban**
+- The **CallStake** `execute_trade` style flows route through **Soroban**
   contracts and (typically) **SDEX / router** code; **slippage limits and
   balance checks** are the first line of defense, not order secrecy.
 
@@ -118,7 +118,7 @@ parameters** in common indexer/bot settings.
 
 #### Implementation in this repository
 
-- **`stellar_swipe_common::hash_trade_intent`** (see
+- **`call_stake_common::hash_trade_intent`** (see
   `contracts/common/src/commit_reveal.rs`) defines a **canonical** SHA-256
   over the fields above. Integrators can:
   - Use it **off-chain** to precompute `H` for a future on-chain
@@ -130,7 +130,7 @@ parameters** in common indexer/bot settings.
   fees, storage for pending commits, and event indexing).
 
 **Tests:** unit tests in `commit_reveal.rs` assert **determinism** and
-**sensitivity to amount** (see `cargo test -p stellar_swipe_common`).
+**sensitivity to amount** (see `cargo test -p call_stake_common`).
 
 ### Other (non-crypto) mitigations to mention in PRs and ops
 

@@ -31,8 +31,8 @@ use reputation::{
 use sdex::{calculate_spot_price, OrderBook};
 use soroban_sdk::{contract, contractimpl, symbol_short, Address, BytesN, Env, Map, String, Vec};
 use staleness::{OracleHealth, OracleStatus, StalenessLevel};
-use stellar_swipe_common::emergency::{PauseState, CAT_ALL};
-use stellar_swipe_common::{
+use call_stake_common::emergency::{PauseState, CAT_ALL};
+use call_stake_common::{
     health_uninitialized, placeholder_admin, Asset, AssetPair, HealthStatus,
 };
 use types::{
@@ -152,7 +152,7 @@ impl OracleContract {
             admin,
             initialized_at: env.ledger().timestamp(),
         };
-        stellar_swipe_common::emit_health_event(&env, &status);
+        call_stake_common::emit_health_event(&env, &status);
         status
     }
     /// and triggers staleness metadata update.

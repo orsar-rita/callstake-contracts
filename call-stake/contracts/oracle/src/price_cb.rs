@@ -7,7 +7,7 @@
 //! for the affected asset until an admin explicitly resets it.
 
 use soroban_sdk::{symbol_short, Address, Env};
-use stellar_swipe_common::AssetPair;
+use call_stake_common::AssetPair;
 
 use crate::{errors::OracleError, storage};
 

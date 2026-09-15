@@ -5,7 +5,7 @@ import sys
 import os
 
 def main():
-    # Path to stellar-swipe Cargo.toml
+    # Path to call-stake Cargo.toml
     script_dir = os.path.dirname(os.path.abspath(__file__))
     workspace_dir = os.path.dirname(script_dir)
     manifest_path = os.path.join(workspace_dir, "Cargo.toml")
@@ -41,7 +41,7 @@ def main():
     node_map = {node["id"]: node for node in nodes}
 
     # Dependencies we want to audit
-    audit_deps = ["soroban-sdk", "stellar-swipe-common", "stellar_swipe_common", "shared"]
+    audit_deps = ["soroban-sdk", "call-stake-common", "call_stake_common", "shared"]
 
     # Map of dep_name -> { member_name: version }
     resolved_versions = {dep: {} for dep in audit_deps}

@@ -11,7 +11,7 @@ mod validation_tests {
     use crate::types::ExternalPrice;
     use crate::storage::{set_feed_decimals, set_staleness_window};
     use crate::{OracleContract, OracleContractClient};
-    use stellar_swipe_common::{Asset, AssetPair};
+    use call_stake_common::{Asset, AssetPair};
 
     fn usdc_xlm_pair(env: &Env) -> AssetPair {
         AssetPair {

@@ -1,6 +1,6 @@
-# Soroban development FAQ (StellarSwipe)
+# Soroban development FAQ (CallStake)
 
-Answers here are tailored to **this repository** (`stellar-swipe/`, `soroban-sdk` workspace version, scripts, and patterns). They synthesize recurring Soroban topics and how we apply them here.
+Answers here are tailored to **this repository** (`call-stake/`, `soroban-sdk` workspace version, scripts, and patterns). They synthesize recurring Soroban topics and how we apply them here.
 
 **Sources to mine for new entries:** team chat threads, GitHub issues, and PR review comments — when you add a question, link the discussion in your PR description if it is public.
 
@@ -14,11 +14,11 @@ Answers here are tailored to **this repository** (`stellar-swipe/`, `soroban-sdk
 
 ### FAQ review checklist (for contributors)
 
-- [ ] Code snippets compile against the workspace `soroban-sdk` version in `stellar-swipe/Cargo.toml`.
+- [ ] Code snippets compile against the workspace `soroban-sdk` version in `call-stake/Cargo.toml`.
 - [ ] Storage examples name the correct **instance / persistent / temporary** bucket.
 - [ ] Auth examples distinguish **on-chain** `require_auth` from **test** `mock_all_auths`.
 - [ ] Cross-contract example matches how we call oracles (`invoke_contract`) or clients.
-- [ ] Build section matches `stellar-swipe/scripts/build.sh` and documented `wasm32-unknown-unknown` flow.
+- [ ] Build section matches `call-stake/scripts/build.sh` and documented `wasm32-unknown-unknown` flow.
 
 ---
 
@@ -32,7 +32,7 @@ Answers here are tailored to **this repository** (`stellar-swipe/`, `soroban-sdk
 
 ```bash
 rustup target add wasm32-unknown-unknown
-cd stellar-swipe
+cd call-stake
 cargo build --workspace --target wasm32-unknown-unknown --release
 ```
 
@@ -40,17 +40,17 @@ cargo build --workspace --target wasm32-unknown-unknown --release
 
 ### 2. What is the supported way to produce small `.wasm` artifacts in this repo?
 
-**Answer:** Use the **release** profile in `stellar-swipe/Cargo.toml` (`opt-level = "z"`, `lto`, `strip`, etc.), then run **`stellar contract optimize`** via our script so deploy/upload sizes stay reasonable.
+**Answer:** Use the **release** profile in `call-stake/Cargo.toml` (`opt-level = "z"`, `lto`, `strip`, etc.), then run **`stellar contract optimize`** via our script so deploy/upload sizes stay reasonable.
 
 **Example:**
 
 ```bash
-cd stellar-swipe
+cd call-stake
 ./scripts/build.sh
 # Optimized artifacts: target/wasm-optimized/*.wasm
 ```
 
-Requires `stellar` on `PATH` (see comments in `stellar-swipe/scripts/build.sh`).
+Requires `stellar` on `PATH` (see comments in `call-stake/scripts/build.sh`).
 
 ---
 
@@ -74,7 +74,7 @@ command -v stellar
 **Example:**
 
 ```bash
-cd stellar-swipe
+cd call-stake
 ./scripts/build.sh --compare   # optional: debug vs release vs optimized table
 ```
 
@@ -82,14 +82,14 @@ cd stellar-swipe
 
 ### 5. `cargo build --workspace` fails in a crate that is not a contract — is that expected?
 
-**Answer:** The workspace under `stellar-swipe/` is contract-centric. Build with `--target wasm32-unknown-unknown` only for contract crates; library crates like `common` compile as dependencies. If a binary crate slipped into `members`, remove it or gate it behind non-Wasm targets.
+**Answer:** The workspace under `call-stake/` is contract-centric. Build with `--target wasm32-unknown-unknown` only for contract crates; library crates like `common` compile as dependencies. If a binary crate slipped into `members`, remove it or gate it behind non-Wasm targets.
 
 **Example:**
 
 ```bash
-cd stellar-swipe
-cargo check -p stellar-swipe-common
-cargo build -p stellar-swipe-signal-registry --target wasm32-unknown-unknown --release
+cd call-stake
+cargo check -p call-stake-common
+cargo build -p call-stake-signal-registry --target wasm32-unknown-unknown --release
 ```
 
 (Replace `-p` with the exact package name from the crate’s `Cargo.toml`.)
@@ -224,7 +224,7 @@ env.storage().instance().set(&StorageKey::MyMap, &m);
 
 **Answer:** Use `Env::invoke_contract` with a **`Symbol`** for the function name and a Soroban **`Vec`** of arguments. The oracle wrapper uses this pattern.
 
-**Example (from `stellar-swipe/contracts/common/src/oracle.rs`):**
+**Example (from `call-stake/contracts/common/src/oracle.rs`):**
 
 ```rust
 use soroban_sdk::{symbol_short, vec, Address, Env, Symbol};
@@ -372,7 +372,7 @@ pub enum StorageKey {
 **Example:**
 
 ```toml
-# stellar-swipe/Cargo.toml — already configured for contracts
+# call-stake/Cargo.toml — already configured for contracts
 [profile.release]
 opt-level = "z"
 lto = true
@@ -399,7 +399,7 @@ let b = Symbol::new(env, "get_open_position_count");
 
 ### 24. Where is the Soroban SDK version pinned for this workspace?
 
-**Answer:** In `stellar-swipe/Cargo.toml` under `[workspace.dependencies]`. FAQ examples must match that major/minor (`soroban-sdk = "23"` at time of writing).
+**Answer:** In `call-stake/Cargo.toml` under `[workspace.dependencies]`. FAQ examples must match that major/minor (`soroban-sdk = "23"` at time of writing).
 
 **Example:**
 

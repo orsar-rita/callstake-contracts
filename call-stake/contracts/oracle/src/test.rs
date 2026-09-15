@@ -319,9 +319,9 @@ fn test_unregistered_oracle_cannot_submit() {
 
 // ── Issue #602: minimum independent source count ─────────────────────────────
 
-fn usdc_xlm_pair(env: &Env) -> stellar_swipe_common::AssetPair {
-    use stellar_swipe_common::Asset;
-    stellar_swipe_common::AssetPair {
+fn usdc_xlm_pair(env: &Env) -> call_stake_common::AssetPair {
+    use call_stake_common::Asset;
+    call_stake_common::AssetPair {
         base: Asset {
             code: soroban_sdk::String::from_str(env, "USDC"),
             issuer: None,
@@ -430,13 +430,13 @@ fn test_min_source_count_admin_only() {
 
 // ── Oracle price normalisation tests ─────────────────────────────────────────
 
-fn make_pair(env: &Env, base: &str, quote: &str) -> stellar_swipe_common::AssetPair {
-    stellar_swipe_common::AssetPair {
-        base: stellar_swipe_common::Asset {
+fn make_pair(env: &Env, base: &str, quote: &str) -> call_stake_common::AssetPair {
+    call_stake_common::AssetPair {
+        base: call_stake_common::Asset {
             code: String::from_str(env, base),
             issuer: None,
         },
-        quote: stellar_swipe_common::Asset {
+        quote: call_stake_common::Asset {
             code: String::from_str(env, quote),
             issuer: None,
         },
@@ -588,7 +588,7 @@ fn error_messages_are_non_empty_and_distinct() {
 
 // ── Instruction-budget regression snapshots (Issue #budget) ───────────────────
 
-use stellar_swipe_common::budget_regression::measure_and_emit;
+use call_stake_common::budget_regression::measure_and_emit;
 
 #[test]
 fn set_price_budget_regression() {

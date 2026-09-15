@@ -1,14 +1,14 @@
 //! Transaction-scoped fee configuration cache for `collect_fee` hot path.
 
 use soroban_sdk::{contracttype, symbol_short, Address, Env, Symbol};
-use stellar_swipe_common::perf::tx_cache_or_compute;
+use call_stake_common::perf::tx_cache_or_compute;
 
 use crate::storage::{
     bump_config_version as _, get_burn_rate, get_config_version, get_fee_optimization_config,
     get_network_condition_score, get_protocol_token, FeeOptimizationConfig, MAX_FEE_RATE_BPS,
     MIN_FEE_RATE_BPS,
 };
-use stellar_swipe_common::Asset;
+use call_stake_common::Asset;
 
 /// Cache key includes the config version so any fee-config write automatically
 /// produces a cache miss on the next call — no explicit flush needed.

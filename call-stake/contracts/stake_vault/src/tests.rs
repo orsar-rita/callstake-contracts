@@ -2774,7 +2774,7 @@ mod unstake_queue_cap_tests {
 
 // ── Instruction-budget regression snapshots (Issue #budget) ───────────────────
 
-use stellar_swipe_common::budget_regression::measure_and_emit;
+use call_stake_common::budget_regression::measure_and_emit;
 
 #[test]
 fn deposit_stake_budget_regression() {

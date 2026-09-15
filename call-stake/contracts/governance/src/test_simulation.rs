@@ -39,7 +39,7 @@ fn client<'a>(env: &'a Env, id: &'a Address) -> GovernanceContractClient<'a> {
 fn init(c: &GovernanceContractClient, env: &Env, admin: &Address, r: &DistributionRecipients) {
     c.initialize(
         admin,
-        &String::from_str(env, "StellarSwipe Gov"),
+        &String::from_str(env, "CallStake Gov"),
         &String::from_str(env, "SSG"),
         &7u32,
         &SUPPLY,
@@ -132,7 +132,7 @@ fn simulate_treasury_spend_insufficient_balance_reports_failure() {
     init(&c, &env, &admin, &r);
     stake_tokens(&c, &r.community_rewards, 10_000);
 
-    let asset = stellar_swipe_common::Asset {
+    let asset = call_stake_common::Asset {
         code: String::from_str(&env, "USDC"),
         issuer: None,
     };
@@ -312,7 +312,7 @@ fn failed_simulation_emits_shadow_mode_result_event_with_reason() {
     init(&c, &env, &admin, &r);
     stake_tokens(&c, &r.community_rewards, 10_000);
 
-    let asset = stellar_swipe_common::Asset {
+    let asset = call_stake_common::Asset {
         code: String::from_str(&env, "USDC"),
         issuer: None,
     };

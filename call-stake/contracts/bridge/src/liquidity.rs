@@ -1,5 +1,5 @@
 use soroban_sdk::{contracttype, Address, Env};
-use stellar_swipe_common::BASIS_POINTS_DENOMINATOR_I128;
+use call_stake_common::BASIS_POINTS_DENOMINATOR_I128;
 
 use crate::BridgeError;
 

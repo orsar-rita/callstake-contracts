@@ -8,7 +8,7 @@
 
 use crate::storage::{get_provider_daily_fee_shares, get_provider_earnings_first_day};
 use soroban_sdk::{contracttype, Address, Env, Vec};
-use stellar_swipe_common::SECONDS_PER_DAY;
+use call_stake_common::SECONDS_PER_DAY;
 
 // ── Period enum ───────────────────────────────────────────────────────────────
 

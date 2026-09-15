@@ -5,8 +5,8 @@ use soroban_sdk::{
     testutils::{Address as _, Events, Ledger},
     Address, Env, String, TryFromVal,
 };
-use stellar_swipe_common::emergency::CAT_ALL;
-use stellar_swipe_common::{Asset, AssetPair};
+use call_stake_common::emergency::CAT_ALL;
+use call_stake_common::{Asset, AssetPair};
 
 fn xlm(env: &Env) -> Asset {
     Asset {

@@ -4,10 +4,10 @@ use shared::reentrancy;
 use soroban_sdk::{
     contract, contracterror, contractimpl, contracttype, Address, Env, String, Symbol, Vec,
 };
-use stellar_swipe_common::token_metadata::{
+use call_stake_common::token_metadata::{
     validate as validate_token_metadata, TokenMetadata, TokenMetadataError,
 };
-use stellar_swipe_common::SECONDS_PER_DAY;
+use call_stake_common::SECONDS_PER_DAY;
 
 mod validators;
 
@@ -933,19 +933,19 @@ impl BridgeContract {
     }
 
     /// Read-only health for ops / frontends.
-    pub fn health_check(env: Env) -> stellar_swipe_common::HealthStatus {
+    pub fn health_check(env: Env) -> call_stake_common::HealthStatus {
         let version = String::from_str(&env, env!("CARGO_PKG_VERSION"));
         let config: Option<BridgeConfig> = env.storage().instance().get(&DataKey::Config);
         match config {
             Some(cfg) => {
-                let status = stellar_swipe_common::HealthStatus {
+                let status = call_stake_common::HealthStatus {
                     is_initialized: true,
                     is_paused: is_paused(&env),
                     version,
                     admin: cfg.admin,
                     initialized_at: env.ledger().timestamp(),
                 };
-                stellar_swipe_common::emit_health_event(&env, &status);
+                call_stake_common::emit_health_event(&env, &status);
                 status
             }
             None => crate::governance::bridge_health_check(&env),

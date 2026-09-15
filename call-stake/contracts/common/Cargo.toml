@@ -1,5 +1,5 @@
 [package]
-name = "stellar_swipe_common"
+name = "call_stake_common"
 version = "0.0.0"
 edition = "2021"
 publish = false

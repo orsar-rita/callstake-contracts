@@ -11,7 +11,7 @@ use soroban_sdk::{
     testutils::{Address as _, Ledger},
     Address, Env,
 };
-use stellar_swipe_common::OraclePrice;
+use call_stake_common::OraclePrice;
 
 // ── Oracle mock ───────────────────────────────────────────────────────────────
 
@@ -365,7 +365,7 @@ fn close_position_emits_position_closed_event_on_loss() {
 
 // ── Instruction-budget regression snapshots (Issue #budget) ───────────────────
 
-use stellar_swipe_common::budget_regression::measure_and_emit;
+use call_stake_common::budget_regression::measure_and_emit;
 
 #[test]
 fn record_trade_budget_regression() {

@@ -6,7 +6,7 @@
 //! of whether aggregation or fallback logic triggers.
 
 use soroban_sdk::{contracttype, Address, Env, Symbol, Vec};
-use stellar_swipe_common::AssetPair;
+use call_stake_common::AssetPair;
 
 use crate::errors::OracleError;
 

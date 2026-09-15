@@ -317,7 +317,7 @@ pub fn check_price_reasonableness(
     };
 
     // Try to fetch oracle price
-    use stellar_swipe_common::oracle::{
+    use call_stake_common::oracle::{
         oracle_price_to_i128, validate_freshness, IOracleClient, OnChainOracleClient,
     };
 

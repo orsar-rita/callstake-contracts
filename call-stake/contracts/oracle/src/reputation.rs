@@ -1,5 +1,5 @@
 use soroban_sdk::{Address, Env, Map};
-use stellar_swipe_common::{BASIS_POINTS_DENOMINATOR_I128, SECONDS_PER_WEEK};
+use call_stake_common::{BASIS_POINTS_DENOMINATOR_I128, SECONDS_PER_WEEK};
 
 use crate::types::{OracleReputation, StorageKey};
 

@@ -15,7 +15,7 @@ execute_swap_with_fallback
     └── 4. SDEX stub (temporary liquidity store)
 ```
 
-Shared logic lives in `stellar_swipe_common::amm_bridge`. Contract wiring is in `auto_trade::amm_bridge`.
+Shared logic lives in `call_stake_common::amm_bridge`. Contract wiring is in `auto_trade::amm_bridge`.
 
 ## AMM source kinds
 
@@ -73,7 +73,7 @@ Compatible with `trade_executor::sdex`:
 
 ## Testing
 
-- **Common unit tests**: `cargo test -p stellar_swipe_common amm_bridge`
+- **Common unit tests**: `cargo test -p call_stake_common amm_bridge`
 - **Integration tests with mock routers**: `cargo test -p auto_trade --features testutils --test test_amm_bridge` (requires `auto_trade` crate to compile)
 
 Mock router: `auto_trade::amm_bridge::mock_router::MockAmmRouter` — configurable ask depth, swap output, and failure modes.

@@ -1,4 +1,4 @@
-# StellarSwipe Threat Model
+# CallStake Threat Model
 
 **Methodology:** STRIDE  
 **Version:** 2.0.0  
@@ -106,7 +106,7 @@ Each threat entry uses:
 | **Likelihood** | LOW |
 | **Impact** | MEDIUM |
 | **Status** | MITIGATED |
-| **Mitigation** | All signal submission functions call `provider.require_auth()` via Soroban's host-enforced auth. Replay protection is provided by `stellar_swipe_common::replay_protection` (nonce / tx-hash dedup). The `increment_adoption` function additionally validates the caller against the registered `TradeExecutor` address. |
+| **Mitigation** | All signal submission functions call `provider.require_auth()` via Soroban's host-enforced auth. Replay protection is provided by `call_stake_common::replay_protection` (nonce / tx-hash dedup). The `increment_adoption` function additionally validates the caller against the registered `TradeExecutor` address. |
 
 ---
 
@@ -449,7 +449,7 @@ Each threat entry uses:
 | **Likelihood** | MEDIUM |
 | **Impact** | MEDIUM |
 | **Status** | PARTIAL |
-| **Mitigation** | Signal submission requires a fee (`fees.rs`). Rate limiting (`stellar_swipe_common::rate_limit`) restricts submissions per address per time window. Staking requirement (`stake.rs`) raises the cost of spam. Signal expiry (`expiry.rs`) cleans up old entries. `cleanup_expired_signals` and `archive_old_signals` provide batch garbage collection. |
+| **Mitigation** | Signal submission requires a fee (`fees.rs`). Rate limiting (`call_stake_common::rate_limit`) restricts submissions per address per time window. Staking requirement (`stake.rs`) raises the cost of spam. Signal expiry (`expiry.rs`) cleans up old entries. `cleanup_expired_signals` and `archive_old_signals` provide batch garbage collection. |
 | **Residual / Remediation** | Rate limits and fees may be insufficient if the attacker is well-funded. Remediation: increase minimum stake for signal submission; implement automatic garbage collection triggered by storage size thresholds. |
 
 ---
@@ -507,7 +507,7 @@ Each threat entry uses:
 | **Likelihood** | LOW |
 | **Impact** | LOW |
 | **Status** | MITIGATED |
-| **Mitigation** | Rate limits in `stellar_swipe_common::rate_limit` are per-address, not global. Each provider has an independent window. Trust score increases an individual provider's limit, not a shared pool. |
+| **Mitigation** | Rate limits in `call_stake_common::rate_limit` are per-address, not global. Each provider has an independent window. Trust score increases an individual provider's limit, not a shared pool. |
 
 ---
 

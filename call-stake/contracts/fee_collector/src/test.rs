@@ -6,7 +6,7 @@ use soroban_sdk::{
     token::{Client as TokenClient, StellarAssetClient},
     Address, Env, String,
 };
-use stellar_swipe_common::Asset;
+use call_stake_common::Asset;
 
 use crate::{
     set_pending_fees, set_treasury_balance, ContractError, FeeCollector, FeeCollectorClient,
@@ -1791,7 +1791,7 @@ fn error_messages_are_non_empty_and_distinct() {
 
 // ── Instruction-budget regression snapshots (Issue #budget) ───────────────────
 
-use stellar_swipe_common::budget_regression::measure_and_emit;
+use call_stake_common::budget_regression::measure_and_emit;
 
 #[test]
 fn collect_fee_budget_regression() {

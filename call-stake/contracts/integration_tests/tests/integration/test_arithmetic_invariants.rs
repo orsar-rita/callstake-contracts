@@ -41,7 +41,7 @@ use soroban_sdk::{
     token::StellarAssetClient,
     Address, Env, String,
 };
-use stellar_swipe_common::Asset;
+use call_stake_common::Asset;
 
 use fee_collector::{fee_amount_floor, FeeCollector, FeeCollectorClient};
 

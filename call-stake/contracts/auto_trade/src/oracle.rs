@@ -8,7 +8,7 @@
 //!   auto-resets when oracle recovers, admin can manually override
 
 use soroban_sdk::{contracttype, Address, Env, String, Symbol};
-use stellar_swipe_common::oracle::{
+use call_stake_common::oracle::{
     validate_price_bounds, IOracleClient, MockOracleClient, OnChainOracleClient, OracleError,
     OraclePrice,
 };

@@ -17,7 +17,7 @@ use crate::{
 };
 use soroban_sdk::testutils::{Address as _, Events, Ledger};
 use soroban_sdk::{symbol_short, Address, Bytes, Env, Map, String, Symbol, Vec};
-use stellar_swipe_common::Asset;
+use call_stake_common::Asset;
 
 const SUPPLY: i128 = 1_000_000_000;
 
@@ -51,7 +51,7 @@ fn initialize(
 ) {
     client.initialize(
         admin,
-        &String::from_str(env, "StellarSwipe Gov"),
+        &String::from_str(env, "CallStake Gov"),
         &String::from_str(env, "SSG"),
         &7u32,
         &SUPPLY,
@@ -100,7 +100,7 @@ fn reject_zero_invalid_total_supply() {
 
     let result = client.try_initialize(
         &admin,
-        &String::from_str(&env, "StellarSwipe Gov"),
+        &String::from_str(&env, "CallStake Gov"),
         &String::from_str(&env, "SSG"),
         &7u32,
         &0i128,
@@ -1409,7 +1409,7 @@ mod event_format_tests {
         };
         client.initialize(
             &admin,
-            &soroban_sdk::String::from_str(env, "StellarSwipe"),
+            &soroban_sdk::String::from_str(env, "CallStake"),
             &soroban_sdk::String::from_str(env, "SSW"),
             &7u32,
             &1_000_000_000i128,

@@ -3,7 +3,7 @@
 use super::AutoTradeContract;
 use soroban_sdk::testutils::Address as _;
 use soroban_sdk::{Address, Env, String};
-use stellar_swipe_common::emergency::CAT_ALL;
+use call_stake_common::emergency::CAT_ALL;
 
 #[test]
 fn health_not_initialized() {

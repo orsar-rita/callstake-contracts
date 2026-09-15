@@ -3,7 +3,7 @@
 use crate::governance::get_bridge_validators;
 use crate::monitoring::{get_bridge_transfer, ChainId, TransferStatus};
 use soroban_sdk::{contracttype, Address, Env, String, Symbol, Vec};
-use stellar_swipe_common::assets::Asset;
+use call_stake_common::assets::Asset;
 
 #[contracttype]
 #[derive(Clone, Debug, PartialEq, Eq)]

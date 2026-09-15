@@ -9,7 +9,7 @@
 //! # Usage pattern
 //!
 //! ```ignore
-//! use stellar_swipe_common::storage_crud::{crud_get_or, crud_set, StorageTier};
+//! use call_stake_common::storage_crud::{crud_get_or, crud_set, StorageTier};
 //!
 //! pub fn get_fee_rate(env: &Env) -> u32 {
 //!     crud_get_or(env, StorageTier::Instance, &StorageKey::FeeRate, DEFAULT_FEE_RATE_BPS)

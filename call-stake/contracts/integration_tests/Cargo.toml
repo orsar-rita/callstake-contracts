@@ -15,7 +15,7 @@ stake_vault = { path = "../stake_vault" }
 [dev-dependencies]
 soroban-sdk = { workspace = true, features = ["testutils"] }
 signal_registry = { path = "../signal_registry", features = ["testutils"] }
-stellar_swipe_common = { path = "../common" }
+call_stake_common = { path = "../common" }
 trade_executor = { path = "../trade_executor" }
 user_portfolio = { path = "../user_portfolio" }
 fee_collector = { path = "../fee_collector" }

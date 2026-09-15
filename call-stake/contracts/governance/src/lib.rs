@@ -92,7 +92,7 @@ use soroban_sdk::{
     contract, contractimpl, contracttype, symbol_short, Address, Bytes, Env, Map, String, Symbol,
     Vec,
 };
-use stellar_swipe_common::Asset;
+use call_stake_common::Asset;
 use timelock::{
     cancel_admin_action, cancel_queued_action, emergency_execute, emergency_unblock_action,
     execute_admin_action, execute_multiple_actions, execute_queued_action, extend_execution_window,
@@ -201,7 +201,7 @@ impl GovernanceContract {
     /// # Parameters
     /// - `env`: Soroban environment.
     /// - `admin`: Address that will hold admin privileges (must authorize).
-    /// - `name`: Token name (e.g. `"StellarSwipe Gov"`).
+    /// - `name`: Token name (e.g. `"CallStake Gov"`).
     /// - `symbol`: Token symbol (e.g. `"SSG"`).
     /// - `decimals`: Token decimal places.
     /// - `total_supply`: Total token supply (must be > 0).
@@ -360,25 +360,25 @@ impl GovernanceContract {
     }
 
     /// Read-only health probe for monitoring and front-ends (no auth).
-    pub fn health_check(env: Env) -> stellar_swipe_common::HealthStatus {
+    pub fn health_check(env: Env) -> call_stake_common::HealthStatus {
         let version = String::from_str(&env, env!("CARGO_PKG_VERSION"));
         if !is_initialized(&env) {
-            return stellar_swipe_common::health_uninitialized(&env, version);
+            return call_stake_common::health_uninitialized(&env, version);
         }
         let admin = env
             .storage()
             .instance()
             .get(&StorageKey::Admin)
-            .unwrap_or_else(|| stellar_swipe_common::placeholder_admin(&env));
+            .unwrap_or_else(|| call_stake_common::placeholder_admin(&env));
         let is_paused = pausable::is_paused(&env);
-        let status = stellar_swipe_common::HealthStatus {
+        let status = call_stake_common::HealthStatus {
             is_initialized: true,
             is_paused,
             version,
             admin,
             initialized_at: env.ledger().timestamp(),
         };
-        stellar_swipe_common::emit_health_event(&env, &status);
+        call_stake_common::emit_health_event(&env, &status);
         status
     }
 

@@ -120,7 +120,7 @@ fn submit_unsupported_pair_rejected() {
 fn submit_spam_limit_enforced() {
     let (env, admin, client) = setup();
     // Set a tight rate limit: max 2 signal submissions per window.
-    use stellar_swipe_common::rate_limit::{ActionType, RateLimitConfig};
+    use call_stake_common::rate_limit::{ActionType, RateLimitConfig};
     client.set_rate_limit_config(&admin, &ActionType::SignalSubmission, &60u64, &2u32);
 
     let provider = Address::generate(&env);

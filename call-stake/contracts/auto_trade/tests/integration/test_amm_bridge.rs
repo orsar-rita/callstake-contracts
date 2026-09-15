@@ -9,7 +9,7 @@ use auto_trade::smart_routing::{LiquidityVenue, VenueLiquidity};
 use auto_trade::{AutoTradeContract, Signal};
 use soroban_sdk::testutils::Ledger;
 use soroban_sdk::{symbol_short, Address, Env};
-use stellar_swipe_common::amm_bridge::{AmmSourceConfig, AmmSourceKind};
+use call_stake_common::amm_bridge::{AmmSourceConfig, AmmSourceKind};
 
 fn signal(id: u64) -> Signal {
     Signal {

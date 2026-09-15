@@ -3,7 +3,7 @@
 use core::convert::TryFrom;
 
 use soroban_sdk::{contracttype, Address, Env, Map, String, Vec};
-use stellar_swipe_common::Asset;
+use call_stake_common::Asset;
 
 use crate::distribution::update_reward_config;
 use crate::errors::GovernanceError;

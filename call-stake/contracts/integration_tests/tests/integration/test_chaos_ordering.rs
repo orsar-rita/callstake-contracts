@@ -42,8 +42,8 @@ struct ChaosOracle;
 
 #[contractimpl]
 impl ChaosOracle {
-    pub fn get_price(_env: Env, _asset_pair: u32) -> stellar_swipe_common::OraclePrice {
-        stellar_swipe_common::OraclePrice {
+    pub fn get_price(_env: Env, _asset_pair: u32) -> call_stake_common::OraclePrice {
+        call_stake_common::OraclePrice {
             price: 1_000_000_000i128,
             decimals: 7,
             timestamp: 0,

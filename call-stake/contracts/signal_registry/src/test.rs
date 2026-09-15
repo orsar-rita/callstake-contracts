@@ -1212,7 +1212,7 @@ fn migration_v1_to_v2_batches() {
 
 // ── Instruction-budget regression snapshots (Issue #budget) ───────────────────
 
-use stellar_swipe_common::budget_regression::measure_and_emit;
+use call_stake_common::budget_regression::measure_and_emit;
 
 #[test]
 fn submit_signal_budget_regression() {

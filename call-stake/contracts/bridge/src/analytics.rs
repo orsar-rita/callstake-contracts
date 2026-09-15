@@ -1,7 +1,7 @@
 use crate::governance::{get_bridge, get_bridge_validators, is_validator};
 use crate::monitoring::{BridgeTransfer, TransferStatus};
 use soroban_sdk::{contracttype, Address, Env, Map, String, Vec};
-use stellar_swipe_common::{BASIS_POINTS_DENOMINATOR, SECONDS_PER_DAY, SECONDS_PER_HOUR};
+use call_stake_common::{BASIS_POINTS_DENOMINATOR, SECONDS_PER_DAY, SECONDS_PER_HOUR};
 
 #[contracttype]
 #[derive(Clone, Debug)]
@@ -48,7 +48,7 @@ pub struct BridgeAnalytics {
     pub total_fees: i128,
     pub avg_transfer_time_seconds: u64,
     pub success_rate: u32, // Basis points (0-10000)
-    pub volume_by_asset: Map<stellar_swipe_common::assets::Asset, i128>,
+    pub volume_by_asset: Map<call_stake_common::assets::Asset, i128>,
     pub volume_by_period: TimeSeries,
 }
 

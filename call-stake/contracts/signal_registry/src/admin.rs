@@ -1,9 +1,9 @@
 use soroban_sdk::{contracttype, Address, Env, Map, String, Vec};
-use stellar_swipe_common::emergency::{
+use call_stake_common::emergency::{
     CircuitBreakerConfig, CircuitBreakerStats, PauseState, CAT_ALL, CAT_SIGNALS, CAT_STAKES,
     CAT_TRADING,
 };
-use stellar_swipe_common::validate_signer_config;
+use call_stake_common::validate_signer_config;
 
 use crate::errors::AdminError;
 use crate::events::*;
@@ -769,8 +769,8 @@ pub fn enable_multisig(
     caller.require_auth();
 
     validate_signer_config(&signers, threshold).map_err(|e| match e {
-        stellar_swipe_common::MultisigError::DuplicateSigner => AdminError::DuplicateSigner,
-        stellar_swipe_common::MultisigError::InvalidThreshold => AdminError::InvalidParameter,
+        call_stake_common::MultisigError::DuplicateSigner => AdminError::DuplicateSigner,
+        call_stake_common::MultisigError::InvalidThreshold => AdminError::InvalidParameter,
         _ => AdminError::InvalidParameter,
     })?;
 
@@ -1034,7 +1034,7 @@ pub fn update_circuit_breaker_stats(env: &Env, failed: bool, volume: i128, price
     // Check circuit breaker triggers
     if let Some(config) = get_circuit_breaker_config(env) {
         if let Some(reason) =
-            stellar_swipe_common::emergency::check_thresholds(env, &stats, &config, price)
+            call_stake_common::emergency::check_thresholds(env, &stats, &config, price)
         {
             // Auto-pause "all" category
             let pause_state = PauseState {

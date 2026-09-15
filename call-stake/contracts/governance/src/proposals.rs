@@ -1,5 +1,5 @@
 use soroban_sdk::{contracttype, symbol_short, Address, Bytes, Env, Map, String, Vec};
-use stellar_swipe_common::{sanitize_string, Asset};
+use call_stake_common::{sanitize_string, Asset};
 
 use crate::{
     add_balance, checked_add, checked_mul, checked_sub, get_holders, get_staked_balance,

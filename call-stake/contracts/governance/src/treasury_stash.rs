@@ -17,7 +17,7 @@
 //! ```
 
 use soroban_sdk::{contracttype, Env, Map, Vec};
-use stellar_swipe_common::Asset;
+use call_stake_common::Asset;
 
 use crate::errors::GovernanceError;
 use crate::{checked_add, checked_sub};

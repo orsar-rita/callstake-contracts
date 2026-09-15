@@ -25,8 +25,8 @@
 /// Panic with a structured `SSW-<code>: <context>` message (issue #596).
 ///
 /// ```ignore
-/// stellar_swipe_common::structured_panic!(9100, "entry price cannot be zero");
-/// stellar_swipe_common::structured_panic!(9100, "invalid amount: {}", amount);
+/// call_stake_common::structured_panic!(9100, "entry price cannot be zero");
+/// call_stake_common::structured_panic!(9100, "invalid amount: {}", amount);
 /// ```
 #[macro_export]
 macro_rules! structured_panic {

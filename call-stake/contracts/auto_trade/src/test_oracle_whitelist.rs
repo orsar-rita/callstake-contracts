@@ -7,7 +7,7 @@ use soroban_sdk::{
     testutils::{Address as _, Ledger as _},
     Env, Symbol,
 };
-use stellar_swipe_common::oracle::OraclePrice;
+use call_stake_common::oracle::OraclePrice;
 
 fn setup() -> (Env, Address, Address, AutoTradeContractClient<'static>) {
     let env = Env::default();

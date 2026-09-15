@@ -7,7 +7,7 @@ contracts), and every tagged release (`v*`)
 
 ## Purpose
 
-This is the **recurring, per-release security review gate** for StellarSwipe.
+This is the **recurring, per-release security review gate** for CallStake.
 A reviewer works through it on every contract-touching pull request, and it
 is re-affirmed at tag time before a release ships. It is deliberately
 lightweight — a checklist a human ticks during code review, not a sign-off
@@ -115,13 +115,13 @@ keys.
       (or an explicit justification for why old data can be left as-is)
       rather than assuming a field is always present going forward.
 - [ ] **Contract interface version is bumped when required.** Follow
-      `stellar-swipe/docs/shared_version_upgrade_rules.md`: bump the
+      `call-stake/docs/shared_version_upgrade_rules.md`: bump the
       relevant `*_VERSION` constant and `min_version_for` for breaking
       changes (removed/renamed method, changed storage layout, changed
       parameter semantics, removed `#[contracttype]` variant); no bump
       needed for additive, backward-compatible changes.
 - [ ] **Cross-contract callers re-verify the callee version** per
-      `stellar-swipe/docs/CROSS_CONTRACT_INTERFACE_VERSIONING.md` if this
+      `call-stake/docs/CROSS_CONTRACT_INTERFACE_VERSIONING.md` if this
       PR changes a callee's interface — add/update the caller-side client
       wrapper's expected version constant and a regression test that
       proves an incompatible callee is rejected.
@@ -140,9 +140,9 @@ keys.
 Overflow/underflow, checked-amount usage, fee rounding.
 
 - [ ] **All financial-amount arithmetic goes through
-      `stellar_swipe_common::Amount`'s `checked_*` methods**, not raw `+`,
+      `call_stake_common::Amount`'s `checked_*` methods**, not raw `+`,
       `-`, `*`, `/` on `i128` — see
-      `stellar-swipe/contracts/common/src/checked_amount.rs` and the
+      `call-stake/contracts/common/src/checked_amount.rs` and the
       "Checked arithmetic for financial amounts" section of
       [`CONTRIBUTING.md`](../../CONTRIBUTING.md).
 - [ ] **New functions that do financial arithmetic on raw `i128` (migration

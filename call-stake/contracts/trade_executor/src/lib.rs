@@ -32,8 +32,8 @@ use soroban_sdk::{
     Val, Vec,
 };
 
-use stellar_swipe_common::pair_validation::{self, PairValidationError};
-use stellar_swipe_common::replay_protection::{
+use call_stake_common::pair_validation::{self, PairValidationError};
+use call_stake_common::replay_protection::{
     purge_expired_nonces as replay_purge_expired_nonces, verify_and_commit, ReplayError,
 };
 use triggers::{ORACLE_KEY, PORTFOLIO_KEY};
@@ -1416,20 +1416,20 @@ impl TradeExecutorContract {
     }
 
     /// Read-only health probe for monitoring and front-ends (no auth).
-    pub fn health_check(env: Env) -> stellar_swipe_common::HealthStatus {
+    pub fn health_check(env: Env) -> call_stake_common::HealthStatus {
         let version = String::from_str(&env, env!("CARGO_PKG_VERSION"));
         let admin: Option<Address> = env.storage().instance().get(&StorageKey::Admin);
         let Some(admin) = admin else {
-            return stellar_swipe_common::health_uninitialized(&env, version);
+            return call_stake_common::health_uninitialized(&env, version);
         };
-        let status = stellar_swipe_common::HealthStatus {
+        let status = call_stake_common::HealthStatus {
             is_initialized: true,
             is_paused: is_paused(&env),
             version,
             admin,
             initialized_at: env.ledger().timestamp(),
         };
-        stellar_swipe_common::emit_health_event(&env, &status);
+        call_stake_common::emit_health_event(&env, &status);
         status
     }
 

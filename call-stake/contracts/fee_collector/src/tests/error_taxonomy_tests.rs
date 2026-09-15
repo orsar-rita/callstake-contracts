@@ -13,7 +13,7 @@ use soroban_sdk::{
     testutils::{Address as _, Ledger},
     Address, Env,
 };
-use stellar_swipe_common::{
+use call_stake_common::{
     collateral_oracle::{self, CollateralError},
     join_rate_limit::{self, JoinRateLimitConfig, JoinRateLimitError},
     oracle::{OraclePrice, MAX_PRICE_AGE_SECS},

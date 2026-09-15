@@ -67,7 +67,7 @@ pub use preferences::{
 use soroban_sdk::{
     contract, contracterror, contractimpl, contracttype, Address, Env, String, Symbol, Vec,
 };
-use stellar_swipe_common::health::{health_uninitialized, HealthStatus};
+use call_stake_common::health::{health_uninitialized, HealthStatus};
 use storage::DataKey;
 
 /// Compute the Herfindahl-Hirschman Index (HHI) concentration score for a user's open
@@ -1602,7 +1602,7 @@ impl UserPortfolio {
             .storage()
             .instance()
             .get(&DataKey::Admin)
-            .unwrap_or_else(|| stellar_swipe_common::health::placeholder_admin(&env));
+            .unwrap_or_else(|| call_stake_common::health::placeholder_admin(&env));
         HealthStatus {
             is_initialized: true,
             is_paused: false,
@@ -1900,7 +1900,7 @@ mod migration_tests {
     use super::*;
     use crate::storage::DataKey;
     use soroban_sdk::testutils::Address as _;
-    use stellar_swipe_common::OraclePrice;
+    use call_stake_common::OraclePrice;
 
     fn close_test_position(env: &Env, client: &UserPortfolioClient, user: &Address, id: u64) {
         let provider = Address::generate(env);
@@ -2084,7 +2084,7 @@ mod anchor_deposit_tests {
 #[cfg(test)]
 mod oracle_ok {
     use soroban_sdk::{contract, contractimpl, symbol_short, Env};
-    use stellar_swipe_common::OraclePrice;
+    use call_stake_common::OraclePrice;
 
     #[contract]
     pub struct OracleMock;
@@ -2109,7 +2109,7 @@ mod oracle_ok {
 #[cfg(test)]
 mod oracle_fail {
     use soroban_sdk::{contract, contractimpl, Env};
-    use stellar_swipe_common::OraclePrice;
+    use call_stake_common::OraclePrice;
 
     #[contract]
     pub struct OraclePanic;
@@ -2129,7 +2129,7 @@ mod tests {
     use super::oracle_ok::OracleMockClient;
     use super::*;
     use soroban_sdk::testutils::{Address as _, Events, Ledger};
-    use stellar_swipe_common::OraclePrice;
+    use call_stake_common::OraclePrice;
 
     #[allow(deprecated)]
     fn setup_portfolio(

@@ -1,5 +1,5 @@
 use soroban_sdk::{Address, Env, Map, String};
-use stellar_swipe_common::emergency::{PauseState, CAT_ALL};
+use call_stake_common::emergency::{PauseState, CAT_ALL};
 
 use crate::errors::OracleError;
 use crate::events::{emit_guardian_revoked, emit_guardian_set};

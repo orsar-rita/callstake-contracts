@@ -1,5 +1,5 @@
 use soroban_sdk::{contracttype, Address, Bytes};
-use stellar_swipe_common::AssetPair;
+use call_stake_common::AssetPair;
 
 #[contracttype]
 #[derive(Clone, Debug)]

@@ -9,7 +9,7 @@ use soroban_sdk::{
     testutils::{Address as _, Events as _, Ledger as _},
     Address, Env, IntoVal, Symbol, TryFromVal, Val,
 };
-use stellar_swipe_common::emergency::CAT_TRADING;
+use call_stake_common::emergency::CAT_TRADING;
 
 fn setup_env() -> Env {
     let env = Env::default();

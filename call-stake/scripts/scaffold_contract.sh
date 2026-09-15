@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# scaffold_contract.sh — Generate a new StellarSwipe contract crate pre-wired with
+# scaffold_contract.sh — Generate a new CallStake contract crate pre-wired with
 # shared Pausable, Initializable, and storage-trait boilerplate.
 #
 # Usage:
@@ -43,7 +43,7 @@ mkdir -p "${CRATE_DIR}/src"
 # ── Cargo.toml ────────────────────────────────────────────────────────────────
 cat > "${CRATE_DIR}/Cargo.toml" << TOML
 [package]
-name = "stellar-swipe-${NAME//_/-}"
+name = "call-stake-${NAME//_/-}"
 version = "0.1.0"
 edition = "2021"
 
@@ -52,7 +52,7 @@ crate-type = ["cdylib", "rlib"]
 
 [dependencies]
 soroban-sdk = { workspace = true }
-stellar-swipe-common = { path = "../common" }
+call-stake-common = { path = "../common" }
 
 [dev-dependencies]
 soroban-sdk = { workspace = true, features = ["testutils"] }
@@ -272,11 +272,11 @@ fi
 
 echo ""
 echo "✓ Scaffolded: ${CRATE_DIR}"
-echo "  • Cargo.toml  — depends on soroban-sdk + stellar-swipe-common"
+echo "  • Cargo.toml  — depends on soroban-sdk + call-stake-common"
 echo "  • src/lib.rs  — initialize/pause/unpause + storage_write/storage_read"
 echo "  • src/tests.rs — starter tests"
 echo ""
 echo "Workspace Cargo.toml updated with: contracts/${NAME}"
 echo ""
 echo "Next steps:"
-echo "  cd stellar-swipe && cargo test -p stellar-swipe-${NAME//_/-}"
+echo "  cd call-stake && cargo test -p call-stake-${NAME//_/-}"

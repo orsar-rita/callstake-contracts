@@ -7,7 +7,7 @@
 
 use crate::analytics::{update_transfer_analytics, update_validator_analytics};
 use soroban_sdk::{contracttype, Address, Env, String, Symbol, Vec};
-use stellar_swipe_common::assets::Asset;
+use call_stake_common::assets::Asset;
 
 /// Chain identifiers for multi-chain support
 #[contracttype]

@@ -1,5 +1,5 @@
 use soroban_sdk::{contracttype, Address, Env, Map, String, Symbol};
-use stellar_swipe_common::emergency::{
+use call_stake_common::emergency::{
     CircuitBreakerConfig, CircuitBreakerStats, PauseState, CAT_ALL, CAT_TRADING,
 };
 
@@ -409,7 +409,7 @@ pub fn update_cb_stats(env: &Env, failed: bool, volume: i128, price: i128) {
         .get::<_, CircuitBreakerConfig>(&AdminStorageKey::CircuitBreakerConfig)
     {
         if let Some(reason) =
-            stellar_swipe_common::emergency::check_thresholds(env, &stats, &config, price)
+            call_stake_common::emergency::check_thresholds(env, &stats, &config, price)
         {
             let pause_state = PauseState {
                 paused: true,

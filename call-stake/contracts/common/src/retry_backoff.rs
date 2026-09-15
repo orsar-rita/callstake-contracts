@@ -33,7 +33,7 @@
 //! # Usage
 //!
 //! ```rust,ignore
-//! use stellar_swipe_common::retry_backoff::{RetryConfig, RetryState, should_retry};
+//! use call_stake_common::retry_backoff::{RetryConfig, RetryState, should_retry};
 //!
 //! const MAX_ATTEMPTS: u32 = 5;
 //! const BASE_DELAY_LEDGERS: u32 = 3;

@@ -7,7 +7,7 @@
 //!  - All persistent keys share a single TTL constant to avoid drift
 
 use soroban_sdk::{contracttype, Env, Vec};
-use stellar_swipe_common::{Asset, AssetPair};
+use call_stake_common::{Asset, AssetPair};
 
 use crate::errors::OracleError;
 

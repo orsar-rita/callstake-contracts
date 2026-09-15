@@ -781,20 +781,20 @@ impl StakeVaultContract {
     }
 
     /// Read-only health probe for monitoring and front-ends (no auth). Issue #865.
-    pub fn health_check(env: Env) -> stellar_swipe_common::HealthStatus {
+    pub fn health_check(env: Env) -> call_stake_common::HealthStatus {
         let version = String::from_str(&env, env!("CARGO_PKG_VERSION"));
         let admin: Option<Address> = env.storage().instance().get(&StorageKey::Admin);
         let Some(admin) = admin else {
-            return stellar_swipe_common::health_uninitialized(&env, version);
+            return call_stake_common::health_uninitialized(&env, version);
         };
-        let status = stellar_swipe_common::HealthStatus {
+        let status = call_stake_common::HealthStatus {
             is_initialized: true,
             is_paused: pausable::is_paused(&env),
             version,
             admin,
             initialized_at: env.ledger().timestamp(),
         };
-        stellar_swipe_common::emit_health_event(&env, &status);
+        call_stake_common::emit_health_event(&env, &status);
         status
     }
 
@@ -1512,10 +1512,10 @@ impl StakeVaultContract {
     pub fn withdraw_stake(env: Env, staker: Address) -> Result<i128, StakeVaultError> {
         Self::require_not_paused(&env)?;
 
-        if stellar_swipe_common::rate_limit::check_rate_limit(
+        if call_stake_common::rate_limit::check_rate_limit(
             &env,
             &staker,
-            stellar_swipe_common::rate_limit::ActionType::StakeChange,
+            call_stake_common::rate_limit::ActionType::StakeChange,
             0,
         )
         .is_err()
@@ -1545,10 +1545,10 @@ impl StakeVaultContract {
         let result = Self::do_withdraw(&env, &staker);
 
         if result.is_ok() {
-            stellar_swipe_common::rate_limit::record_action(
+            call_stake_common::rate_limit::record_action(
                 &env,
                 &staker,
-                stellar_swipe_common::rate_limit::ActionType::StakeChange,
+                call_stake_common::rate_limit::ActionType::StakeChange,
             );
         }
 
@@ -1717,10 +1717,10 @@ impl StakeVaultContract {
         }
 
         // Rate limit: counts as a StakeChange alongside full withdraw_stake calls.
-        if stellar_swipe_common::rate_limit::check_rate_limit(
+        if call_stake_common::rate_limit::check_rate_limit(
             &env,
             &staker,
-            stellar_swipe_common::rate_limit::ActionType::StakeChange,
+            call_stake_common::rate_limit::ActionType::StakeChange,
             0,
         )
         .is_err()
@@ -1736,10 +1736,10 @@ impl StakeVaultContract {
         let result = Self::do_partial_unstake(&env, &staker, amount);
 
         if result.is_ok() {
-            stellar_swipe_common::rate_limit::record_action(
+            call_stake_common::rate_limit::record_action(
                 &env,
                 &staker,
-                stellar_swipe_common::rate_limit::ActionType::StakeChange,
+                call_stake_common::rate_limit::ActionType::StakeChange,
             );
         }
 
@@ -2825,10 +2825,10 @@ impl StakeVaultContract {
                     current_head = current_head.saturating_add(1);
                     processed = processed.saturating_add(1);
 
-                    stellar_swipe_common::rate_limit::record_action(
+                    call_stake_common::rate_limit::record_action(
                         &env,
                         &request.user,
-                        stellar_swipe_common::rate_limit::ActionType::StakeChange,
+                        call_stake_common::rate_limit::ActionType::StakeChange,
                     );
 
                     events::emit_unstake_processed(&env, request.user, request.ticket, amount);

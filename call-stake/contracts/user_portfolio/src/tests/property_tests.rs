@@ -7,7 +7,7 @@ use soroban_sdk::{
     testutils::{Address as _, Ledger},
     Address, Env,
 };
-use stellar_swipe_common::OraclePrice;
+use call_stake_common::OraclePrice;
 
 #[contract]
 pub struct OracleMock;

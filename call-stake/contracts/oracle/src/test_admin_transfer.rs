@@ -6,8 +6,8 @@ use soroban_sdk::{
     Address, Env, String,
 };
 
-fn xlm_asset(env: &Env) -> stellar_swipe_common::Asset {
-    stellar_swipe_common::Asset {
+fn xlm_asset(env: &Env) -> call_stake_common::Asset {
+    call_stake_common::Asset {
         code: String::from_str(env, "XLM"),
         issuer: None,
     }
