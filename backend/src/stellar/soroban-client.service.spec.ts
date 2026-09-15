@@ -108,4 +108,50 @@ describe('SorobanClientService', () => {
 
     expect(result).toEqual({ hash: 'deadbeef', status: 'PENDING' });
   });
+
+  it('buildInvocation returns unsigned XDR built from the prepared transaction, never signing it', async () => {
+    const { service, fakeServer } = makeServiceWithFakeServer();
+    const { TransactionBuilder: RealTransactionBuilder, Account: RealAccount, Operation } =
+      jest.requireActual('@stellar/stellar-sdk');
+    const account = new RealAccount(sourceKeypair.publicKey(), '100');
+    const preparedTx = new RealTransactionBuilder(account, {
+      fee: '1000',
+      networkPassphrase: 'Test SDF Network ; September 2015',
+    })
+      .addOperation(Operation.bumpSequence({ bumpTo: '101' }))
+      .setTimeout(60)
+      .build();
+    fakeServer.prepareTransaction.mockResolvedValue(preparedTx);
+
+    const result = await service.buildInvocation(contractAddress, 'deposit_stake', [1000n], sourceKeypair.publicKey());
+
+    expect(result.xdr).toBe(preparedTx.toXDR());
+    expect(result.latestLedger).toBe(555);
+    // Unsigned: no signatures on the envelope this service handed back.
+    expect(preparedTx.signatures).toHaveLength(0);
+  });
+
+  it('getEvents decodes topics and data for each event and passes through the RPC cursor', async () => {
+    const { service, fakeServer } = makeServiceWithFakeServer();
+    (fakeServer as any).getEvents = jest.fn().mockResolvedValue({
+      latestLedger: 777,
+      events: [
+        {
+          ledger: 700,
+          txHash: 'abc123',
+          topic: [nativeToScVal('SignalCreated', { type: 'symbol' })],
+          value: nativeToScVal(42, { type: 'u32' }),
+        },
+      ],
+    });
+
+    const result = await service.getEvents(contractAddress, 100);
+
+    expect((fakeServer as any).getEvents).toHaveBeenCalledWith({
+      startLedger: 100,
+      filters: [{ type: 'contract', contractIds: [contractAddress] }],
+    });
+    expect(result.latestLedger).toBe(777);
+    expect(result.events).toEqual([{ ledger: 700, txHash: 'abc123', topics: ['SignalCreated'], data: 42 }]);
+  });
 });
