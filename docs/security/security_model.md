@@ -1,4 +1,4 @@
-# StellarSwipe Security Model
+# CallStake Security Model
 
 **Version:** 1.0.0  
 **Status:** Draft for external review  
@@ -6,7 +6,7 @@
 
 ## Purpose
 
-This document describes StellarSwipe's trust model and security assumptions so auditors, security researchers, and advanced users can evaluate protocol risk clearly.
+This document describes CallStake's trust model and security assumptions so auditors, security researchers, and advanced users can evaluate protocol risk clearly.
 
 Threat model reference documents:
 
@@ -16,7 +16,7 @@ Threat model reference documents:
 
 ## System Trust Assumptions
 
-StellarSwipe security depends on the following assumptions:
+CallStake security depends on the following assumptions:
 
 1. **Stellar network and Soroban runtime are correct**
    - Transaction ordering/finality and `require_auth()` enforcement are trusted.
@@ -117,7 +117,7 @@ Operational requirement:
 
 ## Oracle Trust Model
 
-StellarSwipe treats oracle input as a high-value trust boundary.
+CallStake treats oracle input as a high-value trust boundary.
 
 Security intent:
 - Reject stale or highly inconsistent data
@@ -148,7 +148,7 @@ Operational safeguards recommended:
 - Independent security review for high-impact proposals
 - Timelock and emergency controls for critical upgrades
 
-## What StellarSwipe Protects Against
+## What CallStake Protects Against
 
 Designed protections include:
 - Unauthorized state mutation without required signatures
@@ -156,7 +156,7 @@ Designed protections include:
 - Certain classes of oracle outlier behavior
 - Emergency operational controls (pause-oriented containment)
 
-## What StellarSwipe Does Not Fully Protect Against
+## What CallStake Does Not Fully Protect Against
 
 Out-of-scope or partially mitigated risks include:
 - Full key compromise of privileged operators

@@ -361,7 +361,7 @@ Current estimated disclosure date: [Date]
 Questions or concerns? Please let us know.
 
 Best regards,
-StellarSwipe Security Team
+CallStake Security Team
 ```
 
 #### Executive Summary
@@ -407,7 +407,7 @@ TIMELINE:
 
 We will provide more details after public disclosure.
 
-Questions? Contact: security@stellarswipe.io
+Questions? Contact: security@callstake.io
 ```
 
 ---
@@ -521,7 +521,7 @@ Discovered by: [Researcher name/handle]
 
 ## Contact
 
-For questions: security@stellarswipe.io
+For questions: security@callstake.io
 ```
 
 ---

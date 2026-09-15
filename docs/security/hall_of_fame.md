@@ -2,7 +2,7 @@
 
 ## Overview
 
-This page recognizes security researchers who have responsibly disclosed vulnerabilities and helped improve the security of StellarSwipe. We are grateful for their contributions to protecting our users and strengthening our platform.
+This page recognizes security researchers who have responsibly disclosed vulnerabilities and helped improve the security of CallStake. We are grateful for their contributions to protecting our users and strengthening our platform.
 
 ---
 
@@ -205,7 +205,7 @@ Bob identified an integer overflow vulnerability in our staking reward calculati
 
 ## How to Get Listed
 
-1. **Discover a Vulnerability**: Find a security issue in StellarSwipe
+1. **Discover a Vulnerability**: Find a security issue in CallStake
 2. **Report Responsibly**: Follow our disclosure policy in `SECURITY.md`
 3. **Cooperate**: Work with us during verification and remediation
 4. **Wait for Disclosure**: Allow coordinated public disclosure
@@ -220,7 +220,7 @@ Bob identified an integer overflow vulnerability in our staking reward calculati
 ### For Current Researchers
 
 If you're already working with us and have questions about recognition:
-- Email: security@stellarswipe.io
+- Email: security@callstake.io
 - Subject: "Hall of Fame - [Your Name]"
 
 ### For Aspiring Researchers
@@ -246,7 +246,7 @@ This page is updated:
 
 ## Thank You
 
-We are deeply grateful to all security researchers who help protect StellarSwipe and its users. Your contributions make the ecosystem safer for everyone.
+We are deeply grateful to all security researchers who help protect CallStake and its users. Your contributions make the ecosystem safer for everyone.
 
 **Special thanks to**:
 - The broader security research community

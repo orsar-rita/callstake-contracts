@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document provides a detailed, step-by-step guide to the responsible disclosure process for security vulnerabilities in StellarSwipe. It covers the entire lifecycle from discovery through public disclosure.
+This document provides a detailed, step-by-step guide to the responsible disclosure process for security vulnerabilities in CallStake. It covers the entire lifecycle from discovery through public disclosure.
 
 ---
 
@@ -141,12 +141,12 @@ This document provides a detailed, step-by-step guide to the responsible disclos
 **Submission Channels** (in order of preference):
 
 1. **Email** (Preferred):
-   - Address: security@stellarswipe.io
+   - Address: security@callstake.io
    - Subject: "Security Vulnerability Report - [Brief Description]"
    - Encrypt with PGP if sensitive
 
 2. **GitHub Security Advisory**:
-   - URL: https://github.com/AgesEmpire/StellarSwipe-Contract/security/advisories
+   - URL: https://github.com/AgesEmpire/CallStake-Contract/security/advisories
    - Click "Report a vulnerability"
    - Fill in the form
 
@@ -155,7 +155,7 @@ This document provides a detailed, step-by-step guide to the responsible disclos
    - Follow platform guidelines
 
 4. **Encrypted Messaging**:
-   - Keybase: stellarswipe_security
+   - Keybase: callstake_security
    - For highly sensitive issues
 
 **Submission Tips**:
@@ -198,10 +198,10 @@ Next Steps:
 We will provide updates every 7 days minimum. Please keep this
 vulnerability confidential until we coordinate public disclosure.
 
-Point of Contact: [Name] (security@stellarswipe.io)
+Point of Contact: [Name] (security@callstake.io)
 
 Best regards,
-StellarSwipe Security Team
+CallStake Security Team
 ```
 
 ### Step 5: Verification Phase
@@ -504,7 +504,7 @@ Expected next update: [Date]
 
 Best regards,
 [Name]
-StellarSwipe Security Team
+CallStake Security Team
 ```
 
 ### Internal Communication
@@ -600,7 +600,7 @@ Subject: Security Vulnerability Report Received - VUL-YYYY-NNN
 
 Dear [Researcher Name],
 
-Thank you for reporting a security vulnerability to StellarSwipe.
+Thank you for reporting a security vulnerability to CallStake.
 
 REPORT DETAILS:
 - Tracking ID: VUL-YYYY-NNN
@@ -624,12 +624,12 @@ Please keep this vulnerability confidential until we coordinate
 public disclosure, typically 45-90 days after fix deployment.
 
 CONTACT:
-Your point of contact is [Name] at security@stellarswipe.io
+Your point of contact is [Name] at security@callstake.io
 
-Thank you for helping keep StellarSwipe secure!
+Thank you for helping keep CallStake secure!
 
 Best regards,
-StellarSwipe Security Team
+CallStake Security Team
 ```
 
 ### Verification Complete Template
@@ -665,11 +665,11 @@ TIMELINE:
 
 We will provide weekly updates on progress.
 
-Thank you for your contribution to StellarSwipe security!
+Thank you for your contribution to CallStake security!
 
 Best regards,
 [Name]
-StellarSwipe Security Team
+CallStake Security Team
 ```
 
 ---
@@ -743,9 +743,9 @@ Date: [Date]
 
 ### Contact Information
 
-- **Security Team**: security@stellarswipe.io
-- **Emergency**: emergency-security@stellarswipe.io
-- **Bounty Questions**: bounty@stellarswipe.io
+- **Security Team**: security@callstake.io
+- **Emergency**: emergency-security@callstake.io
+- **Bounty Questions**: bounty@callstake.io
 
 ---
 

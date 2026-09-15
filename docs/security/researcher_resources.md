@@ -2,7 +2,7 @@
 
 ## Welcome Security Researchers!
 
-Thank you for your interest in helping secure StellarSwipe. This document provides comprehensive resources to help you effectively test and report security vulnerabilities.
+Thank you for your interest in helping secure CallStake. This document provides comprehensive resources to help you effectively test and report security vulnerabilities.
 
 ---
 
@@ -103,8 +103,8 @@ rustup target add wasm32-unknown-unknown
 
 2. **Clone Repository**:
 ```bash
-git clone https://github.com/AgesEmpire/StellarSwipe-Contract.git
-cd StellarSwipe-Contract
+git clone https://github.com/AgesEmpire/CallStake-Contract.git
+cd CallStake-Contract
 ```
 
 3. **Build Contracts**:
@@ -723,7 +723,7 @@ Use the template provided in `SECURITY.md`:
 **A**: Use Friendbot: `curl "https://friendbot.stellar.org?addr=YOUR_ADDRESS"`
 
 ### Q: What if I find a critical vulnerability?
-**A**: Report immediately via security@stellarswipe.io. Use "CRITICAL" in subject line.
+**A**: Report immediately via security@callstake.io. Use "CRITICAL" in subject line.
 
 ### Q: Can I discuss my findings with others?
 **A**: Not until after coordinated public disclosure. Keep findings confidential.
@@ -753,12 +753,12 @@ Use the template provided in `SECURITY.md`:
 ### Security Team
 
 **Primary Contact**:
-- Email: security@stellarswipe.io
+- Email: security@callstake.io
 - PGP: See `docs/security/pgp-key.asc`
 - Response: Within 48 hours
 
 **Emergency Contact**:
-- Email: emergency-security@stellarswipe.io
+- Email: emergency-security@callstake.io
 - For: Critical vulnerabilities only
 
 ### Technical Support
@@ -766,18 +766,18 @@ Use the template provided in `SECURITY.md`:
 **For Testing Help**:
 - Discord: [Community server]
 - GitHub Discussions
-- Email: dev@stellarswipe.io
+- Email: dev@callstake.io
 
 **For Bounty Questions**:
-- Email: bounty@stellarswipe.io
+- Email: bounty@callstake.io
 
 ---
 
 ## Acknowledgments
 
-We deeply appreciate the security research community's contributions to making StellarSwipe more secure. Your work helps protect our users and strengthens the entire ecosystem.
+We deeply appreciate the security research community's contributions to making CallStake more secure. Your work helps protect our users and strengthens the entire ecosystem.
 
-**Thank you for helping keep StellarSwipe secure!**
+**Thank you for helping keep CallStake secure!**
 
 ---
 
