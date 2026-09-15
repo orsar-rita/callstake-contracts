@@ -2,13 +2,13 @@
 
 ## Overview
 
-This document describes the property-based testing harness for fee and PnL arithmetic invariants in the StellarSwipe contracts. The harness uses `proptest` to generate randomized valid input ranges and asserts core arithmetic invariants hold for fee-splitting calculations in `fee_collector` and realized-PnL calculations in `trade_executor`.
+This document describes the property-based testing harness for fee and PnL arithmetic invariants in the CallStake contracts. The harness uses `proptest` to generate randomized valid input ranges and asserts core arithmetic invariants hold for fee-splitting calculations in `fee_collector` and realized-PnL calculations in `trade_executor`.
 
 ## Location
 
 The test harness is located at:
 ```
-stellar-swipe/contracts/integration_tests/tests/integration/test_arithmetic_invariants.rs
+call-stake/contracts/integration_tests/tests/integration/test_arithmetic_invariants.rs
 ```
 
 ## Running the Tests
@@ -24,7 +24,7 @@ rustup component add rust-src
 ### Run All Arithmetic Invariant Tests
 
 ```bash
-cd stellar-swipe/contracts/integration_tests
+cd call-stake/contracts/integration_tests
 cargo test --test test_arithmetic_invariants
 ```
 
@@ -238,6 +238,6 @@ If CI time becomes a concern, you can:
 ## References
 
 - [Proptest Documentation](https://altsysrq.github.io/proptest-book/)
-- [Fee Collector Contract](../stellar-swipe/contracts/fee_collector/)
-- [Trade Executor Contract](../stellar-swipe/contracts/trade_executor/)
+- [Fee Collector Contract](../call-stake/contracts/fee_collector/)
+- [Trade Executor Contract](../call-stake/contracts/trade_executor/)
 - [Chaos Test Documentation](./chaos_test.md)

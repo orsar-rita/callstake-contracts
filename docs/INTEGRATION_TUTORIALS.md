@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This guide provides step-by-step tutorials for integrating with the StellarSwipe protocol. Whether you're building a frontend application, creating a trading bot, or integrating signal data into your platform, these tutorials will help you get started.
+This guide provides step-by-step tutorials for integrating with the CallStake protocol. Whether you're building a frontend application, creating a trading bot, or integrating signal data into your platform, these tutorials will help you get started.
 
 ---
 
@@ -59,8 +59,8 @@ console.log('Signal:', signal);
 #### Step 1: Setup Project
 
 ```bash
-npx create-react-app stellarswipe-app
-cd stellarswipe-app
+npx create-react-app callstake-app
+cd callstake-app
 npm install @stellar/stellar-sdk
 ```
 
@@ -125,12 +125,12 @@ export class StellarService {
 
 #### Step 3: Create React Hook
 
-**`src/hooks/useStellarSwipe.ts`**:
+**`src/hooks/useCallStake.ts`**:
 ```typescript
 import { useState, useEffect } from 'react';
 import { StellarService } from '../services/stellar';
 
-export function useStellarSwipe() {
+export function useCallStake() {
     const [signals, setSignals] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -161,10 +161,10 @@ export function useStellarSwipe() {
 **`src/components/SignalList.tsx`**:
 ```typescript
 import React, { useEffect } from 'react';
-import { useStellarSwipe } from '../hooks/useStellarSwipe';
+import { useCallStake } from '../hooks/useCallStake';
 
 export function SignalList({ providerId }: { providerId: string }) {
-    const { signals, loading, error, fetchSignals } = useStellarSwipe();
+    const { signals, loading, error, fetchSignals } = useCallStake();
     
     useEffect(() => {
         fetchSignals(providerId);
@@ -227,8 +227,8 @@ export class WalletService {
 #### Step 1: Setup Express Server
 
 ```bash
-mkdir stellarswipe-api
-cd stellarswipe-api
+mkdir callstake-api
+cd callstake-api
 npm init -y
 npm install express @stellar/stellar-sdk dotenv
 ```
@@ -818,4 +818,4 @@ class ConnectionManager {
 
 **Document Version**: 1.0.0  
 **Last Updated**: 2026-06-01  
-**Maintained By**: StellarSwipe Core Team
+**Maintained By**: CallStake Core Team

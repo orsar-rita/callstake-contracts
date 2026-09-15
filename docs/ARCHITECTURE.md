@@ -1,8 +1,8 @@
-# StellarSwipe Architecture Overview
+# CallStake Architecture Overview
 
 ## Introduction
 
-StellarSwipe is a decentralized trading signal platform built on the Stellar blockchain using Soroban smart contracts. This document provides a comprehensive overview of the system architecture, components, and design decisions.
+CallStake is a decentralized trading signal platform built on the Stellar blockchain using Soroban smart contracts. This document provides a comprehensive overview of the system architecture, components, and design decisions.
 
 ---
 
@@ -510,7 +510,7 @@ GET  /api/analytics            - Analytics data
 
 **WebSocket API**:
 ```
-ws://api.stellarswipe.io/ws
+ws://api.callstake.io/ws
 
 // Subscribe to events
 {
@@ -659,7 +659,7 @@ env.events().publish((
 
 ## Conclusion
 
-StellarSwipe's architecture is designed for security, scalability, and user experience. The modular design allows for independent component upgrades while maintaining system integrity. The multi-layer security approach protects user assets and ensures protocol reliability.
+CallStake's architecture is designed for security, scalability, and user experience. The modular design allows for independent component upgrades while maintaining system integrity. The multi-layer security approach protects user assets and ensures protocol reliability.
 
 **Key Takeaways**:
 - ✅ Modular, upgradeable design
@@ -672,4 +672,4 @@ StellarSwipe's architecture is designed for security, scalability, and user expe
 
 **Document Version**: 1.0.0  
 **Last Updated**: 2026-06-01  
-**Maintained By**: StellarSwipe Core Team
+**Maintained By**: CallStake Core Team

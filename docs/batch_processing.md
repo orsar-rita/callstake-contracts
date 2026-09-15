@@ -2,7 +2,7 @@
 
 ## Overview
 
-The StellarSwipe batch processing system optimizes contract operations by grouping multiple transactions together, significantly reducing gas costs and improving throughput. This comprehensive guide covers the architecture, usage patterns, and best practices for implementing batch operations.
+The CallStake batch processing system optimizes contract operations by grouping multiple transactions together, significantly reducing gas costs and improving throughput. This comprehensive guide covers the architecture, usage patterns, and best practices for implementing batch operations.
 
 ## Table of Contents
 
@@ -748,7 +748,7 @@ pub fn process_nested_batches(env: Env) -> BatchResult<()> {
 
 ## Conclusion
 
-The StellarSwipe batch processing system provides a robust, efficient solution for optimizing contract operations. By following the guidelines and best practices in this document, you can achieve significant gas savings and improved throughput while maintaining reliability and consistency.
+The CallStake batch processing system provides a robust, efficient solution for optimizing contract operations. By following the guidelines and best practices in this document, you can achieve significant gas savings and improved throughput while maintaining reliability and consistency.
 
 For more information, see:
 - [Batch Processing Benchmarks](./batch_processing_benchmarks.md)

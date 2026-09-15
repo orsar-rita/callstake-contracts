@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Security is paramount when developing and integrating with blockchain applications. This guide provides comprehensive security best practices for developers working with the StellarSwipe protocol.
+Security is paramount when developing and integrating with blockchain applications. This guide provides comprehensive security best practices for developers working with the CallStake protocol.
 
 ---
 
@@ -323,7 +323,7 @@ if (window.location.protocol !== 'https:' &&
 }
 
 // Use secure WebSocket
-const ws = new WebSocket('wss://api.stellarswipe.io/ws');
+const ws = new WebSocket('wss://api.callstake.io/ws');
 ```
 
 ---
@@ -727,4 +727,4 @@ class SecurityAudit {
 
 **Document Version**: 1.0.0  
 **Last Updated**: 2026-06-01  
-**Maintained By**: StellarSwipe Security Team
+**Maintained By**: CallStake Security Team

@@ -2,7 +2,7 @@
 
 ## Executive Summary
 
-This document presents comprehensive performance benchmarks for the StellarSwipe batch processing system, demonstrating significant improvements in gas efficiency, throughput, and scalability compared to individual transaction processing.
+This document presents comprehensive performance benchmarks for the CallStake batch processing system, demonstrating significant improvements in gas efficiency, throughput, and scalability compared to individual transaction processing.
 
 ### Key Findings
 
@@ -477,13 +477,13 @@ Concurrent Processing:
 
 | Platform | Gas Savings | Throughput Improvement | Max Batch Size |
 |----------|-------------|----------------------|----------------|
-| StellarSwipe | 45-65% | 3-5x | 100 |
+| CallStake | 45-65% | 3-5x | 100 |
 | Ethereum (EIP-2930) | 30-40% | 2-3x | 50 |
 | Polygon | 35-45% | 2.5-4x | 75 |
 | Solana | 50-70% | 5-8x | 200 |
 | Avalanche | 40-50% | 3-4x | 100 |
 
-**Position**: StellarSwipe's batch processing performance is competitive with leading platforms.
+**Position**: CallStake's batch processing performance is competitive with leading platforms.
 
 ---
 
@@ -572,7 +572,7 @@ Concurrent Processing:
 
 ## Conclusion
 
-The StellarSwipe batch processing system delivers substantial performance improvements:
+The CallStake batch processing system delivers substantial performance improvements:
 
 - **45-65% gas cost reduction** across all operation types
 - **3-5x throughput improvement** compared to individual processing

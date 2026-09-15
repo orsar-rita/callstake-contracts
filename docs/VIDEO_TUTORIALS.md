@@ -1,8 +1,8 @@
-# StellarSwipe Video Tutorials
+# CallStake Video Tutorials
 
 ## Overview
 
-This document provides links to video tutorials and screencasts that demonstrate how to integrate with and use the StellarSwipe protocol. These tutorials complement the written documentation and provide visual, step-by-step guidance for developers.
+This document provides links to video tutorials and screencasts that demonstrate how to integrate with and use the CallStake protocol. These tutorials complement the written documentation and provide visual, step-by-step guidance for developers.
 
 ---
 
@@ -19,7 +19,7 @@ This document provides links to video tutorials and screencasts that demonstrate
 
 ## Getting Started
 
-### 1. Introduction to StellarSwipe Protocol
+### 1. Introduction to CallStake Protocol
 **Duration**: 15 minutes  
 **Level**: Beginner  
 **Topics Covered**:
@@ -28,7 +28,7 @@ This document provides links to video tutorials and screencasts that demonstrate
 - Use cases and benefits
 - Getting started checklist
 
-**Video Link**: `https://tutorials.stellarswipe.io/intro-to-protocol`
+**Video Link**: `https://tutorials.callstake.io/intro-to-protocol`
 
 **Resources**:
 - [Architecture Documentation](./ARCHITECTURE.md)
@@ -46,7 +46,7 @@ This document provides links to video tutorials and screencasts that demonstrate
 - Creating your first project
 - Running local tests
 
-**Video Link**: `https://tutorials.stellarswipe.io/dev-environment-setup`
+**Video Link**: `https://tutorials.callstake.io/dev-environment-setup`
 
 **Resources**:
 - [Contract Development Guide](./CONTRACT_DEVELOPMENT_GUIDE.md)
@@ -70,16 +70,16 @@ cargo test
 
 ---
 
-### 3. Your First StellarSwipe Integration
+### 3. Your First CallStake Integration
 **Duration**: 25 minutes  
 **Level**: Beginner  
 **Topics Covered**:
-- Connecting to StellarSwipe contracts
+- Connecting to CallStake contracts
 - Reading signal data
 - Submitting a simple transaction
 - Handling responses and errors
 
-**Video Link**: `https://tutorials.stellarswipe.io/first-integration`
+**Video Link**: `https://tutorials.callstake.io/first-integration`
 
 **Resources**:
 - [Integration Tutorials](./INTEGRATION_TUTORIALS.md)
@@ -114,7 +114,7 @@ const result = await contract.followSignal({
 - Testing your contract
 - Deploying to testnet
 
-**Video Link**: `https://tutorials.stellarswipe.io/custom-signal-provider`
+**Video Link**: `https://tutorials.callstake.io/custom-signal-provider`
 
 **Resources**:
 - [Contract Development Guide](./CONTRACT_DEVELOPMENT_GUIDE.md)
@@ -149,7 +149,7 @@ impl SignalProvider {
 - Handling edge cases
 - Security considerations
 
-**Video Link**: `https://tutorials.stellarswipe.io/staking-mechanisms`
+**Video Link**: `https://tutorials.callstake.io/staking-mechanisms`
 
 **Resources**:
 - [StakeVault Documentation](./ARCHITECTURE.md#stake-vault)
@@ -174,7 +174,7 @@ pub fn claim_rewards(env: Env, user: Address) -> Result<i128, Error>
 - Insurance fund management
 - Optimizing gas costs
 
-**Video Link**: `https://tutorials.stellarswipe.io/fee-collection`
+**Video Link**: `https://tutorials.callstake.io/fee-collection`
 
 **Resources**:
 - [FeeCollector Documentation](./ARCHITECTURE.md#fee-collector)
@@ -192,7 +192,7 @@ pub fn claim_rewards(env: Env, user: Address) -> Result<i128, Error>
 - Optimizing batch sizes
 - Performance benchmarking
 
-**Video Link**: `https://tutorials.stellarswipe.io/batch-processing`
+**Video Link**: `https://tutorials.callstake.io/batch-processing`
 
 **Resources**:
 - [Batch Processing Guide](./batch_processing.md)
@@ -231,7 +231,7 @@ let result = BatchExecutor::execute_batch(
 - Submitting trades
 - Real-time updates with WebSockets
 
-**Video Link**: `https://tutorials.stellarswipe.io/react-trading-interface`
+**Video Link**: `https://tutorials.callstake.io/react-trading-interface`
 
 **Resources**:
 - [Frontend Integration Guide](./frontend_integration.md)
@@ -272,7 +272,7 @@ function SignalCard({ signal }) {
 - Real-time data updates
 - Responsive design
 
-**Video Link**: `https://tutorials.stellarswipe.io/analytics-dashboard`
+**Video Link**: `https://tutorials.callstake.io/analytics-dashboard`
 
 **Resources**:
 - [Analytics Engine Documentation](./analytics_engine.md)
@@ -296,7 +296,7 @@ function SignalCard({ signal }) {
 - Offline data caching
 - Performance optimization
 
-**Video Link**: `https://tutorials.stellarswipe.io/mobile-integration`
+**Video Link**: `https://tutorials.callstake.io/mobile-integration`
 
 **Resources**:
 - [Frontend Integration Guide](./frontend_integration.md)
@@ -334,7 +334,7 @@ Linking.addEventListener('url', handleDeepLink);
 - Error handling and recovery
 - Performance monitoring
 
-**Video Link**: `https://tutorials.stellarswipe.io/trading-bot`
+**Video Link**: `https://tutorials.callstake.io/trading-bot`
 
 **Resources**:
 - [Integration Tutorials - Trading Bot](./INTEGRATION_TUTORIALS.md#tutorial-3-automated-trading-bot)
@@ -374,7 +374,7 @@ class TradingBot {
 - Anomaly detection
 - Performance optimization
 
-**Video Link**: `https://tutorials.stellarswipe.io/advanced-analytics`
+**Video Link**: `https://tutorials.callstake.io/advanced-analytics`
 
 **Resources**:
 - [Analytics Engine Documentation](./analytics_engine.md)
@@ -415,7 +415,7 @@ let anomalies = analytics_engine::detect_anomalies(
 - Security and verification
 - Retry logic
 
-**Video Link**: `https://tutorials.stellarswipe.io/webhook-integration`
+**Video Link**: `https://tutorials.callstake.io/webhook-integration`
 
 **Resources**:
 - [Integration Tutorials - Webhooks](./INTEGRATION_TUTORIALS.md#tutorial-5-webhook-integration)
@@ -423,8 +423,8 @@ let anomalies = analytics_engine::detect_anomalies(
 
 **Webhook Server**:
 ```javascript
-app.post('/webhooks/stellarswipe', async (req, res) => {
-  const signature = req.headers['x-stellarswipe-signature'];
+app.post('/webhooks/callstake', async (req, res) => {
+  const signature = req.headers['x-callstake-signature'];
   
   // Verify signature
   if (!verifySignature(req.body, signature)) {
@@ -451,7 +451,7 @@ app.post('/webhooks/stellarswipe', async (req, res) => {
 - Gas optimization
 - Security considerations
 
-**Video Link**: `https://tutorials.stellarswipe.io/cross-contract`
+**Video Link**: `https://tutorials.callstake.io/cross-contract`
 
 **Resources**:
 - [Contract Development Guide](./CONTRACT_DEVELOPMENT_GUIDE.md)
@@ -482,7 +482,7 @@ pub fn interact_with_external_contract(
 - Batch processing
 - Performance benchmarking
 
-**Video Link**: `https://tutorials.stellarswipe.io/protocol23-optimization`
+**Video Link**: `https://tutorials.callstake.io/protocol23-optimization`
 
 **Resources**:
 - [Protocol 23 Optimization Guide](./protocol23_optimization.md)
@@ -502,7 +502,7 @@ pub fn interact_with_external_contract(
 - Input validation
 - Safe math operations
 
-**Video Link**: `https://tutorials.stellarswipe.io/security-fundamentals`
+**Video Link**: `https://tutorials.callstake.io/security-fundamentals`
 
 **Resources**:
 - [Security Best Practices](./SECURITY_BEST_PRACTICES.md)
@@ -545,7 +545,7 @@ pub fn protected_function(env: Env) -> Result<(), Error> {
 - Testing strategies
 - Preparing for professional audit
 
-**Video Link**: `https://tutorials.stellarswipe.io/contract-auditing`
+**Video Link**: `https://tutorials.callstake.io/contract-auditing`
 
 **Resources**:
 - [Security Best Practices](./SECURITY_BEST_PRACTICES.md)
@@ -572,7 +572,7 @@ pub fn protected_function(env: Env) -> Result<(), Error> {
 - Recovery strategies
 - Post-incident analysis
 
-**Video Link**: `https://tutorials.stellarswipe.io/incident-response`
+**Video Link**: `https://tutorials.callstake.io/incident-response`
 
 **Resources**:
 - [Incident Response Guide](./incident_response.md)
@@ -605,7 +605,7 @@ pub fn emergency_pause(env: Env, admin: Address) -> Result<(), Error> {
 - Network issues
 - Debugging techniques
 
-**Video Link**: `https://tutorials.stellarswipe.io/troubleshooting-basics`
+**Video Link**: `https://tutorials.callstake.io/troubleshooting-basics`
 
 **Resources**:
 - [Troubleshooting Guide](./TROUBLESHOOTING.md)
@@ -629,7 +629,7 @@ pub fn emergency_pause(env: Env, admin: Address) -> Result<(), Error> {
 - Common error patterns
 - Performance profiling
 
-**Video Link**: `https://tutorials.stellarswipe.io/contract-debugging`
+**Video Link**: `https://tutorials.callstake.io/contract-debugging`
 
 **Resources**:
 - [Troubleshooting Guide](./TROUBLESHOOTING.md)
@@ -665,7 +665,7 @@ cargo tarpaulin --out Html
 - Testing and deployment
 - API design
 
-**Video Link**: `https://tutorials.stellarswipe.io/workshop-backend`
+**Video Link**: `https://tutorials.callstake.io/workshop-backend`
 
 ---
 
@@ -678,7 +678,7 @@ cargo tarpaulin --out Html
 - Contract interaction
 - UI/UX best practices
 
-**Video Link**: `https://tutorials.stellarswipe.io/workshop-frontend`
+**Video Link**: `https://tutorials.callstake.io/workshop-frontend`
 
 ---
 
@@ -691,7 +691,7 @@ cargo tarpaulin --out Html
 - Monitoring and analytics
 - Mainnet preparation
 
-**Video Link**: `https://tutorials.stellarswipe.io/workshop-deployment`
+**Video Link**: `https://tutorials.callstake.io/workshop-deployment`
 
 ---
 
@@ -702,7 +702,7 @@ cargo tarpaulin --out Html
 **Level**: Intermediate  
 **Format**: Live coding with Q&A
 
-**Video Link**: `https://tutorials.stellarswipe.io/live-signal-provider`
+**Video Link**: `https://tutorials.callstake.io/live-signal-provider`
 
 **Topics**:
 - Real-time contract development
@@ -717,7 +717,7 @@ cargo tarpaulin --out Html
 **Level**: Advanced  
 **Format**: Live coding with Q&A
 
-**Video Link**: `https://tutorials.stellarswipe.io/live-trading-bot`
+**Video Link**: `https://tutorials.callstake.io/live-trading-bot`
 
 **Topics**:
 - Bot architecture decisions
@@ -734,7 +734,7 @@ cargo tarpaulin --out Html
 **Level**: All levels  
 **Format**: Showcase and interviews
 
-**Video Link**: `https://tutorials.stellarswipe.io/community-showcase`
+**Video Link**: `https://tutorials.callstake.io/community-showcase`
 
 **Featured Projects**:
 - Innovative signal providers
@@ -781,14 +781,14 @@ cargo tarpaulin --out Html
 ### Tutorial Request Form
 
 Have a topic you'd like to see covered? Submit a request:
-**Form Link**: `https://tutorials.stellarswipe.io/request-tutorial`
+**Form Link**: `https://tutorials.callstake.io/request-tutorial`
 
 ### Community Discussion
 
 Join our community to discuss tutorials and get help:
-- **Discord**: `https://discord.gg/stellarswipe`
-- **Forum**: `https://forum.stellarswipe.io`
-- **GitHub Discussions**: `https://github.com/stellarswipe/discussions`
+- **Discord**: `https://discord.gg/callstake`
+- **Forum**: `https://forum.callstake.io`
+- **GitHub Discussions**: `https://github.com/callstake/discussions`
 
 ---
 
@@ -797,9 +797,9 @@ Join our community to discuss tutorials and get help:
 This document is regularly updated with new tutorials and resources. Last updated: June 1, 2026
 
 **Subscribe for Updates**:
-- YouTube Channel: `https://youtube.com/@stellarswipe`
-- Newsletter: `https://stellarswipe.io/newsletter`
-- RSS Feed: `https://tutorials.stellarswipe.io/feed.xml`
+- YouTube Channel: `https://youtube.com/@callstake`
+- Newsletter: `https://callstake.io/newsletter`
+- RSS Feed: `https://tutorials.callstake.io/feed.xml`
 
 ---
 
@@ -810,13 +810,13 @@ We value your feedback on our tutorials! Please let us know:
 - How we can improve existing tutorials
 - Your success stories using these resources
 
-**Feedback Form**: `https://tutorials.stellarswipe.io/feedback`
+**Feedback Form**: `https://tutorials.callstake.io/feedback`
 
 ---
 
 ## Credits
 
-Tutorials created by the StellarSwipe team and community contributors.
+Tutorials created by the CallStake team and community contributors.
 
 Special thanks to:
 - Core development team
@@ -839,4 +839,4 @@ Under the following terms:
 
 ---
 
-**Note**: Video links in this document are placeholders. Actual tutorial videos will be published progressively and links will be updated accordingly. Check the StellarSwipe website and YouTube channel for the latest available tutorials.
+**Note**: Video links in this document are placeholders. Actual tutorial videos will be published progressively and links will be updated accordingly. Check the CallStake website and YouTube channel for the latest available tutorials.

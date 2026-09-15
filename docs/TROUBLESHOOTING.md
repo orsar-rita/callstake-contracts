@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This guide helps you diagnose and resolve common issues when developing with or integrating the StellarSwipe protocol.
+This guide helps you diagnose and resolve common issues when developing with or integrating the CallStake protocol.
 
 ---
 
@@ -711,7 +711,7 @@ const rebuilt = TransactionBuilder.fromXDR(
 **Documentation**:
 - [Soroban Docs](https://soroban.stellar.org)
 - [Stellar Docs](https://developers.stellar.org)
-- [StellarSwipe Docs](./README.md)
+- [CallStake Docs](./README.md)
 
 **Community**:
 - [Stellar Discord](https://discord.gg/stellar)
@@ -771,4 +771,4 @@ When reporting issues, include:
 
 **Document Version**: 1.0.0  
 **Last Updated**: 2026-06-01  
-**Maintained By**: StellarSwipe Support Team
+**Maintained By**: CallStake Support Team

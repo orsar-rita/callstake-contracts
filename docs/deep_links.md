@@ -1,20 +1,20 @@
-# StellarSwipe Deep Links
+# CallStake Deep Links
 
-This document describes the `stellarswipe://` deep link scheme used by StellarSwipe-compatible mobile and wallet integrations.
+This document describes the `callstake://` deep link scheme used by CallStake-compatible mobile and wallet integrations.
 
-## `stellarswipe://copy`
+## `callstake://copy`
 
 The `copy` action creates a trade copy request from a signal and pre-fills amount and slippage values.
 
 ### Format
 
 ```text
-stellarswipe://copy?signal_id=<signal-id>&amount=<amount>&slippage=<slippage>
+callstake://copy?signal_id=<signal-id>&amount=<amount>&slippage=<slippage>
 ```
 
 ### Parameters
 
-- `signal_id` (required): The unique identifier of the signal to copy. This is an opaque string from StellarSwipe.
+- `signal_id` (required): The unique identifier of the signal to copy. This is an opaque string from CallStake.
 - `amount` (required): The requested trade amount as a decimal string. The value is interpreted in the app's base asset units.
 - `slippage` (required): Maximum allowed slippage tolerance expressed as a decimal percentage.
   - Example: `0.5` represents `0.5%` slippage tolerance.
@@ -22,13 +22,13 @@ stellarswipe://copy?signal_id=<signal-id>&amount=<amount>&slippage=<slippage>
 ### Example
 
 ```text
-stellarswipe://copy?signal_id=signal-12345&amount=1500&slippage=0.5
+callstake://copy?signal_id=signal-12345&amount=1500&slippage=0.5
 ```
 
 ### Notes
 
 - All query values must be URL-encoded.
-- `signal_id` is treated as a string and should be delivered exactly as issued by StellarSwipe.
+- `signal_id` is treated as a string and should be delivered exactly as issued by CallStake.
 - `amount` is passed through as a decimal string to prevent precision loss.
 - `slippage` is expressed as a decimal percentage rather than basis points.
 

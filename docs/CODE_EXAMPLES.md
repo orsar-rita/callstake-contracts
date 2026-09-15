@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This library provides ready-to-use code examples for common integration scenarios with the StellarSwipe protocol.
+This library provides ready-to-use code examples for common integration scenarios with the CallStake protocol.
 
 ---
 
@@ -52,7 +52,7 @@ import { Contract, Address } from '@stellar/stellar-sdk';
 
 const CONTRACT_ID = 'CXXX...';
 
-class StellarSwipeClient {
+class CallStakeClient {
     private contract: Contract;
     
     constructor(contractId: string) {
@@ -71,7 +71,7 @@ class StellarSwipeClient {
 }
 
 // Usage
-const client = new StellarSwipeClient(CONTRACT_ID);
+const client = new CallStakeClient(CONTRACT_ID);
 ```
 
 ### Example 3: Read Contract Data
@@ -745,12 +745,12 @@ function validateSignalData(data: any): boolean {
 
 ```typescript
 class TradingApp {
-    private client: StellarSwipeClient;
+    private client: CallStakeClient;
     private userKeypair: Keypair;
     
     constructor(secretKey: string, contractId: string) {
         this.userKeypair = Keypair.fromSecret(secretKey);
-        this.client = new StellarSwipeClient(contractId);
+        this.client = new CallStakeClient(contractId);
     }
     
     async initialize() {
@@ -849,4 +849,4 @@ describe('Signal Operations', () => {
 
 **Document Version**: 1.0.0  
 **Last Updated**: 2026-06-01  
-**Maintained By**: StellarSwipe Core Team
+**Maintained By**: CallStake Core Team

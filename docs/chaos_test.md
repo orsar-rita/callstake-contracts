@@ -1,7 +1,7 @@
 # Chaos Test — Randomised Contract Call Ordering
 
 **Issue:** #681  
-**Location:** `stellar-swipe/contracts/integration_tests/tests/integration/test_chaos_ordering.rs`
+**Location:** `call-stake/contracts/integration_tests/tests/integration/test_chaos_ordering.rs`
 
 ## Purpose
 
@@ -45,7 +45,7 @@ The LCG is seeded once per test run and then used to:
 ### Default seed (42)
 
 ```sh
-cd stellar-swipe
+cd call-stake
 cargo test --test test_chaos_ordering
 ```
 

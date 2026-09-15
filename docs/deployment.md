@@ -1,6 +1,6 @@
 # Deployment Guide
 
-This guide covers deploying StellarSwipe contracts to testnet and mainnet.
+This guide covers deploying CallStake contracts to testnet and mainnet.
 
 ## Prerequisites
 
@@ -21,7 +21,7 @@ Prepare funded keypairs:
 From repository root, build contracts:
 
 ```bash
-cd stellar-swipe
+cd call-stake
 cargo build --workspace --target wasm32-unknown-unknown --release
 ```
 

@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This guide provides comprehensive instructions for developing, testing, and deploying smart contracts for the StellarSwipe protocol on Stellar's Soroban platform.
+This guide provides comprehensive instructions for developing, testing, and deploying smart contracts for the CallStake protocol on Stellar's Soroban platform.
 
 ---
 
@@ -86,7 +86,7 @@ rustc --version
 ### Standard Layout
 
 ```
-stellar-swipe-contract/
+call-stake-contract/
 ├── contracts/
 │   ├── signal_registry/
 │   │   ├── src/
@@ -743,4 +743,4 @@ assert_eq!(events.len(), 1);
 
 **Document Version**: 1.0.0  
 **Last Updated**: 2026-06-01  
-**Maintained By**: StellarSwipe Core Team
+**Maintained By**: CallStake Core Team
