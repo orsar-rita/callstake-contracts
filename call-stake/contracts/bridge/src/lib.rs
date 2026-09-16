@@ -60,6 +60,16 @@ pub enum BridgeError {
     ContractPaused = 20,
     /// Token metadata (decimals, symbol, or name) is invalid or missing.
     InvalidTokenMetadata = 21,
+    /// Message was already consumed on this deployment — replay blocked (Issue #988).
+    MessageAlreadyConsumed = 22,
+    /// Withdrawal exceeds the per-route message cap (Issue #989).
+    PerRouteLimitExceeded = 23,
+    /// Aggregate withdrawal volume within the route window exceeded (Issue #989).
+    AggregateWindowLimitExceeded = 24,
+    /// Transfer is in a permanently failed state and cannot be retried (Issue #990).
+    TransferPermanentlyFailed = 25,
+    /// Transfer is not in a retryable state (Issue #990).
+    TransferNotRetryable = 26,
 }
 
 impl BridgeError {
@@ -125,6 +135,19 @@ impl BridgeError {
             BridgeError::InvalidTokenMetadata => {
                 "token metadata (decimals, symbol, or name) is invalid or missing"
             }
+            BridgeError::MessageAlreadyConsumed => {
+                "message was already consumed on this deployment; replay blocked"
+            }
+            BridgeError::PerRouteLimitExceeded => {
+                "withdrawal exceeds the per-route message cap"
+            }
+            BridgeError::AggregateWindowLimitExceeded => {
+                "aggregate withdrawal volume within the route window was exceeded"
+            }
+            BridgeError::TransferPermanentlyFailed => {
+                "transfer is in a permanently failed state and cannot be retried"
+            }
+            BridgeError::TransferNotRetryable => "transfer is not in a retryable state",
         }
     }
 }
@@ -257,6 +280,14 @@ pub enum DataKey {
     /// Issue #865: central governance contract address authorized to call
     /// `apply_governance_pause`.
     GovernanceAddress,
+    /// Unique deployment identifier for cross-deployment replay protection (Issue #988).
+    DeploymentId,
+    /// Consumed message hash: (deployment_id, source_chain, source_tx_hash, source_nonce) -> true.
+    ConsumedMessage(String),
+    /// Per-route withdrawal config keyed by route identifier (Issue #989).
+    WithdrawalRouteConfig(ChainId, ChainId, String),
+    /// Rolling withdrawal window for a route (Issue #989).
+    WithdrawalWindow(ChainId, ChainId, String),
 }
 
 const DAY_SECONDS: u64 = 86_400;

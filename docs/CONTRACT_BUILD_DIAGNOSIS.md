@@ -248,30 +248,30 @@ while keeping every function body, struct (`WithdrawalRouteConfig`,
 This is a textbook "half the conflict resolved" merge: the conflicting
 enum hunks were resolved by picking one side wholesale instead of
 union-merging both sets of additions, but the surrounding code from both
-branches was kept, so the tree now references six enum variants that
-don't exist. `MessageAlreadyConsumed`, `DeploymentId`, and
-`ConsumedMessage` did **not** get dropped (they still exist and are used
-correctly) — only the withdrawal-limit and transfer-retry pieces
-(`PerRouteLimitExceeded`, `AggregateWindowLimitExceeded`,
-`TransferPermanentlyFailed`, `TransferNotRetryable`,
-`WithdrawalRouteConfig`, `WithdrawalWindow`) were lost; `LimitChangeUnauthorized`
-was dropped too but was never actually referenced anywhere even in
+branches was kept, so the tree now references identifiers that don't
+exist. The full list of casualties, per the actual `cargo build -p
+bridge` error output (9 identifiers, not 6 — an earlier pass at this
+diagnosis undercounted by assuming `MessageAlreadyConsumed`,
+`DeploymentId`, and `ConsumedMessage` survived; they didn't):
+`BridgeError::{MessageAlreadyConsumed, PerRouteLimitExceeded,
+AggregateWindowLimitExceeded, TransferPermanentlyFailed,
+TransferNotRetryable}` and `DataKey::{DeploymentId, ConsumedMessage,
+WithdrawalRouteConfig, WithdrawalWindow}`. `LimitChangeUnauthorized` was
+dropped too but was never actually referenced anywhere even in
 `def62b7c`'s own diff, so it caused no build error and doesn't need to
 come back.
 
-**Fix plan (own commit):** restore the six dropped identifiers —
-`BridgeError::{MessageAlreadyConsumed already present, so just
-PerRouteLimitExceeded, AggregateWindowLimitExceeded,
-TransferPermanentlyFailed, TransferNotRetryable}` continuing numbering
-from the current max (`InvalidTokenMetadata = 21` → 22-25), plus
-`DataKey::{WithdrawalRouteConfig, WithdrawalWindow}` (no explicit
-discriminants needed — `DataKey` isn't `#[repr(u32)]`). Add matching
-`message()` arms for the four restored `BridgeError` variants (the
-`message()` match is exhaustive, no wildcard arm). No logic changes —
-the function bodies that use these identifiers are already correct and
-already tested (`contracts/bridge/src/lib.rs`'s `mod test` has passing
-assertions like `assert_eq!(result, Err(BridgeError::PerRouteLimitExceeded))`
-waiting for the enum to exist again).
+**Fix plan (own commit):** restore all nine dropped identifiers,
+continuing `BridgeError` numbering from the current max
+(`InvalidTokenMetadata = 21` → 22-26), plus the four `DataKey` variants
+(no explicit discriminants needed — `DataKey` isn't `#[repr(u32)]`). Add
+matching `message()` arms for the five restored `BridgeError` variants
+(the `message()` match is exhaustive, no wildcard arm). No logic
+changes — the function bodies that use these identifiers are already
+correct and already tested (`contracts/bridge/src/lib.rs`'s `mod test`
+has passing assertions like
+`assert_eq!(result, Err(BridgeError::PerRouteLimitExceeded))` waiting
+for the enum to exist again).
 
 ## Summary
 
@@ -280,7 +280,7 @@ waiting for the enum to exist again).
 | `stake_vault` | Missing `impl From<TokenFailure> for StakeVaultError` | `trade_executor` (same commit `4920ccfc`) |
 | `trade_executor` | Missing `impl From<TokenFailure> for ContractError` | `stake_vault` (same commit `4920ccfc`) |
 | `auto_trade` | `impl` present, but a new discriminant pushed the `#[contracterror]` enum past Soroban's 50-variant cap | Same commit `4920ccfc` as the above two, different failure mode |
-| `bridge` | Bad merge (`d4499e70`) dropped 6 enum variants added by `def62b7c` while keeping the code that uses them | Unrelated to `4920ccfc`; different PR, same day |
+| `bridge` | Bad merge (`d4499e70`) dropped 9 enum variants added by `def62b7c` while keeping the code that uses them | Unrelated to `4920ccfc`; different PR, same day |
 | Deployment manifest | `user_portfolio`/`trade_executor` slots were given the wrong `package` value at manifest creation (`dd7f94ea`, 2026-07-24) | Unrelated to all of the above; five weeks earlier, never touched again |
 
 **One bug or two? Three, really** — the manifest mismatch, the
