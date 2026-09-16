@@ -289,3 +289,32 @@ incomplete Issue #1001 rollout (`stake_vault` + `trade_executor` +
 bad merge are three independent incidents. They surfaced together only
 because they involve the same four crate names and were all discovered
 in the same audit pass.
+
+## Final verification
+
+All fixes landed; final state, checked after every commit above:
+
+- `cargo build --workspace --keep-going`: all 14 crates build clean.
+- `cargo test --workspace --all-targets`: every crate's unit tests and
+  all 9 `integration_tests` binaries pass, including three latent,
+  pre-existing test bugs this surfaced in crates the original two
+  findings never named (`signal_registry::cohort_retention`,
+  `signal_registry::provider_onboarding`,
+  `user_portfolio::position_tags` — see the "Full workspace
+  verification" commit).
+- `cargo kani` (the 5 harnesses `.github/workflows/kani.yml` names):
+  0 of 101 checks failed, all 5 harnesses verified.
+- `scripts/check_workspace_integrity.py`: passes — every workspace
+  member builds and every manifest entry's `package` matches its
+  logical name.
+- Backend (`backend/`): 81/81 Jest tests pass, `eslint` clean, `nest
+  build` clean, including the new `contract-spec-registry.spec.ts`
+  suite verifying write-path enum encoding against the real compiled
+  `signal_registry`/`governance` contract specs.
+- Frontend (`frontend/`): `next build` still fails on its pre-existing,
+  unrelated issues — a malformed `tsconfig.json` (duplicate JSON
+  values) and missing `@/components/WalletButton` /
+  `@/src/config/rpc-endpoints` modules. Nothing in `frontend/` was
+  touched by this work; this failure is unchanged from before it
+  started.
+in the same audit pass.
