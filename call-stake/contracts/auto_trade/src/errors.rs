@@ -130,9 +130,6 @@ pub enum AutoTradeError {
     LastOracleForPair = 49,
     /// Action requires the contract to be paused, but it is not.
     NotPaused = 50,
-    // ── Issue #1001: standardized token/cross-contract error mapping ─────────
-    /// A router-required allowance was insufficient or expired.
-    InsufficientAllowance = 51,
 }
 
 /// Maps the shared token/cross-contract invocation failure classification
@@ -303,9 +300,6 @@ impl AutoTradeError {
                 "cannot remove the last remaining whitelisted oracle for a pair"
             }
             AutoTradeError::NotPaused => "action requires the contract to be paused, but it is not",
-            AutoTradeError::InsufficientAllowance => {
-                "router token operation failed: insufficient or expired allowance"
-            }
         }
     }
 }
@@ -408,4 +402,12 @@ impl AutoTradeError {
     /// A trade for this (user, signal) was executed too recently; retry after
     /// the per-signal rate-limit window has elapsed.
     pub const ExecutionRateLimited: AutoTradeError = AutoTradeError::RateLimited;
+
+    // ── Issue #1001: standardized token/cross-contract error mapping ─────────
+    // Same 50-variant cap constraint as above: a 51st discriminant here fails
+    // the #[contracterror] macro at compile time with "LengthExceedsMax", so
+    // this reuses `InsufficientBalance` (the closest existing match: the AMM
+    // router couldn't move enough of the caller's tokens) rather than adding one.
+    /// A router-required allowance was insufficient or expired.
+    pub const InsufficientAllowance: AutoTradeError = AutoTradeError::InsufficientBalance;
 }
