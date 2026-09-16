@@ -65,9 +65,9 @@ Verify each contract was deployed in the correct order:
 - [ ] `stake_vault` (governance) deployed — contract ID written to `deployments/testnet.json`
 - [ ] `signal_registry` deployed — contract ID written to `deployments/testnet.json`
 - [ ] `fee_collector` (oracle) deployed — contract ID written to `deployments/testnet.json`
-- [ ] `user_portfolio` (auto_trade) deployed — contract ID written to `deployments/testnet.json`
-- [ ] `trade_executor` (bridge) deployed — contract ID written to `deployments/testnet.json`
-  - Skip with `DEPLOY_TRADE_EXECUTOR=0` only if bridge is intentionally excluded
+- [ ] `user_portfolio` deployed — contract ID written to `deployments/testnet.json`
+- [ ] `trade_executor` deployed — contract ID written to `deployments/testnet.json`
+  - Skip with `DEPLOY_TRADE_EXECUTOR=0` only if trade_executor is intentionally excluded
 
 Pass criterion: `deployments/testnet.json` contains a `contract_id` for each expected contract.
 

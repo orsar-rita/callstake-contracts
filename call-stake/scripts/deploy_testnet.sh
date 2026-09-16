@@ -6,8 +6,8 @@
 #   StakeVault    → governance package
 #   SignalRegistry → signal_registry package
 #   FeeCollector  → oracle package
-#   UserPortfolio → auto_trade package
-#   TradeExecutor → bridge package (optional; see DEPLOY_TRADE_EXECUTOR)
+#   UserPortfolio → user_portfolio package
+#   TradeExecutor → trade_executor package (optional; see DEPLOY_TRADE_EXECUTOR)
 #
 # Requirements: stellar CLI, jq, built WASM (release or optimized).
 #
@@ -24,7 +24,7 @@
 #   STELLAR_NETWORK_PASSPHRASE default: Test SDF Network ; September 2015
 #   WASM_DIR                   default: target/wasm32-unknown-unknown/release
 #   ROOT                       workspace root (parent of call-stake); auto-detected
-#   DEPLOY_TRADE_EXECUTOR      default 1; set 0 to skip bridge (no #[contract] on some branches)
+#   DEPLOY_TRADE_EXECUTOR      default 1; set 0 to skip trade_executor
 #   GOVERNANCE_INIT_SKIP       set 1 to deploy governance WASM but skip initialize (manual CLI)
 #   RECIPIENT_TEAM, RECIPIENT_EARLY_INVESTORS, ... (G...) override DistributionRecipients;
 #                            default: all STELLAR_ADMIN_ADDRESS
@@ -211,13 +211,13 @@ init_oracle() {
   invoke_init "$logical" "$cid" --admin "$ADMIN" --base_currency "$asset_json"
 }
 
-init_auto_trade() {
+init_user_portfolio() {
   local logical=user_portfolio
   local cid
   cid="$(get_cid "$logical")"
-  [[ -n "$cid" ]] || die "auto_trade (user_portfolio) not deployed"
+  [[ -n "$cid" ]] || die "user_portfolio not deployed"
   is_initialized_flag "$logical" && return 0
-  echo "==> initialize auto_trade (user_portfolio)"
+  echo "==> initialize user_portfolio"
   invoke_init "$logical" "$cid" --admin "$ADMIN"
 }
 
@@ -254,26 +254,14 @@ init_governance() {
     --recipients.public_sale "$rp"
 }
 
-init_bridge() {
+init_trade_executor() {
   local logical=trade_executor
   local cid
   cid="$(get_cid "$logical")"
-  [[ -n "$cid" ]] || return 0
+  [[ -n "$cid" ]] || die "trade_executor not deployed"
   is_initialized_flag "$logical" && return 0
-  echo "==> trade_executor (bridge): probe with health_check (deploy-only if it fails)"
-  if stellar contract invoke \
-    --id "$cid" \
-    --source-account "$SOURCE" \
-    --network "$NET" \
-    "${rpc_flags[@]}" \
-    --send=no \
-    -- \
-    health_check >/dev/null 2>&1; then
-    echo "    bridge exposes health_check; no separate initialize required"
-  else
-    echo "    (optional) add initialize to bridge contract or set DEPLOY_TRADE_EXECUTOR=0"
-  fi
-  mark_initialized "$logical"
+  echo "==> initialize trade_executor"
+  invoke_init "$logical" "$cid" --admin "$ADMIN"
 }
 
 echo "Using STATE=$STATE WASM_DIR=$WASM_DIR NETWORK=$NET"
@@ -282,20 +270,20 @@ echo "Using STATE=$STATE WASM_DIR=$WASM_DIR NETWORK=$NET"
 deploy_if_needed stake_vault governance
 deploy_if_needed signal_registry signal_registry
 deploy_if_needed fee_collector oracle
-deploy_if_needed user_portfolio auto_trade
+deploy_if_needed user_portfolio user_portfolio
 
 if [[ "$DEPLOY_TRADE_EXECUTOR" == "1" ]]; then
-  deploy_if_needed trade_executor bridge
+  deploy_if_needed trade_executor trade_executor
 else
-  echo "==> skip trade_executor (bridge) DEPLOY_TRADE_EXECUTOR=0"
+  echo "==> skip trade_executor DEPLOY_TRADE_EXECUTOR=0"
 fi
 
 init_governance
 init_signal_registry
 init_oracle
-init_auto_trade
+init_user_portfolio
 if [[ "$DEPLOY_TRADE_EXECUTOR" == "1" ]]; then
-  init_bridge
+  init_trade_executor
 fi
 
 echo ""

@@ -22,13 +22,13 @@
       "depends_on": {}
     },
     "user_portfolio": {
-      "package": "auto_trade",
+      "package": "user_portfolio",
       "address": null,
       "version": 2,
       "depends_on": {}
     },
     "trade_executor": {
-      "package": "bridge",
+      "package": "trade_executor",
       "address": null,
       "version": 1,
       "depends_on": {
