@@ -645,12 +645,13 @@ mod tests {
     }
 
     #[test]
-    #[should_panic]
-    fn register_twice_panics() {
+    fn register_twice_is_idempotent() {
         let (e, cid) = env();
         let provider = Address::generate(&e);
-        e.as_contract(&cid, || register_provider(&e, &provider));
-        e.as_contract(&cid, || register_provider(&e, &provider));
+        let first = e.as_contract(&cid, || register_provider(&e, &provider));
+        let second = e.as_contract(&cid, || register_provider(&e, &provider));
+        assert_eq!(first, second);
+        assert_eq!(second.status, OnboardingStatus::Pending);
     }
 
     // ── approve ───────────────────────────────────────────────────────────

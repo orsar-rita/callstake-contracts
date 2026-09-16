@@ -161,10 +161,7 @@ mod tests {
         let provider = Address::generate(&env);
         let user1 = Address::generate(&env);
         let user2 = Address::generate(&env);
-        #[allow(deprecated)]
-        let cid = env.register_contract(None, crate::SignalRegistry);
-        let e2 = env.clone();
-        env.as_contract(&cid, move || f(&e2, &provider, &user1, &user2));
+        (env, provider, user1, user2)
     }
 
     #[test]

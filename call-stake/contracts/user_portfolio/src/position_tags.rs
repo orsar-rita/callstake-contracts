@@ -207,17 +207,27 @@ mod tests {
     #[test]
     fn tag_and_get_positions_by_tag() {
         let (env, contract_id) = setup();
-        run(&env, &contract_id, || {
-            let user = Address::generate(&env);
-            let tag = String::from_str(&env, "long-term");
+        let user = Address::generate(&env);
+        let tag = String::from_str(&env, "long-term");
 
+        run(&env, &contract_id, || {
             TagHarness::simulate_open_position(env.clone(), user.clone(), 1);
             TagHarness::simulate_open_position(env.clone(), user.clone(), 2);
+        });
 
+        // Each `require_auth()`-ing call needs its own top-level invocation
+        // frame — `mock_all_auths()` only authorizes one require_auth() per
+        // frame for a given address, so batching two into one `run()` fails
+        // with "frame is already authorized".
+        run(&env, &contract_id, || {
             tag_position(&env, user.clone(), 1, tag.clone()).unwrap();
+        });
+        run(&env, &contract_id, || {
             tag_position(&env, user.clone(), 2, tag.clone()).unwrap();
+        });
 
-            let ids = get_positions_by_tag(&env, user, tag);
+        run(&env, &contract_id, || {
+            let ids = get_positions_by_tag(&env, user.clone(), tag.clone());
             assert_eq!(ids.len(), 2);
         });
     }
@@ -225,21 +235,27 @@ mod tests {
     #[test]
     fn retag_position_removes_old_index() {
         let (env, contract_id) = setup();
+        let user = Address::generate(&env);
         run(&env, &contract_id, || {
-            let user = Address::generate(&env);
             TagHarness::simulate_open_position(env.clone(), user.clone(), 1);
+        });
 
-            let tag1 = String::from_str(&env, "experimental");
-            let tag2 = String::from_str(&env, "long-term");
+        let tag1 = String::from_str(&env, "experimental");
+        let tag2 = String::from_str(&env, "long-term");
 
-            tag_position(&env, user.clone(), 1, tag1).unwrap();
+        run(&env, &contract_id, || {
+            tag_position(&env, user.clone(), 1, tag1.clone()).unwrap();
+        });
+        run(&env, &contract_id, || {
             tag_position(&env, user.clone(), 1, tag2.clone()).unwrap();
+        });
 
+        run(&env, &contract_id, || {
             let old_ids =
                 get_positions_by_tag(&env, user.clone(), String::from_str(&env, "experimental"));
             assert_eq!(old_ids.len(), 0);
 
-            let new_ids = get_positions_by_tag(&env, user, tag2);
+            let new_ids = get_positions_by_tag(&env, user.clone(), tag2.clone());
             assert_eq!(new_ids.len(), 1);
             assert_eq!(new_ids.get(0).unwrap(), 1);
         });
@@ -248,22 +264,30 @@ mod tests {
     #[test]
     fn untag_position_removes_tag_and_index() {
         let (env, contract_id) = setup();
+        let user = Address::generate(&env);
         run(&env, &contract_id, || {
-            let user = Address::generate(&env);
             TagHarness::simulate_open_position(env.clone(), user.clone(), 1);
+        });
 
-            let tag = String::from_str(&env, "watchlist");
+        let tag = String::from_str(&env, "watchlist");
+        run(&env, &contract_id, || {
             tag_position(&env, user.clone(), 1, tag.clone()).unwrap();
+        });
 
+        run(&env, &contract_id, || {
             let ids = get_positions_by_tag(&env, user.clone(), tag.clone());
             assert_eq!(ids.len(), 1);
+        });
 
+        run(&env, &contract_id, || {
             untag_position(&env, user.clone(), 1);
+        });
 
-            let ids = get_positions_by_tag(&env, user.clone(), tag);
+        run(&env, &contract_id, || {
+            let ids = get_positions_by_tag(&env, user.clone(), tag.clone());
             assert_eq!(ids.len(), 0);
 
-            let stored_tag = get_position_tag(&env, user, 1);
+            let stored_tag = get_position_tag(&env, user.clone(), 1);
             assert!(stored_tag.is_none());
         });
     }
@@ -287,23 +311,31 @@ mod tests {
     #[test]
     fn filter_positions_by_tag() {
         let (env, contract_id) = setup();
+        let user = Address::generate(&env);
         run(&env, &contract_id, || {
-            let user = Address::generate(&env);
             TagHarness::simulate_open_position(env.clone(), user.clone(), 10);
             TagHarness::simulate_open_position(env.clone(), user.clone(), 20);
             TagHarness::simulate_open_position(env.clone(), user.clone(), 30);
+        });
 
-            let lt = String::from_str(&env, "long-term");
-            let exp = String::from_str(&env, "experimental");
+        let lt = String::from_str(&env, "long-term");
+        let exp = String::from_str(&env, "experimental");
 
+        run(&env, &contract_id, || {
             tag_position(&env, user.clone(), 10, lt.clone()).unwrap();
+        });
+        run(&env, &contract_id, || {
             tag_position(&env, user.clone(), 20, exp.clone()).unwrap();
+        });
+        run(&env, &contract_id, || {
             tag_position(&env, user.clone(), 30, lt.clone()).unwrap();
+        });
 
-            let long_ids = get_positions_by_tag(&env, user.clone(), lt);
+        run(&env, &contract_id, || {
+            let long_ids = get_positions_by_tag(&env, user.clone(), lt.clone());
             assert_eq!(long_ids.len(), 2);
 
-            let exp_ids = get_positions_by_tag(&env, user.clone(), exp);
+            let exp_ids = get_positions_by_tag(&env, user.clone(), exp.clone());
             assert_eq!(exp_ids.len(), 1);
             assert_eq!(exp_ids.get(0).unwrap(), 20);
         });
