@@ -33,10 +33,11 @@ export const envSchema = z.object({
   // envelope, even for a call that charges no fee). Never used to sign
   // anything — see SorobanClientService.
   SOROBAN_SIMULATION_ACCOUNT: z.string().optional(),
-  // Manual override for the real user_portfolio crate's address. Not
-  // resolvable through deployments/registry.json today — see
-  // ContractRegistryService's doc comment: the manifest's "user_portfolio"
-  // slot actually deploys the auto_trade package, not user_portfolio.
+  // Manual override for the real user_portfolio crate's address. The
+  // manifest's "user_portfolio" slot is now correct (see
+  // docs/CONTRACT_BUILD_DIAGNOSIS.md), but UserPortfolioService still
+  // resolves this address via env var rather than the registry — see
+  // its doc comment.
   USER_PORTFOLIO_CONTRACT_ADDRESS: z.string().optional(),
 });
 

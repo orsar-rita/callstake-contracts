@@ -79,32 +79,33 @@ export class SignalRegistryService {
   }
 
   /**
-   * Builds (unsigned) the transaction for create_signal. NOTE: asset_pair,
-   * rationale and tags are plain strings/vectors and encode unambiguously.
-   * action/category/risk_level are the contract's custom Soroban enums
-   * (SignalAction/SignalCategory/RiskLevel in
-   * call-stake/contracts/signal_registry/src/types.rs) — they are passed
-   * through generically here via the SDK's nativeToScVal, which is exact
-   * for primitives but has NOT been verified against those contracts'
-   * exact enum XDR encoding (that requires the contract's compiled spec,
-   * which isn't wired in). Treat signal creation as unverified until that
-   * gap is closed — see docs/BACKEND_SCOPE.md.
+   * Builds (unsigned) the transaction for create_signal. action/category/
+   * risk_level are the contract's custom Soroban enums (SignalAction/
+   * SignalCategory/RiskLevel in call-stake/contracts/signal_registry/src/types.rs)
+   * — all three are unit-variant unions (no associated data), so each is
+   * passed as `{ tag: <variant name> }`. Encoding goes through
+   * buildInvocationWithSpec, which uses the contract's real compiled spec
+   * (see contract-spec-registry.ts) rather than the generic nativeToScVal
+   * used elsewhere, which cannot represent a union type from a bare string
+   * (confirmed: it produces scvString, not the scvVec([scvSymbol]) a union
+   * argument actually requires — see docs/CONTRACT_BUILD_DIAGNOSIS.md).
    */
   async buildCreateSignal(input: CreateSignalInput) {
-    return this.soroban.buildInvocation(
+    return this.soroban.buildInvocationWithSpec(
+      'signal_registry',
       this.address(),
       'create_signal',
-      [
-        input.provider,
-        input.assetPair,
-        input.action,
-        input.price,
-        input.rationale,
-        input.expiry,
-        input.category,
-        input.tags,
-        input.riskLevel,
-      ],
+      {
+        provider: input.provider,
+        asset_pair: input.assetPair,
+        action: { tag: input.action },
+        price: input.price,
+        rationale: input.rationale,
+        expiry: input.expiry,
+        category: { tag: input.category },
+        tags: input.tags,
+        risk_level: { tag: input.riskLevel },
+      },
       input.provider,
     );
   }

@@ -9,6 +9,7 @@ import {
   xdr,
 } from '@stellar/stellar-sdk';
 import { ContractRegistryService } from '../config/contract-registry.service';
+import { getContractSpec } from './contract-spec-registry';
 
 export interface ReadResult<T> {
   value: T;
@@ -92,6 +93,44 @@ export class SorobanClientService {
     const account = await this.loadAccountOrThrow(sourceAccountId);
     const contract = new Contract(contractAddress);
     const scArgs = args.map((arg) => this.toScVal(arg));
+
+    const transaction = new TransactionBuilder(account, {
+      fee: '1000',
+      networkPassphrase: this.registry.getRpcConfig().network_passphrase,
+    })
+      .addOperation(contract.call(method, ...scArgs))
+      .setTimeout(60)
+      .build();
+
+    const prepared = await this.server.prepareTransaction(transaction);
+
+    return { xdr: prepared.toXDR(), latestLedger: (await this.server.getLatestLedger()).sequence };
+  }
+
+  /**
+   * Like `buildInvocation`, but for a method whose arguments include a
+   * contract-defined Soroban enum/union (e.g. SignalAction, ProposalType) —
+   * types the generic `nativeToScVal(value)` used by `buildInvocation`
+   * cannot correctly represent from a bare JS value. `namedArgs` are encoded
+   * via that contract's real compiled spec (see contract-spec-registry.ts),
+   * so an enum argument's `{tag, values}` shape and every other parameter's
+   * type come from the contract itself rather than a hand-maintained
+   * assumption. `specPackageName` is the spec snapshot's file name under
+   * src/contracts/specs/ (see generate-contract-specs.sh), which may differ
+   * from the manifest's logical slot name if a slot's package name ever
+   * legitimately differs from its logical name.
+   */
+  async buildInvocationWithSpec(
+    specPackageName: string,
+    contractAddress: string,
+    method: string,
+    namedArgs: Record<string, unknown>,
+    sourceAccountId: string,
+  ): Promise<BuiltInvocation> {
+    const account = await this.loadAccountOrThrow(sourceAccountId);
+    const contract = new Contract(contractAddress);
+    const spec = getContractSpec(specPackageName);
+    const scArgs = spec.funcArgsToScVals(method, namedArgs);
 
     const transaction = new TransactionBuilder(account, {
       fee: '1000',

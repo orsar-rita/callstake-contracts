@@ -33,6 +33,12 @@ describe('money path integration (login -> stake -> signal -> fee claim)', () =>
           xdr: `unsigned-xdr-for-${method}`,
           latestLedger: 1,
         })),
+      buildInvocationWithSpec: jest
+        .fn()
+        .mockImplementation(async (_specPackageName, _address, method) => ({
+          xdr: `unsigned-xdr-for-${method}`,
+          latestLedger: 1,
+        })),
     };
     const registry = {
       requireAddress: jest.fn((slot: string) =>
@@ -98,14 +104,15 @@ describe('money path integration (login -> stake -> signal -> fee claim)', () =>
       price: 1_000_000n,
       rationale: 'integration test signal',
       expiry: 2_000_000_000,
-      category: 'Spot',
+      category: 'SWING',
       tags: ['test'],
       riskLevel: 'Low',
     });
-    expect(soroban.buildInvocation).toHaveBeenLastCalledWith(
+    expect(soroban.buildInvocationWithSpec).toHaveBeenLastCalledWith(
+      'signal_registry',
       expect.any(String),
       'create_signal',
-      expect.arrayContaining([provider.publicKey()]),
+      expect.objectContaining({ provider: provider.publicKey() }),
       provider.publicKey(),
     );
 
@@ -129,6 +136,9 @@ describe('money path integration (login -> stake -> signal -> fee claim)', () =>
     // Every write in this path was built for the provider's own address — never relayed on someone else's behalf.
     for (const call of soroban.buildInvocation.mock.calls) {
       expect(call[3]).toBe(provider.publicKey());
+    }
+    for (const call of soroban.buildInvocationWithSpec.mock.calls) {
+      expect(call[4]).toBe(provider.publicKey());
     }
   });
 });

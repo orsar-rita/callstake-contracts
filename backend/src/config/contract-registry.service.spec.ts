@@ -28,15 +28,17 @@ describe('ContractRegistryService', () => {
     expect(resolved.address).toBeNull();
   });
 
-  it('resolves the package field even when the manifest slot name differs from the crate name', () => {
+  it('resolves user_portfolio and trade_executor to their own package, not a stand-in contract', () => {
     const service = makeService();
-    // deployments/testnet.manifest.json maps the "user_portfolio" slot to
-    // the "auto_trade" package and "trade_executor" slot to "bridge" —
-    // callers must trust .package, not the slot key.
+    // deployments/testnet.manifest.json used to map the "user_portfolio"
+    // slot to the "auto_trade" package and "trade_executor" slot to
+    // "bridge" — see docs/CONTRACT_BUILD_DIAGNOSIS.md. Fixed: each slot
+    // now deploys its own crate. This still exercises .package (not just
+    // the slot key), since that's the field every caller must trust.
     const userPortfolioSlot = service.resolve('user_portfolio');
-    expect(userPortfolioSlot.package).toBe('auto_trade');
+    expect(userPortfolioSlot.package).toBe('user_portfolio');
     const tradeExecutorSlot = service.resolve('trade_executor');
-    expect(tradeExecutorSlot.package).toBe('bridge');
+    expect(tradeExecutorSlot.package).toBe('trade_executor');
   });
 
   it('falls back to config/<network>.json for the oracle address when not in the registry', () => {

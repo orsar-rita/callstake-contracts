@@ -63,34 +63,45 @@ export class GovernanceService {
   }
 
   /**
-   * Same enum-encoding caveat as signal-registry's create_signal: proposal_type
-   * and category are the contract's custom Soroban enums (ProposalType,
-   * ProposalCategory in call-stake/contracts/governance/src/types.rs) and
-   * are passed through generically — unverified against the exact on-chain
-   * XDR encoding. See docs/BACKEND_SCOPE.md.
+   * proposal_type is ProposalType (call-stake/contracts/governance/src/proposals.rs)
+   * — a tuple-variant union, so it needs both a variant name and its
+   * positional associated values (e.g. SignalProposal(String) needs one
+   * value, ParameterChange(String, i128, i128) needs three). category is
+   * ProposalCategory, a unit-variant union (name only). Both are encoded
+   * via buildInvocationWithSpec against the contract's real compiled spec,
+   * which also validates each variant's arity/types at encode time instead
+   * of silently producing malformed XDR the way generic nativeToScVal did
+   * (see docs/CONTRACT_BUILD_DIAGNOSIS.md).
    */
   async buildCreateProposal(input: CreateProposalInput) {
-    return this.soroban.buildInvocation(
+    return this.soroban.buildInvocationWithSpec(
+      'governance',
       this.address(),
       'create_proposal',
-      [
-        input.proposer,
-        input.proposalType,
-        input.title,
-        input.description,
-        input.executionPayload,
-        input.category,
-        input.useQuadraticVoting,
-      ],
+      {
+        proposer: input.proposer,
+        proposal_type: { tag: input.proposalType, values: input.proposalTypeValues },
+        title: input.title,
+        description: input.description,
+        execution_payload: input.executionPayload,
+        category: { tag: input.category },
+        use_quadratic_voting: input.useQuadraticVoting,
+      },
       input.proposer,
     );
   }
 
+  /** vote_type is GovernanceVoteType, a unit-variant union (For/Against/Abstain). */
   async buildCastVote(proposalId: number, voter: string, voteType: string) {
-    return this.soroban.buildInvocation(
+    return this.soroban.buildInvocationWithSpec(
+      'governance',
       this.address(),
       'cast_vote',
-      [proposalId, voter, voteType],
+      {
+        proposal_id: proposalId,
+        voter,
+        vote_type: { tag: voteType },
+      },
       voter,
     );
   }

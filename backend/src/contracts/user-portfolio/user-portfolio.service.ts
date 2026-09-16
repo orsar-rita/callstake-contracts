@@ -5,14 +5,16 @@ import { requireSimulationAccount } from '../../stellar/simulation-account';
 
 /**
  * The real user_portfolio crate (positions, PnL, KYC gating — see
- * call-stake/contracts/user_portfolio/src/lib.rs) has no deployment slot
- * anywhere in this repo's registry/manifest: the manifest's
- * "user_portfolio" slot actually deploys the auto_trade package instead
- * (see ContractRegistryService's doc comment). Rather than guess at an
- * address or silently call the wrong contract, this module requires an
- * explicit USER_PORTFOLIO_CONTRACT_ADDRESS override and fails loudly
- * (503) until it's set — matching this repo's own documented convention
- * for an undeployed contract (see ContractNotDeployedError).
+ * call-stake/contracts/user_portfolio/src/lib.rs) now has its own real
+ * deployment slot in deployments/*.manifest.json (fixed — see
+ * docs/CONTRACT_BUILD_DIAGNOSIS.md; it previously pointed at the
+ * auto_trade package). This module still requires an explicit
+ * USER_PORTFOLIO_CONTRACT_ADDRESS override rather than resolving through
+ * ContractRegistryService/CONTRACT_SLOTS, since that wiring predates the
+ * manifest fix and hasn't been revisited — CONTRACT_SLOTS has no
+ * USER_PORTFOLIO entry yet. Switching to registry resolution is a
+ * reasonable follow-up now that the slot is correct, but is out of scope
+ * here.
  *
  * Scope is intentionally narrow: portfolio/PnL reads and the two KYC
  * gate checks the contract exposes. No position writes (open/close) —

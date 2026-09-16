@@ -714,7 +714,7 @@ impl GovernanceContract {
         env: Env,
         proposal_id: u64,
         voter: Address,
-        vote_type: GovernanceVoteType,
+        vote_type: proposals::VoteType,
     ) -> Result<(), GovernanceError> {
         require_initialized(&env)?;
         require_not_paused(&env)?;
@@ -1123,7 +1123,7 @@ impl GovernanceContract {
         env: Env,
         proposal_id: u64,
         voter: Address,
-        vote_type: GovernanceVoteType,
+        vote_type: proposals::VoteType,
     ) -> Result<(), GovernanceError> {
         require_initialized(&env)?;
         reputation::cast_reputation_weighted_vote(&env, proposal_id, voter, vote_type)

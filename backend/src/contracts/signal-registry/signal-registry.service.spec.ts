@@ -6,6 +6,7 @@ function makeService(opts: { address?: string | null; simulationAccount?: string
   const soroban = {
     callReadOnly: jest.fn().mockResolvedValue({ value: { id: 1 }, latestLedger: 10 }),
     buildInvocation: jest.fn().mockResolvedValue({ xdr: 'AAAA', latestLedger: 10 }),
+    buildInvocationWithSpec: jest.fn().mockResolvedValue({ xdr: 'AAAA', latestLedger: 10 }),
     submitSignedTransaction: jest.fn().mockResolvedValue({ hash: 'h', status: 'PENDING' }),
   };
   const registry = {
@@ -48,7 +49,7 @@ describe('SignalRegistryService', () => {
     await expect(service.getSignal(1)).rejects.toThrow(ServiceUnavailableException);
   });
 
-  it('buildCreateSignal passes structured args through to buildInvocation', async () => {
+  it('buildCreateSignal wraps action/category/riskLevel as union tags for buildInvocationWithSpec', async () => {
     const { service, soroban } = makeService();
     await service.buildCreateSignal({
       provider: 'GPROVIDER',
@@ -57,25 +58,26 @@ describe('SignalRegistryService', () => {
       price: 12345n,
       rationale: 'looks bullish',
       expiry: 1893456000,
-      category: 'Spot',
+      category: 'SWING',
       tags: ['momentum'],
       riskLevel: 'Medium',
     });
 
-    expect(soroban.buildInvocation).toHaveBeenCalledWith(
+    expect(soroban.buildInvocationWithSpec).toHaveBeenCalledWith(
+      'signal_registry',
       'CSIGNALREGISTRYADDRESS',
       'create_signal',
-      [
-        'GPROVIDER',
-        'XLM/USDC',
-        'Buy',
-        12345n,
-        'looks bullish',
-        1893456000,
-        'Spot',
-        ['momentum'],
-        'Medium',
-      ],
+      {
+        provider: 'GPROVIDER',
+        asset_pair: 'XLM/USDC',
+        action: { tag: 'Buy' },
+        price: 12345n,
+        rationale: 'looks bullish',
+        expiry: 1893456000,
+        category: { tag: 'SWING' },
+        tags: ['momentum'],
+        risk_level: { tag: 'Medium' },
+      },
       'GPROVIDER',
     );
   });
