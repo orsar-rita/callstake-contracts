@@ -56,6 +56,16 @@ jobs:
       - name: Change to call-stake
         run: cd call-stake
 
+      # Regression guard: every workspace member must build (with
+      # --keep-going, so one broken crate can't hide behind another and
+      # all failures are reported together), and every deployment
+      # manifest's logical-contract-name -> package mapping must point at
+      # a real, matching workspace member. Catches a crate that silently
+      # stops compiling, and a manifest slot that silently points at the
+      # wrong package (see docs/CONTRACT_BUILD_DIAGNOSIS.md).
+      - name: Workspace + manifest package integrity
+        run: python3 call-stake/scripts/check_workspace_integrity.py
+
       # Format check for entire workspace
       - name: Format check
         run: cd call-stake && cargo fmt --all -- --check
