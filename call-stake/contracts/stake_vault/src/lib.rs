@@ -397,6 +397,35 @@ pub enum StakeVaultError {
     /// Rejected before any storage write or token transfer — no partial state
     /// change occurs (unlike the previous silent-clamp-to-`i128::MAX` behavior).
     StakeOverflow = 43,
+    // ── Issue #1001: standardized token/cross-contract error mapping ─────────
+    /// The vault's token balance was insufficient to complete a transfer or burn.
+    InsufficientTokenBalance = 44,
+    /// The vault's allowance from the token holder was insufficient or expired.
+    InsufficientTokenAllowance = 45,
+    /// A token/cross-contract invocation failed for a reason not covered by
+    /// a more specific variant above (invalid request, overflow, an
+    /// unrecognized custom-token error code, or a host-level abort).
+    TokenOperationFailed = 46,
+}
+
+/// Maps the shared token/cross-contract invocation failure classification
+/// (Issue #1001) onto this contract's stable error codes. Every non-success
+/// outcome from a token transfer/burn must flow through here rather than
+/// being treated as `Ok`.
+impl From<shared::TokenFailure> for StakeVaultError {
+    fn from(failure: shared::TokenFailure) -> Self {
+        match failure {
+            shared::TokenFailure::Unauthorized => StakeVaultError::Unauthorized,
+            shared::TokenFailure::InsufficientBalance => StakeVaultError::InsufficientTokenBalance,
+            shared::TokenFailure::InsufficientAllowance => {
+                StakeVaultError::InsufficientTokenAllowance
+            }
+            shared::TokenFailure::InvalidRequest
+            | shared::TokenFailure::Overflow
+            | shared::TokenFailure::OtherContractError(_)
+            | shared::TokenFailure::HostError => StakeVaultError::TokenOperationFailed,
+        }
+    }
 }
 
 impl StakeVaultError {
@@ -503,6 +532,15 @@ impl StakeVaultError {
             }
             StakeVaultError::StakeOverflow => {
                 "resulting amount would overflow i128; deposit or delegation rejected"
+            }
+            StakeVaultError::InsufficientTokenBalance => {
+                "vault's token balance is too low for this transfer or burn"
+            }
+            StakeVaultError::InsufficientTokenAllowance => {
+                "vault's token allowance is insufficient or has expired"
+            }
+            StakeVaultError::TokenOperationFailed => {
+                "a token or cross-contract invocation failed"
             }
         }
     }

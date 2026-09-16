@@ -309,7 +309,8 @@ mod tests {
     // Minimal token mock for testing.
     mod token_mock {
         use soroban_sdk::{
-            contract, contractimpl, contracttype, token, Address, Env, MuxedAddress,
+            contract, contractimpl, contracttype, token::TokenInterface, Address, Env,
+            MuxedAddress,
         };
 
         #[contracttype]
@@ -329,7 +330,8 @@ mod tests {
             }
         }
 
-        impl token::Interface for MockToken {
+        #[contractimpl]
+        impl TokenInterface for MockToken {
             fn allowance(_env: Env, _from: Address, _spender: Address) -> i128 {
                 0
             }
